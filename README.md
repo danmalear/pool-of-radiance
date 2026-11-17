@@ -57,6 +57,7 @@ This work would not exist without SSI's original game and the people who have sp
 
 Special thanks to:
 
+- [Brian Schkerke](https://github.com/talonius) for creating the original repo this project was based on
 - [Gold Box Companion](https://gbc.zorbus.net/) for its character tools, automapping and years of practical Gold Box knowledge.
 - [Gold Box Explorer](https://github.com/bsimser/Gold-Box-Explorer) for making the games' files and resources much easier to inspect and understand.
 - Simeon Pilgrim's [CoAB project](https://github.com/simeonpilgrim/coab), an earlier reverse-engineering effort for *Curse of the Azure Bonds* that provided valuable reference work.
