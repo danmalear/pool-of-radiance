@@ -342,7 +342,7 @@ export namespace Types {
 		hi: number;
 	};
 	export type TBrkSet = string[];
-	export type Tnumbers = number[]; //0-65000
+	export type TBytes = number[]; //0-65000
 	export type TColorMap = number[]; //0-7
 	export type TColorTab = number[]; //0-15 namespace Crt
 	export type TCombatTarget = {
@@ -375,7 +375,7 @@ export namespace Types {
 		// numbers in one image
 		imgSize: number;
 		// extra transparency space (default nil)
-		transp: Tnumbers;
+		transp: TBytes;
 		// image data (open-ended)
 		data: number[]; //0-32000
 	};
@@ -407,7 +407,7 @@ export namespace Types {
 		// low numbers copied to TItemRec charges/effect/special
 		properties: number[]; //1-3
 	};
-	export type TWordnumbers = {
+	export type TWordBytes = {
 		lo: number;
 		hi: number;
 	};
@@ -421,7 +421,7 @@ export namespace Types {
 		words: number[]; //1-152
 	};
 	export type TRandomItemTable2 = {
-		wordnumbers: TWordnumbers[]; //1-152
+		wordBytes: TWordBytes[]; //1-152
 	};
 	export type TRandomItemTable =
 		| TRandomItemTable0
@@ -688,7 +688,7 @@ export namespace Types {
 	};
 
 	// DaxIo types.
-	export type TnumberArr = number[]; //0-65534
+	export type TByteArr = number[]; //0-65534
 
 	// EclMenu types.
 	export type TEclRet = {
