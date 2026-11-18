@@ -23,5 +23,5 @@
 		"noUncheckedSideEffectImports": true,
 		"noImplicitOverride": true
 	},
-	"include": ["src"]
+	"include": ["src", "scripts/transform.ts"]
 }
