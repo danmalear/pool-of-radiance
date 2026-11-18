@@ -18,3 +18,5 @@
 
 # DOSBox-X captures
 capture/
+
+node_modules/
