@@ -1,0 +1,1272 @@
+/***
+REF
+---
+
+SHORTHAND
+
+$str(addr: hex) string starting at addr
+
+OPS
+
+COMBAT_OR_SHOP:
+monstersLoaded == false && combat_type == normal
+	? gbvmEnterShop
+		? CityShop()
+		: gbvmEnterTemple
+			? TempleShop()
+			: AfterCombatExpAndTreasure()
+	: DoCombat()
+
+LOAD_FILES (fileId, unused, loadTiles):
+	filesLoaded = true
+	mapLoaded = true
+	fileId != 255 && fileId != 127 && gd.view3dFlag != 0
+		? LoadGeo(fileId); moveLocked = 0
+	loadTiles != 255 && gd.view3dFlag == 0
+		? LoadTiles(0, 40)
+
+LOAD_PIECES (wallSetId1, wallSetId2, wallSetId3):
+	filesLoaded = true
+	piecesLoaded = true
+	wallSetId1 == 127
+		? LoadWallSet(0, 1)
+		: gd.mapGraphics1 != 0 && gd.mapGraphics2 != 0
+			? LoadWallSet(wallSetId1, 1); LoadWallSet(wallSetId3, 3)
+			: i : 1 to 3:
+				param[i] != 255
+					? LoadWallSet(param[i], i)
+					: gd.wallSetCache[i].wallDefId = -1; gd.wallSetCache[i].symbolSlot = -1
+
+***/
+
+CONST pic_treasure_chest_id = 1
+CONST pic_campfire_id = 29
+CONST pic_boat_dock_id = 41
+
+CONST no_head_id = 255
+CONST remove_picture = 255
+
+CONST head_m_blonde_circlet_id = 0
+CONST head_m_blonde_smiling_id = 8
+CONST head_m_brunette_grumpy_id = 9
+CONST head_m_old_serious_id = 13
+CONST head_m_old_bald_id = 16
+CONST head_a_brunette_serious_id = 18
+CONST head_f_blonde_serious_id = 22
+CONST head_f_brunette_tired_id = 24
+CONST head_m_brunette_mustache_id = 32
+CONST head_m_old_smiling_id = 34
+CONST head_m_brunette_tired_id = 42
+CONST head_m_brunette_mohawk_id = 44
+CONST head_f_brunette_elven_id = 45
+CONST head_f_blonde_short_id = 51
+CONST head_a_old_frowning_id = 53
+CONST head_m_brunette_goatee_id = 55
+CONST head_m_brunette_helmet_id = 57
+CONST head_f_brunette_smiling_id = 63
+CONST head_m_brunette_bowlcut_id = 67
+CONST head_a_brunette_elven_circlet_id = 68
+CONST head_m_brunette_serious_id = 71
+
+CONST body_breastplate_id = 1
+CONST body_mage_id = 2
+CONST body_hairy_chest_id = 3
+CONST body_cross_armor_id = 4
+CONST body_chainmail_id = 7
+CONST body_ruffian_id = 8
+CONST body_worker_id = 9
+CONST body_full_plate_id = 18
+CONST body_leather_cape_id = 24
+CONST body_full_plate_tits_id = 26
+CONST body_turtleneck_id = 31
+CONST body_cage_armor_tits_id = 32
+CONST body_black_skintight_tits_id = 33
+CONST body_apron_id = 34
+CONST body_bikini_sword_tits_id = 35
+CONST body_blue_robe_tits_id = 37
+
+CONST monster_swordsman_id = 36
+CONST monster_nomad_id = 40
+CONST monster_lv4_fighter_id = 41
+CONST monster_lv1_thief_id = 45
+CONST monster_lv6_thief_id = 51
+CONST monster_aides_id = 53
+CONST monster_corporal_id = 54
+CONST monster_lv7_cleric_id = 83
+CONST monster_lv6_fighter_id = 84
+CONST monster_lv8_fighter_id = 85
+CONST monster_lv3_mage_id = 94
+CONST monster_warrior_id = 103
+CONST monster_wolf_id = 106
+CONST monster_dirten_id = 107
+CONST monster_acolyte_id = 108
+CONST monster_hero_id = 109
+CONST monster_theurgist_id = 110
+CONST monster_robber_id = 111
+CONST monster_curate_id = 112
+CONST monster_evoker_id = 122
+
+CONST table_tour_switch = [0, 0, 0, 0, 0, 1, 0, 2, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 3, 0, 0, 0, 0, 4, 0, 0, 0, 0, 0, 0, 5, 6] // @B592
+CONST table_tour_pos_x = [14, 13, 12, 11, 11, 11, 11, 11, 11, 10, 10, 10, 10, 9, 8, 7, 6, 5, 5, 5, 5, 5, 5, 5, 4, 4, 4, 3, 2, 2, 2, 2, 1, 0] // @B5B4
+CONST table_tour_pos_y = [1, 1, 1, 1, 1, 2, 2, 2, 2, 2, 2, 3, 3, 3, 3, 3, 3, 3, 3, 2, 2, 2, 3, 3, 3, 3, 3, 3, 3, 3, 4, 4, 4, 4] // @B5D6
+CONST table_tour_pos_facing = [3, 3, 3, 3, 2, 2, 3, 0, 3, 3, 2, 2, 3, 3, 3, 3, 3, 3, 0, 0, 1, 2, 2, 3, 3, 2, 3, 3, 3, 2, 2, 3, 3, 3] // @B5F8
+CONST table_random_x = [3, 10, 2, 12] // @B61A
+CONST table_random_y = [11, 10, 0, 3] // @B61E
+CONST table_brawl_monster_ids = [monster_nomad_id, monster_lv1_thief_id, monster_corporal_id, monster_aides_id, monster_lv4_fighter_id, monster_lv6_thief_id] // @B622
+CONST table_brawl_sprite_ids = [11, 13, 16, 15, 11, 24] // @B628
+
+CONST op_refresh_view = @2C90 // => @AC91
+CONST op_start_mirror = @8000 // => 1
+CONST op_start_solo_fight = @8001 // => 2
+CONST op_play_sound = @BA03 // => @3A04
+CONST op_move_forward = @C01E // => @401F
+CONST op_get_wall_ahead = @C018 // => @4019
+
+CONST prog_training = 0
+CONST prog_win_game = 8
+CONST prog_camp = 9
+
+/** Divided by two from C_dir consts */
+CONST dir_north = 0
+CONST dir_east = 1
+CONST dir_south = 2
+CONST dir_west = 3
+/** self / no movement (delta 0,0) */
+CONST dir_center = 4
+
+/* current disk number */
+VAR gbvmDiskNum = 0 // @6E12
+
+VAR partySize = 0 // @6E3E
+
+VAR pictureLoading = no_head_id // @6DE1
+
+VAR curCharName = '' // $str(@6B00)
+VAR curCharConCur = 0 // @6B18
+VAR curCharSaves[C_Save.PETRIFICATION] = 0 // @6B9B
+VAR curCharLevelHighest = 0 // @6BA0
+VAR curCharThiefSkills = [null, 0, 0, 0, 0, 0, 0, 0, 0] // @6BA4 (unused) @6BA5, @6BA6 @6BA7 @6BA8 @6BA9 @6BAA @6BAB @6BAC
+/* bit 7: a non-player character */
+CONST npc_non_player_bit = 0x80 // 10000000
+/* bits 0-6: morale */
+CONST npc_morale_mask = 0x7F // 01111111
+/* Animated NPC or mirror-duel clone; prior morale is not restored. */
+CONST npc_animated_creature = 178;
+/* Animated party member or charm marker; removal resets it to zero. */
+CONST npc_animated_member = 179;
+VAR curCharNpc = 0 // @6BB8
+VAR curCharCopper = 0 // @6BBB
+VAR curCharSilver = 0 // @6BBD
+VAR curCharElectrum = 0 // @6BBF
+VAR curCharGold = 0 // @6BC1
+VAR curCharPlatinum = 0 // @6BC3
+VAR curCharAlignment = 0 // @6BD8
+VAR curCharXpAward = 0 // @6BF7
+VAR curCharXpBonusPerHp = 0 // @6BF9
+CONST char_enabled_not_found = 0
+CONST char_enabled_true = 1
+CONST char_enabled_false = 128
+VAR curCharEnabled = char_enabled_not_found // @6C00
+CONST char_combat_role_ally = 0
+CONST char_combat_role_ally_quick = 128
+CONST char_combat_role_hostile = 129
+VAR curCharCombatRole = char_combat_role_ally // @6C0C
+VAR curCharNotRead = 0 // @6C0D ; no value is ever returned
+VAR curCharMovementCur = 0 // @6C1B
+VAR curCharIdx = 0 // @6DB1 @6DB4 ; both get index
+CONST loyalty_from_cha_3 = 0
+CONST loyalty_from_cha_4 = 5
+CONST loyalty_from_cha_5 = 10
+CONST loyalty_from_cha_6 = 15
+CONST loyalty_from_cha_7 = 20
+CONST loyalty_from_cha_8_12 = 25
+CONST loyalty_from_cha_13 = 30
+CONST loyalty_from_cha_14 = 35
+CONST loyalty_from_cha_15 = 40
+CONST loyalty_from_cha_16 = 50
+CONST loyalty_from_cha_17 = 55
+CONST loyalty_from_cha_18_25 = 60
+VAR curCharLoyaltyBase = loyalty_from_cha_3 // @6DCF
+
+VAR partyPosMapX = 15 // @C04B
+VAR partyPosMapY = 1 // @C04C
+VAR partyPosFacing = dir_west // @C04D
+VAR partyPosWallAhead = 0 // @C04E
+VAR partyPosEventAtCell = 0 // @C04F
+
+VAR gbvmEnterShop = 0 // @6E6C
+VAR gbvmEnterTemple = 0 // @6DE2
+/** 0 won, 128 lost, 129 fled */
+VAR gbvmCombatResult = 0 // @6DC7
+
+/** morale-check % threshold */
+VAR moraleThreshold = null // @6DC6
+/** 255 => party X/Y move locked */
+CONST move_locked_true = 255
+CONST move_locked_false = 0
+VAR moveLocked = move_locked_false // @6DC9
+/** 1 => party to leave current map */
+VAR leaveMap = 0 // @6DD5
+/** 1 => next combat is a mirror duel */
+VAR mirrorDuel = 0 // @6DE6
+
+VAR gbvmNoCombatItems = 0 // @6DE3
+
+/* ENTRY POINTS */
+ECL_0_9900	GOTO ECL_0_9914
+ECL_0_9904	GOTO ECL_0_99EB
+ECL_0_9908	GOTO ECL_0_9A5E
+ECL_0_990C	GOTO ECL_0_9A93
+ECL_0_9910	GOTO ECL_0_9AF2
+
+/* MAIN SCRIPT */
+ECL_0_9914
+	@6E7B = 0
+	@6E7D = 11
+	IF @49C9 >= 14
+		@6E7D = 8
+	@49FD = @6E7D
+	@49FE = 10
+	IF leaveMap == 0
+		GOTO ECL_0_9965
+	@49EB = 1
+	CALL (opAddr: op_move_forward)
+	moveLocked = move_locked_true
+	LOAD_FILES (fileId: 255, unused: 255, loadTiles: 127)
+	gbvmDiskNum = 2
+	LOAD_ECL (eclId: 20) // exits current ECL
+
+ECL_0_9965
+	@6E82 = partyPosEventAtCell & 127
+	IF @4ABA >= 254 || @6E7D != 8
+		EXIT
+	IF (@6E82 == 0 && partyPosWallAhead == 9) || (@6E82 == 4 && partyPosWallAhead == 7) || (@6E82 == 26 && partyPosWallAhead == 11)
+		GOTO ECL_0_99AF
+	EXIT
+
+ECL_0_99AF
+	PRINT ('THE DOOR IS LOCKED.  DO YOU WANT TO BREAK IN?')
+	ECL_0_AE5D()
+	SWITCH @6E79
+		CASE 0
+			GOTO ECL_0_AD85
+		CASE 1
+			moveLocked = move_locked_true
+			EXIT
+
+ECL_0_99EB
+	PRINT ('')
+	PICTURE (blockId: remove_picture)
+	pictureLoading = no_head_id
+	@6E82 = partyPosEventAtCell & 127
+	IF @4AC5 < 1
+		 EXIT
+	@4A05 = 0
+	@6E79 = RANDOM (max: 19)
+	IF @6E79 == 19
+		$str(@9890) = 'MAD MAN'
+		ECL_0_AF56()
+	IF @4A05 != 0
+		GOTO ECL_0_AF9E
+	@9800 = 0
+	GOTO ECL_0_9A3D
+
+ECL_0_9A3D
+	IF @9800 == @6E82
+		GOTO ECL_0_9B4C
+	IF @9800 > 27
+		EXIT
+	@9800 = @9800 + 1
+	GOTO ECL_0_9A3D
+
+ECL_0_9A5E
+	ECL_0_9A63()
+	EXIT
+
+ECL_0_9A63
+	IF @4ABA >= 254 || @4A07 != 0
+		GOTO ECL_0_9A86
+	@6DD2 = 1
+	@6DD3 = 101
+	RETURN
+
+ECL_0_9A86
+	@6DD2 = 0
+	@6DD3 = 0
+	RETURN
+
+ECL_0_9A93
+	@6DD3 = 0
+	ECL_0_AF43()
+	PRINT ('YOU ARE ROUSTED BY THE CITY WATCH AND TOLD TO MOVE ALONG. WHAT DO YOU DO?')
+	@6E79 = HORIZONTAL_MENU ('GO', 'STAY')
+	SWITCH @6E79
+		CASE 0
+			GOTO ECL_0_AE6D
+		CASE 1
+			GOTO ECL_0_ADE2
+
+ECL_0_9AF2
+	@4AC4 = 0
+	@49EB = 0
+	@49FB = 0
+	LOAD_FILES (fileId: 0, unused: 0, loadTiles: 0) // Load GEO
+	LOAD_PIECES (wallSetId1: 127, wallSetId2: 127, wallSetId3: 127) // Default wall set
+	IF @6DD3 != 255 || @4A17 == 0
+		ECL_0_9A86()
+	@4A17 = 1
+	@00B8 = 72
+	@00B9 = 189
+	IF @4AC5 < 1
+		GOTO ECL_0_B071
+	EXIT
+
+ECL_0_9B4C
+	SWITCH @9800
+		CASE 0
+			GOTO ECL_0_AE6D
+		CASE 1
+			GOTO ECL_0_9BA6
+		CASE 2
+			GOTO ECL_0_9C43
+		CASE 3
+			GOTO ECL_0_9DD5
+		CASE 4
+			GOTO ECL_0_AE6D
+		CASE 5
+			GOTO ECL_0_9E07
+		CASE 6
+			GOTO ECL_0_A064
+		CASE 7
+			GOTO ECL_0_A0BC
+		CASE 8
+			GOTO ECL_0_A0F7
+		CASE 9
+			GOTO ECL_0_A140
+		CASE 10
+			GOTO ECL_0_A22D
+		CASE 11
+			GOTO ECL_0_AE6D
+		CASE 12
+			GOTO ECL_0_AE6D
+		CASE 13
+			GOTO ECL_0_AE6D
+		CASE 14
+			GOTO ECL_0_AE6D
+		CASE 15
+			GOTO ECL_0_AE6D
+		CASE 16
+			GOTO ECL_0_AE6D
+		CASE 17
+			GOTO ECL_0_A230
+		CASE 18
+			GOTO ECL_0_AE6D
+		CASE 19
+			GOTO ECL_0_A233
+		CASE 20
+			GOTO ECL_0_A2C6
+		CASE 21
+			GOTO ECL_0_A837
+		CASE 22
+			GOTO ECL_0_A8BE
+		CASE 23
+			GOTO ECL_0_A945
+		CASE 24
+			GOTO ECL_0_A9D6
+		CASE 25
+			GOTO ECL_0_AAD8
+		CASE 26
+			GOTO ECL_0_AB9A
+		CASE 27
+			GOTO ECL_0_AD82
+
+ECL_0_9BA6
+	IF @4A01 == 0
+		EXIT
+	IF @49C9 > 14
+		GOTO ECL_0_9BBC
+	PICTURE (blockId: pic_boat_dock_id) // Load PIC
+	GOTO ECL_0_9BBC
+
+ECL_0_9BBC
+	@49EB = 1
+	PRINT ('YOU BOARD A BOAT.')
+	ECL_0_AF1F()
+	@4AC6 = 1
+	LOAD_FILES (fileId: 255, unused: 255, loadTiles: 127)
+	IF @4AC4 == 0
+		gbvmDiskNum = 4
+		LOAD_ECL (eclId: 21) // exits current ECL
+	IF @4AC4 < 2
+		GOTO ECL_0_9C2E
+	IF @4AC4 > 2
+		GOTO ECL_0_9C19
+	@49C3 = 7
+	@49C4 = 29
+	gbvmDiskNum = 7
+	LOAD_ECL (eclId: 26) // exits current ECL
+
+ECL_0_9C19
+	@49C3 = 13
+	@49C4 = 27
+	gbvmDiskNum = 7
+	LOAD_ECL (eclId: 26) // exits current ECL
+
+ECL_0_9C2E
+	@49C3 = 9
+	@49C4 = 29
+	gbvmDiskNum = 8
+	LOAD_ECL (eclId: 27) // exits current ECL
+
+CONST harbor_master_head_id = head_m_old_bald_id
+CONST harbor_master_body_id = body_chainmail_id
+
+ECL_0_9C43
+	IF partyPosFacing != dir_north
+		EXIT
+	IF @4A01 == 1
+		EXIT
+	pictureLoading = harbor_master_head_id
+	PICTURE (blockId: harbor_master_body_id) // Load BODY
+	IF @4AA7 < 254
+		GOTO ECL_0_9D54
+	PRINT ('THE HARBOR MASTER TELLS YOU BOATS LEAVE FOR THE WEST, THE EAST, SOKAL KEEP, AND THE NORTH SIDE OF THE BAY.  'ROUND TRIP PASSAGE IS 1 PLATINUM PIECE. WHAT PASSAGE CAN I SELL YOU?'')
+	@4AC4 = HORIZONTAL_MENU ('SOKAL', 'EAST', 'WEST', 'BAY', 'NONE')
+	SWITCH @4AC4
+		CASE 0
+			GOTO ECL_0_9D25
+		CASE 1
+			GOTO ECL_0_9D25
+		CASE 2
+			GOTO ECL_0_9D25
+		CASE 3
+			GOTO ECL_0_9D25
+		CASE 4
+			GOTO ECL_0_AE6D
+
+ECL_0_9D25
+	ECL_0_A1B4()
+	@4A01 = 1
+	PRINT (''CATCH THE BOAT AT THE END OF THE PIER.'')
+	PICTURE (blockId: remove_picture)
+	EXIT
+
+ECL_0_9D54
+	PRINT (''BY ORDER OF THE CITY COUNCIL,' THE HARBOR MASTER SAYS, 'THE ONLY BOAT OUT IS GOING TO SOKAL KEEP.  YOU CAN CATCH IT AT THE END OF THE PIER.'')
+	ECL_0_AF1F()
+	PICTURE (blockId: remove_picture)
+	@4AC4 = 0
+	@4A01 = 1
+	EXIT
+
+ECL_0_9DD5
+	IF @4AC8 == 1
+		GOTO ECL_0_AB26
+	IF partyPosFacing == dir_south
+		EXIT
+	PRINT ('TO THE NORTH IS THE PASSENGER DOCK.')
+	EXIT
+
+CONST temple_guard_head_id = head_m_blonde_smiling_id
+CONST temple_guard_body_id = body_cross_armor_id
+
+ECL_0_9E07
+	IF @4A9C == 255
+		EXIT
+	IF @4A9B == 254
+		GOTO ECL_0_9EA6
+	IF @4A9C == 128
+		GOTO ECL_0_9EA6
+	pictureLoading = temple_guard_head_id
+	PICTURE (blockId: temple_guard_body_id) // Load BODY
+	PRINT ('THE TEMPLE GUARDS INFORM YOU THAT THE BISHOP IS NOT RECEIVING VISITORS AT THIS TIME.  WHAT DO YOU DO?')
+	@9801 = HORIZONTAL_MENU ('LEAVE', 'FORCE YOUR WAY PAST')
+	SWITCH @9801
+		CASE 0
+			GOTO ECL_0_A059
+		CASE 1
+			GOTO ECL_0_AD85
+
+CONST bishop_braccio_head_id = head_m_old_serious_id
+CONST bishop_braccio_body_id = body_breastplate_id
+CONST dirten_head_id = head_m_blonde_circlet_id
+CONST dirten_body_id = body_cross_armor_id
+
+ECL_0_9EA6
+	IF @4A9C == 128
+		GOTO ECL_0_9FAF
+	pictureLoading = bishop_braccio_head_id
+	PICTURE (blockId: bishop_braccio_body_id) // Load BODY
+	PRINT ('YOU ARE USHERED INTO THE BISHOP'S STUDY. BISHOP BRACCIO SPEAKS, 'ALLOW ME TO INTRODUCE DIRTEN, PRIEST OF ILMAR.')
+	ECL_0_AF1F()
+	pictureLoading = dirten_head_id
+	PICTURE (blockId: dirten_body_id) // Load BODY
+	PRINT (''HE IS BOUND TO RECOVER THE TEMPLE WHICH HAS BEEN DESECRATED TO BANE.  GO WITH HIM ACROSS THE RIVER AND HELP HIM TO CLEANSE THE TEMPLE.  IN PAYMENT, YOU MAY KEEP THE HIDDEN TREASURES.'')
+	GOTO ECL_0_A010
+
+ECL_0_9FAF
+	pictureLoading = dirten_head_id
+	PICTURE (blockId: dirten_body_id) // Load BODY
+	PRINT ('YOU ARE USHERED INTO THE STUDY WHERE DIRTEN WAITS.  'I AM ABOUT TO JOURNEY TO THE TEMPLE, WILL YOU COME WITH ME?'')
+	GOTO ECL_0_A010
+
+ECL_0_A010
+	ECL_0_AF1F()
+	PRINT (''WILL YOU ACCOMPANY DIRTEN?'')
+	@4A9C = 128
+	ECL_0_AE5D()
+	SWITCH @6E79
+		CASE 0
+			GOTO ECL_0_A042
+		CASE 1
+			GOTO ECL_0_A055
+
+ECL_0_A042
+	ECL_0_AEAB()
+	ADD_NPC (npcId: monster_dirten_id, morale: 99)
+	@4A9C = 255
+	PICTURE (blockId: remove_picture)
+	RETURN
+
+ECL_0_A055
+	PICTURE (blockId: remove_picture)
+	EXIT
+
+ECL_0_A059
+	partyPosMapX = 11
+	CALL (opAddr: op_refresh_view)
+	EXIT
+
+CONST tyr_priest_head_id = head_m_old_smiling_id
+CONST tyr_priest_body_id = body_mage_id
+
+ECL_0_A064
+	pictureLoading = tyr_priest_head_id
+	PICTURE (blockId: tyr_priest_body_id) // Load BODY
+	IF @4AC0 > 0
+		GOTO ECL_0_AE1D
+	PRINT ('THE PRIESTS OF TYR WELCOME YOU TO THE TEMPLE.')
+	$str(@9890) = 'MAD MAN'
+	ECL_0_AF56()
+	IF @4A05 != 0
+		ECL_0_AFE3()
+	GOTO ECL_0_AA16
+
+CONST sune_priestess_head_id = head_f_blonde_serious_id
+CONST sune_priestess_body_id = body_leather_cape_id
+
+ECL_0_A0BC
+	pictureLoading = sune_priestess_head_id
+	PICTURE (blockId: sune_priestess_body_id) // Load BODY
+	IF @4AC0 > 0
+		GOTO ECL_0_AE1D
+	PRINT ('YOU ARE WELCOMED BY PRIESTESS JOY OF SUNE.')
+	GOTO ECL_0_AA16
+
+ECL_0_A0F7
+	PRINT ('YOU WALK NEAR THE ')
+	IF @4AB3 >= 245
+		GOTO ECL_0_A129
+	APPEND ('POISONOUS BARREN RIVER.')
+	EXIT
+
+ECL_0_A129
+	APPEND ('BEAUTIFUL STOJANOW RIVER.')
+	EXIT
+
+CONST innkeeper_head_id = head_f_brunette_elven_id
+CONST innkeeper_body_id = body_leather_cape_id
+
+ECL_0_A140
+	IF @4A07 != 0
+		EXIT
+	pictureLoading = innkeeper_head_id
+	PICTURE (blockId: innkeeper_body_id) // Load BODY
+	IF @4AC0 != 0
+		GOTO ECL_0_AE1D
+	PRINT (''IT WILL COST YOU 1 PLATINUM PIECE TO REST HERE.  DO YOU WANT TO STAY?'')
+	ECL_0_AE5D()
+	SWITCH @6E79
+		CASE 0
+			GOTO ECL_0_A1A5
+		CASE 1
+			GOTO ECL_0_AA3B
+
+ECL_0_A1A5
+	ECL_0_A1B4()
+	ECL_0_9A63()
+	PROGRAM (prog: prog_camp) // Exits ECL
+
+ECL_0_A1B4
+	SELECT_PLAYER ('WHO WILL PAY?')
+	IF curCharNpc < 128 // is not NPC
+		GOTO ECL_0_A1E5
+	PRINT ('THAT PERSON WON'T PAY.')
+	DELAY ()
+	GOTO ECL_0_A1B4
+
+ECL_0_A1E5
+	IF curCharPlatinum < 1
+		GOTO ECL_0_A20D
+	curCharPlatinum = curCharPlatinum - 1
+	@6E79 = 128 + curCharIdx
+	LOAD_CHARACTER (characterIdx: @6E79)
+	@4A07 = 1
+	RETURN
+
+ECL_0_A20D
+	PRINT ('YOU DON'T HAVE ENOUGH PLATINUM.')
+	DELAY ()
+	PICTURE (blockId: remove_picture)
+	EXIT
+
+ECL_0_A22D
+	LOAD_ECL (eclId: 11) // exits current ECL
+
+ECL_0_A230
+	LOAD_ECL (eclId: 11) // exits current ECL
+
+CONST shopkeeper_head_id = head_m_brunette_tired_id
+CONST shopkeeper_body_id = body_worker_id
+
+ECL_0_A233
+	ECL_0_AE89()
+	IF @4AC0 > 0
+		GOTO ECL_0_AE1D
+	pictureLoading = shopkeeper_head_id
+	PICTURE (blockId: shopkeeper_body_id) // Load BODY
+	PRINT ('THE SHOPKEEPER GREETS YOU AND OFFERS YOU ITEMS FOR SALE. 'CAN I SHOW YOU SOMETHING?'')
+	ECL_0_AE5D()
+	SWITCH @6E79
+		CASE 0
+			GOTO ECL_0_A29D
+		CASE 1
+			GOTO ECL_0_AE6D
+
+ECL_0_A29D
+	CLEAR_MONSTERS ()
+	TREASURE (CP: 0 SP: 0 EP: 0 GP: 0 PP: 0 gems: 0 jewels: 0, itemId: 54) // load ITEM block 54
+	gbvmEnterShop = 1
+	@6EF6 = 1
+	@6E6D = 16
+	COMBAT_OR_SHOP ()
+	PICTURE (blockId: remove_picture)
+	EXIT
+
+ECL_0_A2C6
+	IF @4A11 > 0
+		GOTO ECL_0_A328
+	@4A11 = 1
+	PRINT ('YOU ARE IN A TAVERN.  THE AIR IS FILLED WITH SMOKE AND GOSSIP.  PEOPLE ARE GAMBLING AT THE TABLES.')
+	ECL_0_AF1F()
+	GOTO ECL_0_A328
+
+ECL_0_A328
+	@6E79 = RANDOM (max: 255)
+	IF @6E79 > 25
+		GOTO ECL_0_A3B1
+	ROB (allParty: 1, coinPct: 20, item: 5)
+	@6E79 = RANDOM (max: 1)
+	IF @6E79 != 0
+		GOTO ECL_0_A3B1
+	PRINT ('YOU FEEL A LIGHT TOUCH ON YOUR PURSE.  DO YOU IGNORE IT OR GRAB THE OFFENDING HAND?')
+	@6E79 = HORIZONTAL_MENU ('IGNORE', 'GRAB')
+	SWITCH @6E79
+		CASE 0
+			GOTO ECL_0_A3B1
+		CASE 1
+			GOTO ECL_0_A696
+
+ECL_0_A3B1
+	IF @6E79 == 1
+		PRINT ('YOU REALIZE YOU HAVE BEEN VICTIMIZED BY A PICKPOCKET.')
+		ECL_0_AF1F()
+	PICTURE (blockId: remove_picture)
+	PRINT (' DOES ANYONE WANT TO GAMBLE?')
+	ECL_0_AE5D()
+	SWITCH @6E79
+		CASE 0
+			GOTO ECL_0_A452
+		CASE 1
+			GOTO ECL_0_A413
+
+ECL_0_A413
+	PRINT ('YOU OVERHEAR TAVERN TALE ')
+	@6E7E = RANDOM (max: 22)
+	@6E7E = @6E7E + 1
+	APPEND @6E7E
+	ECL_0_AF1F()
+	@9803 = RANDOM (max: 3)
+	IF @9803 == 1
+		GOTO ECL_0_A696
+	EXIT
+
+CONST croupier_head_id = head_m_blonde_smiling_id
+CONST croupier_body_id = body_chainmail_id
+
+ECL_0_A452
+	pictureLoading = croupier_head_id
+	PICTURE (blockId: croupier_body_id) // Load BODY
+	PRINT (''THE GAME WORKS LIKE THIS.  WE SPIN THIS TOP. IF THE GREEN SIDE COMES UP, YOU GET DOUBLE YOUR MONEY BACK.  IF A BLUE SIDE COMES UP, YOU GET YOUR MONEY BACK.  IF A RED SIDE COMES UP, YOU LOSE.'')
+	ECL_0_AF1F()
+	SELECT_PLAYER ('WHO WILL GAMBLE?')
+	IF curCharEnabled != char_enabled_true
+		GOTO ECL_0_A647
+	@4A19 = curCharIdx
+	^4A1A = curCharPlatinum
+	GOTO ECL_0_A51A
+
+ECL_0_A51A
+	PRINT ('YOU HAVE ')
+	APPEND ^4A1A
+	APPEND (' PP.')
+	ECL_0_AF1F()
+	PRINT ('HOW MANY PLATINUM PIECES WILL YOU WAGER? (HOUSE LIMIT IS 1000)')
+	^4A0D = INPUT_NUMBER (maxLen: 4)
+	IF ^4A1A < ^4A0D || ^4A0D > 1000 || ^4A0D == 0
+		GOTO ECL_0_A67B
+	@6E81 = RANDOM (max: 9)
+	IF @6E81 >= 8
+		PRINT ('IT'S GREEN.  YOU GET DOUBLE YOUR MONEY BACK.')
+		^4A1A = ^4A1A + ^4A0D
+		GOTO ECL_0_A609
+	IF @6E81 > 2
+		PRINT ('IT'S BLUE.  YOU WIN.')
+		GOTO ECL_0_A609
+	PRINT ('RED. SORRY, YOU LOSE.')
+	^4A1A = ^4A1A - ^4A0D
+	GOTO ECL_0_A609
+
+ECL_0_A609
+	ECL_0_AF1F()
+	PRINT ('WILL YOU GO AGAIN?')
+	ECL_0_AE5D()
+	IF @6E79 == 0
+		GOTO ECL_0_A51A
+	LOAD_CHARACTER (characterIdx: @4A19)
+	curCharPlatinum = ^4A1A
+	@4A0D = @4A19 + 128
+	LOAD_CHARACTER (characterIdx: @4A0D)
+	GOTO ECL_0_AE6D
+
+ECL_0_A647
+	PRINT ('NO ONE IS WILLING TO GAMBLE WITH SOMEONE WHO LOOKS THAT BAD.')
+	GOTO ECL_0_A3B1
+
+ECL_0_A67B
+	PRINT ('I CAN'T ACCEPT THAT WAGER.')
+	GOTO ECL_0_A609
+
+CONST tavern_brawler_head_id = head_a_old_frowning_id
+CONST tavern_brawler_body_id = body_chainmail_id
+
+ECL_0_A696
+	pictureLoading = tavern_brawler_head_id
+	SETUP_MONSTER (spriteId: 7, maxDistance: 2, picId: tavern_brawler_body_id)
+	PRINT ('A DRUNKEN BRAWL BREAKS OUT. YOU ARE CAUGHT IN THE MIDDLE.')
+	ECL_0_AF1F()
+	@9804 = RANDOM (max: 1)
+	@6E7A = power_value_of_team
+	IF @6E7A > 24
+		@9804 = @9804 + 1
+	IF @6E7A > 50
+		@9804 = @9804 + 1
+	@9805 = table_brawl_monster_ids[@9804]
+	@980B = table_brawl_sprite_ids[@9804]
+	@9804 = @9804 + 1
+	@9806 = table_brawl_monster_ids[@9804]
+	@980C = table_brawl_sprite_ids[@9804]
+	@9804 = @9804 + 1
+	@9807 = table_brawl_monster_ids[@9804]
+	@980D = table_brawl_sprite_ids[@9804]
+	@9808 = RANDOM (max: 3)
+	@9809 = table_brawl_monster_ids[@9808]
+	@980E = table_brawl_sprite_ids[@9808]
+	gbvmNoCombatItems = 1
+	mirrorDuel = 1
+	moraleThreshold = 50
+	CLEAR_MONSTERS ()
+	LOAD_MONSTER (id: @9805, copies: 11, cpicId: @980B)
+	LOAD_MONSTER (id: @9806, copies: 11, cpicId: @980C)
+	LOAD_MONSTER (id: @9807, copies: 11, cpicId: @980D)
+	LOAD_MONSTER (id: @9809, copies: 13, cpicId: @980E)
+	@6E79 = 41
+	GOTO ECL_0_A7A4
+
+ECL_0_A7A4
+	LOAD_CHARACTER (characterIdx: @6E79)
+	curCharCombatRole = char_combat_role_ally_quick
+	curCharNpc = npc_animated_creature
+	@9809 = @6E79 + 128
+	LOAD_CHARACTER (characterIdx: @9809)
+	@6E79 = @6E79 + 1
+	IF @6E79 < 54
+		GOTO ECL_0_A7A4
+	COMBAT_OR_SHOP ()
+	IF gbvmCombatResult > 128 // fled
+		GOTO ECL_0_AEF7
+	ECL_0_AF43()
+	PRINT ('THE CITY WATCH CHARGES IN. DO YOU RUN AWAY OR STAY TO CONFRONT THEM?')
+	@980A = HORIZONTAL_MENU ('STAY', 'RUN')
+	SWITCH @980A
+		CASE 0
+			GOTO ECL_0_AD85
+		CASE 1
+			GOTO ECL_0_AEF7
+
+CONST jeweler_head_id = head_f_brunette_smiling_id
+CONST jeweler_body_id = body_apron_id
+
+ECL_0_A837
+	ECL_0_AE89()
+	pictureLoading = jeweler_head_id
+	PICTURE (blockId: jeweler_body_id) // Load BODY
+	IF @4AC0 > 0
+		GOTO ECL_0_AE1D
+	PRINT ('THE SHOPKEEPER OFFERS JEWELRY FOR SALE. 'CAN I SHOW YOU SOMETHING?'')
+	ECL_0_AE5D()
+	SWITCH @6E79
+		CASE 0
+			GOTO ECL_0_A895
+		CASE 1
+			GOTO ECL_0_AE6D
+
+ECL_0_A895
+	CLEAR_MONSTERS ()
+	TREASURE (cp: 0, sp: 0, ep: 0, gp: 0, pp: 0, gems: 0, jewels: 0, itemId: 52) // load ITEM block 52
+	gbvmEnterShop = 1
+	@6EF6 = 1
+	@6E6D = 16
+	COMBAT_OR_SHOP ()
+	PICTURE (blockId: remove_picture)
+	EXIT
+
+ECL_0_A8BE
+	ECL_0_AE89()
+	pictureLoading = shopkeeper_head_id
+	PICTURE (blockId: shopkeeper_body_id) // Load BODY
+	IF @4AC0 > 0
+		GOTO ECL_0_AE1D
+	PRINT ('THE SHOP SPECIALIZES IN ARMS AND ARMOR. 'CAN I SHOW YOU OUR WARES?'')
+	ECL_0_AE5D()
+	SWITCH @6E79
+		CASE 0
+			GOTO ECL_0_A91C
+		CASE 1
+			GOTO ECL_0_AE6D
+
+ECL_0_A91C
+	CLEAR_MONSTERS ()
+	TREASURE (CP: 0 SP: 0 EP: 0 GP: 0 PP: 0 gems: 0 jewels: 0, itemId: 53) // load ITEM block 53
+	gbvmEnterShop = 1
+	@6EF6 = 1
+	@6E6D = 16
+	COMBAT_OR_SHOP ()
+	PICTURE (blockId: remove_picture)
+	EXIT
+
+CONST silver_trader_head_id = head_f_brunette_smiling_id
+CONST silver_trader_body_id = body_apron_id
+
+ECL_0_A945
+	IF @4A10 != 0
+		EXIT
+	@4A10 = 1
+	pictureLoading = silver_trader_head_id
+	PICTURE (blockId: silver_trader_body_id) // Load BODY
+	IF @4AC0 > 0
+		GOTO ECL_0_AE1D
+	PRINT ('THE SHOP SELLS SILVER ITEMS. 'WOULD YOU LIKE TO SEE OUR SELECTION?'')
+	ECL_0_AE5D()
+	SWITCH @6E79
+		CASE 0
+			GOTO ECL_0_A9AD
+		CASE 1
+			GOTO ECL_0_AE6D
+
+ECL_0_A9AD
+	CLEAR_MONSTERS ()
+	TREASURE (CP: 0 SP: 0 EP: 0 GP: 0 PP: 0 gems: 0 jewels: 0, itemId: 55) // load ITEM block 55
+	gbvmEnterShop = 1
+	@6EF6 = 1
+	@6E6D = 16
+	COMBAT_OR_SHOP ()
+	PICTURE (blockId: remove_picture)
+	EXIT
+
+CONST tempus_priest_head_id = head_m_brunette_helmet_id
+CONST tempus_priest_body_id = body_breastplate_id
+
+ECL_0_A9D6
+	IF @4A09 != 0
+		EXIT
+	pictureLoading = tempus_priest_head_id
+	PICTURE (blockId: tempus_priest_body_id) // Load BODY
+	IF @4AC0 > 0
+		GOTO ECL_0_AA78
+	PRINT ('THE PRIESTS OF TEMPUS BID YOU WELCOME.')
+	GOTO ECL_0_AA16
+
+ECL_0_AA16
+	APPEND ('' DO YOU SEEK HEALING?'')
+	ECL_0_AE5D()
+	SWITCH @6E79
+		CASE 0
+			GOTO ECL_0_AA66
+		CASE 1
+			GOTO ECL_0_AA3B
+
+ECL_0_AA3B
+	PRINT ('THEN YOU MUST LEAVE.')
+	partyPosMapX = @49F0
+	partyPosMapY = @49F1
+	pictureLoading = no_head_id
+	CALL (opAddr: op_refresh_view)
+	EXIT
+
+ECL_0_AA66
+	CLEAR_MONSTERS ()
+	gbvmEnterTemple = 1
+	COMBAT_OR_SHOP ()
+	pictureLoading = no_head_id
+	PICTURE (blockId: remove_picture)
+	EXIT
+
+ECL_0_AA78
+	SETUP_MONSTER (spriteId: 16, maxDistance: 0, picId: body_breastplate_id)
+	PRINT ('YOU ATTACKED THE CITY WATCH, YOU WON'T BEAT US SO EASILY!')
+	moraleThreshold = 99
+	CLEAR_MONSTERS ()
+	LOAD_MONSTER (id: monster_lv7_cleric_id, copies: 12, cpicId: 12)
+	LOAD_MONSTER (id: monster_lv4_fighter_id, copies: 20, cpicId: 11)
+	LOAD_MONSTER (id: monster_lv8_fighter_id, copies: 20, cpicId: 16)
+	COMBAT_OR_SHOP ()
+	IF gbvmCombatResult == 1 // 1 value unclear, never set in PAS
+		@4A09 = 1
+	EXIT
+
+ECL_0_AAD8
+	PRINT ('YOU ARE BY THE GATEWAY TO THE UNSETTLED AREAS. THE CITY WATCH EYES YOU SUSPICIOUSLY.')
+	IF @4AC8 == 1
+		GOTO ECL_0_AB26
+	EXIT
+
+ECL_0_AB26
+	ECL_0_AF1F()
+	PRINT ('THE CITY WATCH STOPS YOU AND REMOVES CADORNA'S TREASURE FROM YOUR KEEPING.  THEY TELL YOU YOUR REWARD WAITS WITH THE CITY CLERK.')
+	@4AB8 = 254
+	@4AC8 = 255
+	EXIT
+
+ECL_0_AB9A
+	@4A05 = 0
+	$str(@985E) = 'LIX.'
+	$str(@9890) = 'SKULLCRUSHER'
+	ECL_0_AF56()
+	IF @4A05 == 1
+		GOTO ECL_0_AD2C
+	IF @4A13 != 0
+		EXIT
+	@4A13 = 1
+	PRINT ('YOU ARE OUTSIDE THE CITY HALL. THE CITY CLERK WAITS INSIDE TO AWARD COMMISSIONS.')
+	IF @6E82 != 26 || partyPosWallAhead != 11
+		EXIT
+	ECL_0_AF1F()
+	PRINT ('PROCLAMATIONS ARE POSTED ON THE WALLS, IN YOUR JOURNAL YOU NOTE ')
+	IF @4AC1 == 0
+		GOTO ECL_0_AC9E
+	@4A18 = @4AC1 - 1
+	SWITCH @4A18
+		CASE 0
+			ECL_0_ACC2()
+		CASE 1
+			ECL_0_ACCC()
+		CASE 2
+			ECL_0_ACDD()
+		CASE 3
+			ECL_0_ACEA()
+		CASE 4
+			ECL_0_ACF5()
+		CASE 5
+			ECL_0_AD00()
+		CASE 6
+			ECL_0_AD0B()
+		CASE 7
+			ECL_0_AD17()
+		CASE 8
+			ECL_0_AD21()
+	APPEND ('PROCLAMATION')
+	APPEND $str(@985E)
+	EXIT
+
+ECL_0_AC9E
+	APPEND ('PROCLAMATIONS LXIV, LXXVIII, CIX, AND LIX.')
+	EXIT
+
+ECL_0_ACC2
+	$str(@985E) = 'CI.'
+	RETURN
+
+ECL_0_ACCC
+	$str(@985E) = 'CXXVI AND CX.'
+	RETURN
+
+ECL_0_ACDD
+	$str(@985E) = 'CXXXIV.'
+	RETURN
+
+ECL_0_ACEA
+	$str(@985E) = 'CLIV.'
+	RETURN
+
+ECL_0_ACF5
+	$str(@985E) = 'CXIV.'
+	RETURN
+
+ECL_0_AD00
+	$str(@985E) = 'CCIV.'
+	RETURN
+
+ECL_0_AD0B
+	$str(@985E) = 'CXXIX.'
+	RETURN
+
+ECL_0_AD17
+	$str(@985E) = 'CCI.'
+	RETURN
+
+ECL_0_AD21
+	$str(@985E) = 'CXIV.'
+	RETURN
+
+ECL_0_AD2C
+	PRINT ('SKULLCRUSHER SPEAKS, 'I MUST GO TO MY MASTER NOW.' ')
+	curCharEnabled = char_enabled_not_found
+	curCharName = ''
+	@9802 = @9802 + 128
+	LOAD_CHARACTER (characterIdx: @9802)
+	APPEND ('HE LEAVES.')
+	ECL_0_AF1F()
+	GOTO ECL_0_AB9A
+
+ECL_0_AD82
+	LOAD_ECL (eclId: 8) // exits current ECL
+
+ECL_0_AD85
+	ECL_0_AF43()
+	PRINT ('THE CITY WATCH RESPONDS TO THE NOISE.  DO YOU STAY TO FIGHT THEM OR RUN AWAY?')
+	@6E79 = HORIZONTAL_MENU ('STAY', 'RUN')
+	SWITCH @6E79
+		CASE 0
+			GOTO ECL_0_ADE2
+		CASE 1
+			GOTO ECL_0_AEF7
+
+ECL_0_ADE2
+	@4A03 = 0
+	moraleThreshold = 50
+	CLEAR_MONSTERS ()
+	LOAD_MONSTER (id: monster_lv3_mage_id, copies: 2, cpicId: 14)
+	LOAD_MONSTER (id: monster_lv6_fighter_id, copies: 12, cpicId: 16)
+	LOAD_MONSTER (id: monster_aides_id, copies: 12, cpicId: 11)
+	LOAD_MONSTER (id: monster_nomad_id, copies: 12, cpicId: 15)
+	COMBAT_OR_SHOP ()
+	@4A03 = 1
+	ECL_0_AE98()
+	@4AC0 = 1
+	EXIT
+
+ECL_0_AE1D
+	PRINT (''DUE TO YOUR VICIOUS ATTACK ON THOSE WHO PROTECT US, WE REFUSE YOU ALL SERVICE.'')
+	EXIT
+
+ECL_0_AE5D
+	@6E79 = HORIZONTAL_MENU ('YES', 'NO')
+	RETURN
+
+ECL_0_AE6D
+	@4A07 = 0
+	@4A0F = 0
+	@4A11 = 0
+	@4A10 = 0
+	PICTURE (blockId: remove_picture)
+	EXIT
+
+ECL_0_AE89
+	IF @4A0F != 0
+		EXIT
+	@4A0F = 1
+	RETURN
+
+ECL_0_AE98
+	IF gbvmCombatResult > 128 // fled
+		GOTO ECL_0_AEF7
+	IF @4A03 > 0
+		RETURN
+	GOTO ECL_0_AEAB
+
+ECL_0_AEAB
+	IF partySize < 8
+		RETURN
+	PRINT (''YOUR PARTY IS TOO LARGE TO JOIN AT THIS TIME.  RETURN WHEN IT IS SMALLER.'')
+	ECL_0_AF1F()
+	PICTURE (blockId: remove_picture)
+	EXIT
+
+ECL_0_AEF7
+	partyPosFacing = RANDOM (max: 3)
+	@9802 = RANDOM (max: 3)
+	partyPosMapX = table_random_x[@9802]
+	partyPosMapY = table_random_y[@9802]
+	PRINT ('')
+	CALL (opAddr: op_refresh_view)
+	EXIT
+
+ECL_0_AF1F
+	@9801 = HORIZONTAL_MENU ('PRESS <RETURN> OR BUTTON TO CONTINUE')
+	RETURN
+
+CONST city_watch_head_id = head_m_brunette_grumpy_id
+CONST city_watch_body_id = body_chainmail_id
+
+ECL_0_AF43
+	pictureLoading = city_watch_head_id
+	SETUP_MONSTER (spriteId: 27, maxDistance: 2, picId: city_watch_body_id)
+	DELAY ()
+	APPROACH ()
+	DELAY ()
+	APPROACH ()
+	DELAY ()
+	RETURN
+
+ECL_0_AF56
+	@9802 = 0
+	GOTO ECL_0_AF5C
+
+ECL_0_AF5C
+	LOAD_CHARACTER (characterIdx: @9802)
+	IF curCharEnabled > 127 // false
+		GOTO ECL_0_AF77
+	IF curCharName == $str(@9890)
+		GOTO ECL_0_AF8C
+	GOTO ECL_0_AF77
+
+ECL_0_AF77
+	@9802 = @9802 + 1
+	IF @9802 < 8
+		GOTO ECL_0_AF5C
+	RETURN
+
+ECL_0_AF8C
+	IF curCharNpc < 128 // is not NPC
+		GOTO ECL_0_AF77
+	@4A05 = 1
+	RETURN
+
+ECL_0_AF9E
+	PRINT ('THE MAD MAN SUDDENLY BEGINS TO SCREAM AND ATTACK EVERYONE WITHIN ARM'S REACH.')
+	ECL_0_AF1F()
+	GOTO ECL_0_AD85
+
+ECL_0_AFE3
+	PRINT ('AN AGED PRIEST APPROACHES, POINTING AT THE MAD MAN, HE SPEAKS, 'THAT MAN URGENTLY NEEDS OUR CARE.  DROP HIM FROM YOUR PARTY OR HE WILL BRING YOU TO GRIEF.  WE WILL CARE FOR HIM.'')
+	ECL_0_AF1F()
+	RETURN
+
+CONST rolf_head_id = head_m_blonde_smiling_id
+CONST rolf_body_id = body_worker_id
+
+ECL_0_B071
+	@4AC5 = 1
+	@6E7D = 11
+	IF @49C9 > 14
+		@6E7D = 8
+	@49FD = @6E7D
+	partyPosMapX = 15
+	partyPosMapY = 1
+	partyPosFacing = dir_west
+	CALL (opAddr: op_refresh_view)
+	pictureLoading = rolf_head_id
+	SETUP_MONSTER (spriteId: 12, maxDistance: 2, picId: rolf_body_id)
+	DELAY ()
+	APPROACH ()
+	DELAY ()
+	APPROACH ()
+	DELAY ()
+	PRINT (''GREETINGS, COURAGEOUS ONES, I AM ROLF, APPOINTED BY THE COUNCIL TO INTRODUCE NEWCOMERS TO THE FAIR CITY OF PHLAN. IF YOU WILL ACCOMPANY ME, I WILL START THE TOUR.'')
+	ECL_0_AF1F()
+	SPRITE_OFF ()
+	PICTURE (blockId: remove_picture)
+	@6E79 = 0
+	GOTO ECL_0_B145
+
+ECL_0_B145
+	PRINT ('')
+	@6E7A = table_tour_pos_x[@6E79]
+	@6E7B = table_tour_pos_y[@6E79]
+	partyPosFacing = table_tour_pos_facing[@6E79]
+	@6E7C = table_tour_switch[@6E79]
+	ECL_0_B1A7()
+	SWITCH @6E7C
+		CASE 0
+			ECL_0_B1C4()
+		CASE 1
+			ECL_0_B1C5()
+		CASE 2
+			ECL_0_B25A()
+		CASE 3
+			ECL_0_B2F6()
+		CASE 4
+			ECL_0_B36D()
+		CASE 5
+			ECL_0_B403()
+		CASE 6
+			ECL_0_B492()
+	IF @6E7C == 6
+		GOTO ECL_0_AE6D
+	@6E79 = @6E79 + 1
+	GOTO ECL_0_B145
+
+ECL_0_B1A7
+	partyPosMapX = @6E7A
+	partyPosMapY = @6E7B
+	CALL (opAddr: op_refresh_view)
+	@03DE = 8
+	CALL (opAddr: op_play_sound)
+	DELAY ()
+	RETURN
+
+ECL_0_B1C4
+	RETURN
+
+ECL_0_B1C5
+	PRINT (''YOU NOW FACE AN ENTRANCE TO THE TEMPLE OF TYR.  THERE ARE THREE TEMPLES IN PHLAN: TYR'S, SUNE'S, AND TEMPUS. TYR'S IS THE LARGEST AND HOUSES BISHOP BRACCIO. IF YOU WILL TURN AROUND NOW, '')
+	ECL_0_AF1F()
+	RETURN
+
+ECL_0_B25A
+	PRINT (''YOU WILL SEE THE ENTRANCE TO THE PASSENGER DOCK AREA WE JUST DEPARTED.  FEW SHIPS DARE THE PERILOUS PASSAGE HERE, BUT THE COUNCIL IS DEVELOPING A PLAN TO OPEN UP THE SEA LANES.  PLEASE FOLLOW ME.'')
+	ECL_0_AF1F()
+	RETURN
+
+ECL_0_B2F6
+	PRINT (''BEHIND THESE DOORS ARE THE SPECIAL TRAINING SCHOOLS  WHERE ADVENTURERS INCREASE THEIR SKILLS. LET US NOW GO TO THE CITY'S MOST IMPORTANT BUILDING.'')
+	ECL_0_AF1F()
+	RETURN
+
+ECL_0_B36D
+	PRINT (''WE ARE JUST OUTSIDE THE CITY HALL. PROCLAMATIONS ARE POSTED ON THESE WALLS. INSIDE, THE CITY CLERK AWARDS THE COUNCIL'S COMMISSIONS.  COMMISSIONS ARE THE QUICKEST WAY TO FAME AND FORTUNE.'')
+	ECL_0_AF1F()
+	RETURN
+
+ECL_0_B403
+	PRINT (''ON YOUR RIGHT IS ONE OF THE ENTRANCE'S TO SUNE'S TEMPLE. AS WITH ALL PHLAN'S TEMPLES, VARIOUS CLERICAL SERVICES ARE OFFERED INSIDE.  ON YOUR LEFT IS AN ENTRANCE TO THE CITY PARK.'')
+	ECL_0_AF1F()
+	RETURN
+
+ECL_0_B492
+	PRINT (''BEYOND THIS GATE ARE THE MONSTER-RIDDEN AREAS OF THE OLD CITY WE ARE SLOWLY PREPARING FOR SETTLEMENT.  THE COUNCIL OFFERS A GENEROUS REWARD TO THOSE WHO CLEAR AREAS OF MONSTERS.')
+	ECL_0_AF1F()
+	PRINT (''OUR TOUR IS ENDED. AGAIN, LET ME URGE YOU TO APPLY TO THE CITY CLERK FOR A COMMISSION.  GOOD-BYE AND GOOD FORTUNE.' (YOU ARE ON YOUR OWN NOW)')
+	ECL_0_AF1F()
+	RETURN
