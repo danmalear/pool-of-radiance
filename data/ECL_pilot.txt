@@ -39,12 +39,11 @@ LOAD_PIECES (wallSetId1, wallSetId2, wallSetId3):
 
 ***/
 
+CONST no_picture = 255
+
 CONST pic_treasure_chest_id = 1
 CONST pic_campfire_id = 29
 CONST pic_boat_dock_id = 41
-
-CONST no_head_id = 255
-CONST remove_picture = 255
 
 CONST head_m_blonde_circlet_id = 0
 CONST head_m_brunette_eye_patch_2_id = 6
@@ -142,7 +141,7 @@ VAR gbvmDiskNum = 0 // @6E12
 
 VAR partySize = 0 // @6E3E
 
-VAR pictureLoading = no_head_id // @6DE1
+VAR pictureLoading = no_picture // @6DE1
 
 VAR curCharName = '' // $str(@6B00)
 VAR curCharConCur = 0 // @6B18
@@ -264,8 +263,8 @@ ECL_0_99AF
 
 ECL_0_99EB
 	PRINT_CLEAR (message: ``)
-	PICTURE (blockId: remove_picture)
-	pictureLoading = no_head_id
+	PICTURE (blockId: no_picture)
+	pictureLoading = no_picture
 	@6E82 = partyPosEventAtCell & 127
 	IF @4AC5 < 1
 		EXIT
@@ -456,13 +455,13 @@ ECL_0_9D25
 	ECL_0_A1B4()
 	@4A01 = 1
 	PRINT_CLEAR (message: `'CATCH THE BOAT AT THE END OF THE PIER.'`)
-	PICTURE (blockId: remove_picture)
+	PICTURE (blockId: no_picture)
 	EXIT
 
 ECL_0_9D54
 	PRINT_CLEAR (message: `'BY ORDER OF THE CITY COUNCIL,' THE HARBOR MASTER SAYS, 'THE ONLY BOAT OUT IS GOING TO SOKAL KEEP.  YOU CAN CATCH IT AT THE END OF THE PIER.'`)
 	ECL_0_AF1F()
-	PICTURE (blockId: remove_picture)
+	PICTURE (blockId: no_picture)
 	@4AC4 = 0
 	@4A01 = 1
 	EXIT
@@ -533,11 +532,11 @@ ECL_0_A042
 	ECL_0_AEAB()
 	ADD_NPC (npcId: monster_dirten_id, morale: 99)
 	@4A9C = 255
-	PICTURE (blockId: remove_picture)
+	PICTURE (blockId: no_picture)
 	RETURN
 
 ECL_0_A055
-	PICTURE (blockId: remove_picture)
+	PICTURE (blockId: no_picture)
 	EXIT
 
 ECL_0_A059
@@ -604,7 +603,7 @@ ECL_0_A1A5
 	ECL_0_A1B4()
 	ECL_0_9A63()
 	PROGRAM (prog: prog_camp) // Exits ECL
-	PICTURE (blockId: remove_picture)
+	PICTURE (blockId: no_picture)
 	EXIT
 
 ECL_0_A1B4
@@ -627,7 +626,7 @@ ECL_0_A1E5
 ECL_0_A20D
 	PRINT_CLEAR (message: `YOU DON'T HAVE ENOUGH PLATINUM.`)
 	DELAY ()
-	PICTURE (blockId: remove_picture)
+	PICTURE (blockId: no_picture)
 	EXIT
 
 ECL_0_A22D
@@ -660,7 +659,7 @@ ECL_0_A29D
 	@6EF6 = 1
 	@6E6D = 16
 	COMBAT ()
-	PICTURE (blockId: remove_picture)
+	PICTURE (blockId: no_picture)
 	EXIT
 
 ECL_0_A2C6
@@ -691,7 +690,7 @@ ECL_0_A3B1
 	IF @6E79 == 1
 		PRINT_CLEAR (message: `YOU REALIZE YOU HAVE BEEN VICTIMIZED BY A PICKPOCKET.`)
 		ECL_0_AF1F()
-	PICTURE (blockId: remove_picture)
+	PICTURE (blockId: no_picture)
 	PRINT_CLEAR (message: ` DOES ANYONE WANT TO GAMBLE?`)
 	ECL_0_AE5D()
 	SWITCH @6E79
@@ -848,7 +847,7 @@ ECL_0_A895
 	@6EF6 = 1
 	@6E6D = 16
 	COMBAT ()
-	PICTURE (blockId: remove_picture)
+	PICTURE (blockId: no_picture)
 	EXIT
 
 ECL_0_A8BE
@@ -872,7 +871,7 @@ ECL_0_A91C
 	@6EF6 = 1
 	@6E6D = 16
 	COMBAT ()
-	PICTURE (blockId: remove_picture)
+	PICTURE (blockId: no_picture)
 	EXIT
 
 CONST silver_trader_head_id = head_f_brunette_smiling_id
@@ -901,7 +900,7 @@ ECL_0_A9AD
 	@6EF6 = 1
 	@6E6D = 16
 	COMBAT ()
-	PICTURE (blockId: remove_picture)
+	PICTURE (blockId: no_picture)
 	EXIT
 
 CONST tempus_priest_head_id = head_m_brunette_helmet_id
@@ -930,7 +929,7 @@ ECL_0_AA3B
 	PRINT_CLEAR (message: `THEN YOU MUST LEAVE.`)
 	partyPosMapX = @49F0
 	partyPosMapY = @49F1
-	pictureLoading = no_head_id
+	pictureLoading = no_picture
 	CALL (opAddr: op_refresh_view)
 	EXIT
 
@@ -938,8 +937,8 @@ ECL_0_AA66
 	CLEAR_MONSTERS ()
 	gbvmEnterTemple = 1
 	COMBAT ()
-	pictureLoading = no_head_id
-	PICTURE (blockId: remove_picture)
+	pictureLoading = no_picture
+	PICTURE (blockId: no_picture)
 	EXIT
 
 ECL_0_AA78
@@ -1099,7 +1098,7 @@ ECL_0_AE6D
 	@4A0F = 0
 	@4A11 = 0
 	@4A10 = 0
-	PICTURE (blockId: remove_picture)
+	PICTURE (blockId: no_picture)
 	EXIT
 
 ECL_0_AE89
@@ -1120,7 +1119,7 @@ ECL_0_AEAB
 		RETURN
 	PRINT_CLEAR (message: `'YOUR PARTY IS TOO LARGE TO JOIN AT THIS TIME.  RETURN WHEN IT IS SMALLER.'`)
 	ECL_0_AF1F()
-	PICTURE (blockId: remove_picture)
+	PICTURE (blockId: no_picture)
 	EXIT
 
 ECL_0_AEF7
@@ -1206,7 +1205,7 @@ ECL_0_B071
 	PRINT_CLEAR (message: `'GREETINGS, COURAGEOUS ONES, I AM ROLF, APPOINTED BY THE COUNCIL TO INTRODUCE NEWCOMERS TO THE FAIR CITY OF PHLAN. IF YOU WILL ACCOMPANY ME, I WILL START THE TOUR.'`)
 	ECL_0_AF1F()
 	SPRITE_OFF ()
-	PICTURE (blockId: remove_picture)
+	PICTURE (blockId: no_picture)
 	@6E79 = 0
 	GOTO ECL_0_B145
 
@@ -1402,7 +1401,7 @@ ECL_1_9A64
 	APPROACH ()
 	DELAY ()
 	APPROACH ()
-	pictureLoading = no_head_id
+	pictureLoading = no_picture
 	SWITCH @4A1A
 		CASE 0
 			GOTO ECL_1_9AD7
@@ -1486,7 +1485,7 @@ ECL_1_9D11
 		GOTO ECL_1_B59A
 	pictureLoading = 6
 	SETUP_MONSTER (spriteId: 16, maxDistance: 0, picId: 3)
-	pictureLoading = no_head_id
+	pictureLoading = no_picture
 	PRINT_CLEAR (message: `SOME GUARDS RUSH FOWARD AND ATTACK.`)
 	moraleThreshold = 100
 	CLEAR_MONSTERS ()
@@ -1540,7 +1539,7 @@ ECL_1_9F6F
 	APPROACH ()
 	DELAY ()
 	APPROACH ()
-	pictureLoading = no_head_id
+	pictureLoading = no_picture
 	CLEAR_MONSTERS ()
 	LOAD_MONSTER (monsterId: 99, copies: 6, cpicId: 11)
 	COMBAT ()
@@ -1745,7 +1744,7 @@ ECL_1_AA17
 		GOTO ECL_1_B59A
 	pictureLoading = 6
 	SETUP_MONSTER (spriteId: 16, maxDistance: 0, picId: 3)
-	pictureLoading = no_head_id
+	pictureLoading = no_picture
 	IF @4AA9 >= 254
 		GOTO ECL_1_A9BC
 	PRINT_CLEAR (message: `STANDING IN FRONT OF THE DOOR ARE TWO LARGE GUARDS.  ONE OF THEM SAYS 'DO YOU HAVE A PASS TO SEE THE CAPTAIN?'  WHAT WILL YOU DO?`)
@@ -1991,7 +1990,7 @@ ECL_1_B4A2
 ECL_1_B4C7
 	IF @4A0A != 0
 		GOTO ECL_1_B59A
-	pictureLoading = no_head_id
+	pictureLoading = no_picture
 	PICTURE (blockId: 42)
 	PRINT_CLEAR (message: `YOU ARE IN THE SLAVE PEN.  STANDING NEAR YOU IS THE YOUNG BOY.  WHAT WILL YOU DO?`)
 	@6E79 = HORIZONTAL_MENU (opts: [`GET HIM`, `LEAVE`])
@@ -2011,9 +2010,9 @@ ECL_1_B53B
 	GOTO ECL_1_B59A
 
 ECL_1_B59A
-	PICTURE (blockId: remove_picture)
+	PICTURE (blockId: no_picture)
 	SPRITE_OFF ()
-	pictureLoading = no_head_id
+	pictureLoading = no_picture
 	EXIT
 
 ECL_1_B5A5
@@ -2044,7 +2043,7 @@ ECL_1_B5FE
 
 ECL_1_B613
 	SPRITE_OFF ()
-	PICTURE (blockId: remove_picture)
+	PICTURE (blockId: no_picture)
 	RETURN
 
 ECL_1_B618
