@@ -577,7 +577,7 @@ ECL_0_9E07
 		CASE 1
 			GOTO ECL_0_AD85
 
-CONST bishop_braccio_head_id = head_m_old_serious_id
+CONST bishop_braccio_head_id = head_m_old_beard_id
 CONST bishop_braccio_body_id = body_breastplate_id
 CONST dirten_head_id = head_m_blonde_circlet_id
 CONST dirten_body_id = body_cross_armor_id
@@ -643,7 +643,7 @@ ECL_0_A064
 	GOTO ECL_0_AA16
 
 CONST sune_priestess_head_id = head_f_blonde_serious_id
-CONST sune_priestess_body_id = body_leather_cape_id
+CONST sune_priestess_body_id = body_leather_cape_2_id
 
 ECL_0_A0BC
 	pictureLoading = sune_priestess_head_id
@@ -665,7 +665,7 @@ ECL_0_A129
 	EXIT
 
 CONST innkeeper_head_id = head_f_brunette_elven_id
-CONST innkeeper_body_id = body_leather_cape_id
+CONST innkeeper_body_id = body_leather_cape_2_id
 
 ECL_0_A140
 	IF @4A07 != 0
@@ -1159,7 +1159,7 @@ ECL_0_ADE2
 	moraleThreshold = 50
 	CLEAR_MONSTERS ()
 	LOAD_MONSTER (monsterId: monster_lv3_mage_id, copies: 2, cpicId: 14)
-	LOAD_MONSTER (monsterId: monster_lv6_fighter_id, copies: 12, cpicId: 16)
+	LOAD_MONSTER (monsterId: monster_lv6_fighter_2_id, copies: 12, cpicId: 16)
 	LOAD_MONSTER (monsterId: monster_aides_id, copies: 12, cpicId: 11)
 	LOAD_MONSTER (monsterId: monster_nomad_id, copies: 12, cpicId: 15)
 	COMBAT ()
