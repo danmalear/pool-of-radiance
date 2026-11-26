@@ -88,13 +88,11 @@ entryPointBlock = entryPointBlock.replace(
 // Compare lines
 const dbValue = '[0-9a-f]{2} ?';
 const dbLine = new RegExp(
-	`^\\s*${addr}\\s+\\.db (?<values>(?:${dbValue})+)$`,
+	`^\\s*(?<startAddr>${addr})\\s+\\.db (?<values>(?:${dbValue})+)$`,
 	'gm',
 );
 
-matches = mainBlock.match(
-	new RegExp(`^\\s*(?<startAddr>${addr})\\s+\\.db\\s$`, 'gm'),
-);
+matches = mainBlock.match(new RegExp(`^.*\\s\\.db\\s$`, 'gm'));
 if (matches) {
 	for (const match of matches) {
 		if (!dbLine.test(match)) {
@@ -112,13 +110,13 @@ mainBlock = mainBlock.replace(dbLine, (...args) => {
 		values: string;
 	} = args[args.length - 1];
 
-	let result = '';
+	let result = '\n';
 	let curAddr = Number(`0x${startAddr}`);
 
 	const valMatches = values.match(new RegExp(dbValue, 'gm'));
 	for (const valMatch of valMatches!) {
 		let numValue = Number(`0x${valMatch.trim()}`);
-		result = `CONST db_$${curAddr.toString(16).toUpperCase()} = ${numValue.toString()}\n`;
+		result += `CONST db_$${curAddr.toString(16).toUpperCase()} = ${numValue.toString()}\n`;
 		curAddr++;
 	}
 

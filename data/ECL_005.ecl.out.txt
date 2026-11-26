@@ -101,7 +101,23 @@ ECL_5_9A80
 	CALL (opAddr: @C01E)
 	@6DC9 = 255
 	EXIT
-CONST db_$NAN = 6
+
+CONST db_$9AEB = 3
+CONST db_$9AEC = 4
+CONST db_$9AED = 6
+CONST db_$9AEE = 3
+CONST db_$9AEF = 4
+CONST db_$9AF0 = 4
+CONST db_$9AF1 = 5
+CONST db_$9AF2 = 3
+CONST db_$9AF3 = 4
+CONST db_$9AF4 = 5
+CONST db_$9AF5 = 5
+CONST db_$9AF6 = 6
+CONST db_$9AF7 = 3
+CONST db_$9AF8 = 5
+CONST db_$9AF9 = 6
+CONST db_$9AFA = 6
 
 
 ECL_5_9AFB
@@ -203,7 +219,15 @@ ECL_5_9C8A
 	LOAD_FILES (fileId: @6E79, unused: 2, loadTiles: 255)
 	CALL (opAddr: @2C90)
 	EXIT
-CONST db_$NAN = 5
+
+CONST db_$9CE1 = 12
+CONST db_$9CE2 = 6
+CONST db_$9CE3 = 3
+CONST db_$9CE4 = 9
+CONST db_$9CE5 = 11
+CONST db_$9CE6 = 10
+CONST db_$9CE7 = 4
+CONST db_$9CE8 = 5
 
 
 ECL_5_9CE9
@@ -614,4 +638,5 @@ ECL_5_AC31
 	IF @6DC7 == 129
 		GOTO ECL_5_9D0C
 	EXIT
-CONST db_$NAN = 0
+
+CONST db_$AC4C = 0

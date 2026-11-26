@@ -636,63 +636,527 @@ ECL_17_ABC5
 	ECL_17_9D7F()
 	PRINT_CLEAR (message: "'YOU MAY WANDER AS YOU WILL OR YOU MAY STAY HERE AND REST AND STUDY. FORGIVE ME, I MUST SEE TO MY PEOPLE.' HE LEAVES.")
 	GOTO ECL_17_9ED1
-CONST db_$NAN = 8
 
-CONST db_$NAN = 12
+CONST db_$AC7D = 0
+CONST db_$AC7E = 1
+CONST db_$AC7F = 1
+CONST db_$AC80 = 18
+CONST db_$AC81 = 0
+CONST db_$AC82 = 24
+CONST db_$AC83 = 0
+CONST db_$AC84 = 0
+CONST db_$AC85 = 0
+CONST db_$AC86 = 4
+CONST db_$AC87 = 8
+CONST db_$AC88 = 0
+CONST db_$AC89 = 0
+CONST db_$AC8A = 0
+CONST db_$AC8B = 4
+CONST db_$AC8C = 8
 
-CONST db_$NAN = 7
 
-CONST db_$NAN = 13
+CONST db_$AC8D = 4
+CONST db_$AC8E = 8
+CONST db_$AC8F = 4
+CONST db_$AC90 = 8
+CONST db_$AC91 = 0
+CONST db_$AC92 = 0
+CONST db_$AC93 = 0
+CONST db_$AC94 = 4
+CONST db_$AC95 = 8
+CONST db_$AC96 = 12
+CONST db_$AC97 = 4
+CONST db_$AC98 = 4
+CONST db_$AC99 = 8
+CONST db_$AC9A = 8
+CONST db_$AC9B = 12
+CONST db_$AC9C = 12
 
-CONST db_$NAN = 11
 
-CONST db_$NAN = 2
+CONST db_$AC9D = 3
+CONST db_$AC9E = 7
+CONST db_$AC9F = 11
+CONST db_$ACA0 = 3
+CONST db_$ACA1 = 3
+CONST db_$ACA2 = 3
+CONST db_$ACA3 = 7
+CONST db_$ACA4 = 11
+CONST db_$ACA5 = 7
+CONST db_$ACA6 = 11
+CONST db_$ACA7 = 7
+CONST db_$ACA8 = 11
+CONST db_$ACA9 = 3
+CONST db_$ACAA = 3
+CONST db_$ACAB = 3
+CONST db_$ACAC = 7
 
-CONST db_$NAN = 3
 
-CONST db_$NAN = 3
+CONST db_$ACAD = 11
+CONST db_$ACAE = 15
+CONST db_$ACAF = 7
+CONST db_$ACB0 = 7
+CONST db_$ACB1 = 11
+CONST db_$ACB2 = 11
+CONST db_$ACB3 = 15
+CONST db_$ACB4 = 15
+CONST db_$ACB5 = 4
+CONST db_$ACB6 = 7
+CONST db_$ACB7 = 11
+CONST db_$ACB8 = 4
+CONST db_$ACB9 = 4
+CONST db_$ACBA = 4
+CONST db_$ACBB = 8
+CONST db_$ACBC = 13
 
-CONST db_$NAN = 2
 
-CONST db_$NAN = 1
+CONST db_$ACBD = 8
+CONST db_$ACBE = 13
+CONST db_$ACBF = 8
+CONST db_$ACC0 = 10
+CONST db_$ACC1 = 4
+CONST db_$ACC2 = 4
+CONST db_$ACC3 = 4
+CONST db_$ACC4 = 6
+CONST db_$ACC5 = 10
+CONST db_$ACC6 = 12
+CONST db_$ACC7 = 7
+CONST db_$ACC8 = 6
+CONST db_$ACC9 = 10
+CONST db_$ACCA = 9
+CONST db_$ACCB = 11
+CONST db_$ACCC = 11
 
-CONST db_$NAN = 3
 
-CONST db_$NAN = 1
+CONST db_$ACCD = 2
+CONST db_$ACCE = 2
+CONST db_$ACCF = 2
+CONST db_$ACD0 = 2
+CONST db_$ACD1 = 2
+CONST db_$ACD2 = 2
+CONST db_$ACD3 = 2
+CONST db_$ACD4 = 2
+CONST db_$ACD5 = 2
+CONST db_$ACD6 = 2
+CONST db_$ACD7 = 2
+CONST db_$ACD8 = 2
+CONST db_$ACD9 = 2
+CONST db_$ACDA = 2
+CONST db_$ACDB = 2
+CONST db_$ACDC = 2
 
-CONST db_$NAN = 3
 
-CONST db_$NAN = 3
+CONST db_$ACDD = 2
+CONST db_$ACDE = 2
+CONST db_$ACDF = 2
+CONST db_$ACE0 = 3
+CONST db_$ACE1 = 3
+CONST db_$ACE2 = 3
+CONST db_$ACE3 = 3
+CONST db_$ACE4 = 3
+CONST db_$ACE5 = 2
+CONST db_$ACE6 = 2
+CONST db_$ACE7 = 2
+CONST db_$ACE8 = 2
+CONST db_$ACE9 = 2
+CONST db_$ACEA = 2
+CONST db_$ACEB = 2
+CONST db_$ACEC = 3
 
-CONST db_$NAN = 1
 
-CONST db_$NAN = 3
+CONST db_$ACED = 3
+CONST db_$ACEE = 3
+CONST db_$ACEF = 3
+CONST db_$ACF0 = 3
+CONST db_$ACF1 = 2
+CONST db_$ACF2 = 2
+CONST db_$ACF3 = 2
+CONST db_$ACF4 = 2
+CONST db_$ACF5 = 1
+CONST db_$ACF6 = 2
+CONST db_$ACF7 = 2
+CONST db_$ACF8 = 3
+CONST db_$ACF9 = 3
+CONST db_$ACFA = 3
+CONST db_$ACFB = 3
+CONST db_$ACFC = 3
 
-CONST db_$NAN = 0
 
-CONST db_$NAN = 2
+CONST db_$ACFD = 2
+CONST db_$ACFE = 2
+CONST db_$ACFF = 2
+CONST db_$AD00 = 2
+CONST db_$AD01 = 0
+CONST db_$AD02 = 2
+CONST db_$AD03 = 2
+CONST db_$AD04 = 2
+CONST db_$AD05 = 3
+CONST db_$AD06 = 3
+CONST db_$AD07 = 3
+CONST db_$AD08 = 3
+CONST db_$AD09 = 2
+CONST db_$AD0A = 1
+CONST db_$AD0B = 2
+CONST db_$AD0C = 2
 
-CONST db_$NAN = 3
 
-CONST db_$NAN = 3
+CONST db_$AD0D = 2
+CONST db_$AD0E = 1
+CONST db_$AD0F = 2
+CONST db_$AD10 = 3
+CONST db_$AD11 = 3
+CONST db_$AD12 = 3
+CONST db_$AD13 = 3
+CONST db_$AD14 = 3
+CONST db_$AD15 = 2
+CONST db_$AD16 = 3
+CONST db_$AD17 = 2
+CONST db_$AD18 = 2
+CONST db_$AD19 = 2
+CONST db_$AD1A = 2
+CONST db_$AD1B = 2
+CONST db_$AD1C = 1
 
-CONST db_$NAN = 2
 
-CONST db_$NAN = 1
+CONST db_$AD1D = 2
+CONST db_$AD1E = 3
+CONST db_$AD1F = 3
+CONST db_$AD20 = 3
+CONST db_$AD21 = 1
+CONST db_$AD22 = 2
+CONST db_$AD23 = 2
+CONST db_$AD24 = 1
+CONST db_$AD25 = 1
+CONST db_$AD26 = 2
+CONST db_$AD27 = 2
+CONST db_$AD28 = 2
+CONST db_$AD29 = 3
+CONST db_$AD2A = 3
+CONST db_$AD2B = 3
+CONST db_$AD2C = 3
 
-CONST db_$NAN = 3
 
-CONST db_$NAN = 1
+CONST db_$AD2D = 1
+CONST db_$AD2E = 1
+CONST db_$AD2F = 2
+CONST db_$AD30 = 2
+CONST db_$AD31 = 2
+CONST db_$AD32 = 2
+CONST db_$AD33 = 2
+CONST db_$AD34 = 2
+CONST db_$AD35 = 1
+CONST db_$AD36 = 2
+CONST db_$AD37 = 3
+CONST db_$AD38 = 3
+CONST db_$AD39 = 1
+CONST db_$AD3A = 1
+CONST db_$AD3B = 2
+CONST db_$AD3C = 1
 
-CONST db_$NAN = 3
 
-CONST db_$NAN = 3
+CONST db_$AD3D = 2
+CONST db_$AD3E = 2
+CONST db_$AD3F = 2
+CONST db_$AD40 = 2
+CONST db_$AD41 = 3
+CONST db_$AD42 = 3
+CONST db_$AD43 = 3
+CONST db_$AD44 = 3
+CONST db_$AD45 = 2
+CONST db_$AD46 = 3
+CONST db_$AD47 = 1
+CONST db_$AD48 = 1
+CONST db_$AD49 = 1
+CONST db_$AD4A = 2
+CONST db_$AD4B = 2
+CONST db_$AD4C = 3
 
-CONST db_$NAN = 1
 
-CONST db_$NAN = 3
+CONST db_$AD4D = 3
+CONST db_$AD4E = 3
+CONST db_$AD4F = 3
+CONST db_$AD50 = 3
+CONST db_$AD51 = 1
+CONST db_$AD52 = 1
+CONST db_$AD53 = 2
+CONST db_$AD54 = 3
+CONST db_$AD55 = 1
+CONST db_$AD56 = 2
+CONST db_$AD57 = 3
+CONST db_$AD58 = 0
+CONST db_$AD59 = 0
+CONST db_$AD5A = 1
+CONST db_$AD5B = 0
+CONST db_$AD5C = 3
 
-CONST db_$NAN = 0
+
+CONST db_$AD5D = 1
+CONST db_$AD5E = 1
+CONST db_$AD5F = 1
+CONST db_$AD60 = 1
+CONST db_$AD61 = 0
+CONST db_$AD62 = 255
+CONST db_$AD63 = 0
+CONST db_$AD64 = 3
+CONST db_$AD65 = 3
+CONST db_$AD66 = 3
+CONST db_$AD67 = 3
+CONST db_$AD68 = 3
+CONST db_$AD69 = 1
+CONST db_$AD6A = 1
+CONST db_$AD6B = 1
+CONST db_$AD6C = 1
+
+
+CONST db_$AD6D = 0
+CONST db_$AD6E = 1
+CONST db_$AD6F = 0
+CONST db_$AD70 = 2
+CONST db_$AD71 = 0
+CONST db_$AD72 = 0
+CONST db_$AD73 = 0
+CONST db_$AD74 = 3
+CONST db_$AD75 = 0
+CONST db_$AD76 = 1
+CONST db_$AD77 = 0
+CONST db_$AD78 = 0
+CONST db_$AD79 = 0
+CONST db_$AD7A = 0
+CONST db_$AD7B = 0
+CONST db_$AD7C = 3
+
+
+CONST db_$AD7D = 1
+CONST db_$AD7E = 1
+CONST db_$AD7F = 3
+CONST db_$AD80 = 3
+CONST db_$AD81 = 0
+CONST db_$AD82 = 0
+CONST db_$AD83 = 0
+CONST db_$AD84 = 0
+CONST db_$AD85 = 0
+CONST db_$AD86 = 0
+CONST db_$AD87 = 0
+CONST db_$AD88 = 0
+CONST db_$AD89 = 0
+CONST db_$AD8A = 0
+CONST db_$AD8B = 0
+CONST db_$AD8C = 0
+
+
+CONST db_$AD8D = 2
+CONST db_$AD8E = 2
+CONST db_$AD8F = 2
+CONST db_$AD90 = 2
+CONST db_$AD91 = 2
+CONST db_$AD92 = 2
+CONST db_$AD93 = 2
+CONST db_$AD94 = 2
+CONST db_$AD95 = 2
+CONST db_$AD96 = 2
+CONST db_$AD97 = 2
+CONST db_$AD98 = 2
+CONST db_$AD99 = 2
+CONST db_$AD9A = 2
+CONST db_$AD9B = 2
+CONST db_$AD9C = 2
+
+
+CONST db_$AD9D = 2
+CONST db_$AD9E = 2
+CONST db_$AD9F = 2
+CONST db_$ADA0 = 3
+CONST db_$ADA1 = 3
+CONST db_$ADA2 = 3
+CONST db_$ADA3 = 3
+CONST db_$ADA4 = 3
+CONST db_$ADA5 = 2
+CONST db_$ADA6 = 2
+CONST db_$ADA7 = 2
+CONST db_$ADA8 = 2
+CONST db_$ADA9 = 2
+CONST db_$ADAA = 2
+CONST db_$ADAB = 2
+CONST db_$ADAC = 3
+
+
+CONST db_$ADAD = 3
+CONST db_$ADAE = 3
+CONST db_$ADAF = 3
+CONST db_$ADB0 = 3
+CONST db_$ADB1 = 2
+CONST db_$ADB2 = 2
+CONST db_$ADB3 = 2
+CONST db_$ADB4 = 2
+CONST db_$ADB5 = 1
+CONST db_$ADB6 = 2
+CONST db_$ADB7 = 2
+CONST db_$ADB8 = 3
+CONST db_$ADB9 = 3
+CONST db_$ADBA = 3
+CONST db_$ADBB = 3
+CONST db_$ADBC = 3
+
+
+CONST db_$ADBD = 2
+CONST db_$ADBE = 2
+CONST db_$ADBF = 2
+CONST db_$ADC0 = 2
+CONST db_$ADC1 = 0
+CONST db_$ADC2 = 2
+CONST db_$ADC3 = 2
+CONST db_$ADC4 = 2
+CONST db_$ADC5 = 3
+CONST db_$ADC6 = 3
+CONST db_$ADC7 = 3
+CONST db_$ADC8 = 3
+CONST db_$ADC9 = 1
+CONST db_$ADCA = 1
+CONST db_$ADCB = 2
+CONST db_$ADCC = 2
+
+
+CONST db_$ADCD = 2
+CONST db_$ADCE = 1
+CONST db_$ADCF = 2
+CONST db_$ADD0 = 3
+CONST db_$ADD1 = 3
+CONST db_$ADD2 = 3
+CONST db_$ADD3 = 3
+CONST db_$ADD4 = 3
+CONST db_$ADD5 = 2
+CONST db_$ADD6 = 3
+CONST db_$ADD7 = 2
+CONST db_$ADD8 = 2
+CONST db_$ADD9 = 2
+CONST db_$ADDA = 2
+CONST db_$ADDB = 2
+CONST db_$ADDC = 1
+
+
+CONST db_$ADDD = 2
+CONST db_$ADDE = 3
+CONST db_$ADDF = 3
+CONST db_$ADE0 = 3
+CONST db_$ADE1 = 1
+CONST db_$ADE2 = 1
+CONST db_$ADE3 = 1
+CONST db_$ADE4 = 1
+CONST db_$ADE5 = 1
+CONST db_$ADE6 = 2
+CONST db_$ADE7 = 2
+CONST db_$ADE8 = 2
+CONST db_$ADE9 = 3
+CONST db_$ADEA = 3
+CONST db_$ADEB = 3
+CONST db_$ADEC = 3
+
+
+CONST db_$ADED = 1
+CONST db_$ADEE = 1
+CONST db_$ADEF = 2
+CONST db_$ADF0 = 2
+CONST db_$ADF1 = 2
+CONST db_$ADF2 = 2
+CONST db_$ADF3 = 2
+CONST db_$ADF4 = 2
+CONST db_$ADF5 = 1
+CONST db_$ADF6 = 2
+CONST db_$ADF7 = 3
+CONST db_$ADF8 = 3
+CONST db_$ADF9 = 1
+CONST db_$ADFA = 1
+CONST db_$ADFB = 2
+CONST db_$ADFC = 1
+
+
+CONST db_$ADFD = 2
+CONST db_$ADFE = 255
+CONST db_$ADFF = 3
+CONST db_$AE00 = 3
+CONST db_$AE01 = 3
+CONST db_$AE02 = 3
+CONST db_$AE03 = 3
+CONST db_$AE04 = 3
+CONST db_$AE05 = 2
+CONST db_$AE06 = 3
+CONST db_$AE07 = 1
+CONST db_$AE08 = 1
+CONST db_$AE09 = 1
+CONST db_$AE0A = 0
+CONST db_$AE0B = 0
+CONST db_$AE0C = 3
+
+
+CONST db_$AE0D = 3
+CONST db_$AE0E = 3
+CONST db_$AE0F = 3
+CONST db_$AE10 = 3
+CONST db_$AE11 = 1
+CONST db_$AE12 = 1
+CONST db_$AE13 = 0
+CONST db_$AE14 = 3
+CONST db_$AE15 = 1
+CONST db_$AE16 = 0
+CONST db_$AE17 = 3
+CONST db_$AE18 = 0
+CONST db_$AE19 = 0
+CONST db_$AE1A = 1
+CONST db_$AE1B = 0
+CONST db_$AE1C = 3
+
+
+CONST db_$AE1D = 1
+CONST db_$AE1E = 1
+CONST db_$AE1F = 1
+CONST db_$AE20 = 1
+CONST db_$AE21 = 0
+CONST db_$AE22 = 0
+CONST db_$AE23 = 0
+CONST db_$AE24 = 3
+CONST db_$AE25 = 3
+CONST db_$AE26 = 3
+CONST db_$AE27 = 3
+CONST db_$AE28 = 3
+CONST db_$AE29 = 1
+CONST db_$AE2A = 1
+CONST db_$AE2B = 1
+CONST db_$AE2C = 1
+
+
+CONST db_$AE2D = 0
+CONST db_$AE2E = 1
+CONST db_$AE2F = 0
+CONST db_$AE30 = 2
+CONST db_$AE31 = 0
+CONST db_$AE32 = 0
+CONST db_$AE33 = 0
+CONST db_$AE34 = 3
+CONST db_$AE35 = 0
+CONST db_$AE36 = 1
+CONST db_$AE37 = 0
+CONST db_$AE38 = 0
+CONST db_$AE39 = 0
+CONST db_$AE3A = 0
+CONST db_$AE3B = 0
+CONST db_$AE3C = 3
+
+
+CONST db_$AE3D = 1
+CONST db_$AE3E = 1
+CONST db_$AE3F = 3
+CONST db_$AE40 = 3
+CONST db_$AE41 = 0
+CONST db_$AE42 = 0
+CONST db_$AE43 = 0
+CONST db_$AE44 = 0
+CONST db_$AE45 = 0
+CONST db_$AE46 = 0
+CONST db_$AE47 = 0
+CONST db_$AE48 = 0
+CONST db_$AE49 = 0
+CONST db_$AE4A = 0
+CONST db_$AE4B = 0
+CONST db_$AE4C = 0
 
 
 ECL_17_AE4D
@@ -937,4 +1401,5 @@ ECL_17_B662
 	@4A7C = 8 | @4A7C
 	TREASURE (cp: 0, sp: 0, ep: 0, gp: 8000, pp: 0, gems: 0, jewels: 0, itemId: 255)
 	GOTO ECL_17_A1A5
-CONST db_$NAN = 255
+
+CONST db_$B6B0 = 255

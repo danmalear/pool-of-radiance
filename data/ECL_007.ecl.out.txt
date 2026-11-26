@@ -52,9 +52,33 @@ ECL_7_99BF
 			GOTO ECL_7_9A74
 		CASE 2
 			GOTO ECL_7_9ADA
-CONST db_$NAN = 0
 
-CONST db_$NAN = 2
+CONST db_$99D8 = 1
+CONST db_$99D9 = 1
+CONST db_$99DA = 2
+CONST db_$99DB = 3
+CONST db_$99DC = 5
+CONST db_$99DD = 8
+CONST db_$99DE = 9
+CONST db_$99DF = 1
+CONST db_$99E0 = 3
+CONST db_$99E1 = 1
+CONST db_$99E2 = 0
+CONST db_$99E3 = 2
+CONST db_$99E4 = 3
+CONST db_$99E5 = 0
+CONST db_$99E6 = 2
+CONST db_$99E7 = 0
+
+
+CONST db_$99E8 = 0
+CONST db_$99E9 = 0
+CONST db_$99EA = 1
+CONST db_$99EB = 0
+CONST db_$99EC = 1
+CONST db_$99ED = 1
+CONST db_$99EE = 0
+CONST db_$99EF = 2
 
 
 ECL_7_99F0
@@ -126,7 +150,20 @@ ECL_7_9AC2
 	LOAD_FILES (fileId: 3, unused: 2, loadTiles: 255)
 	NEW_ECL (eclId: 5)
 	APPROACH ()
-CONST db_$NAN = 8
+
+CONST db_$9ACD = 11
+CONST db_$9ACE = 5
+CONST db_$9ACF = 5
+CONST db_$9AD0 = 5
+CONST db_$9AD1 = 3
+CONST db_$9AD2 = 3
+CONST db_$9AD3 = 15
+CONST db_$9AD4 = 7
+CONST db_$9AD5 = 4
+CONST db_$9AD6 = 6
+CONST db_$9AD7 = 7
+CONST db_$9AD8 = 6
+CONST db_$9AD9 = 8
 
 
 ECL_7_9ADA
