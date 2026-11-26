@@ -116,7 +116,7 @@ mainBlock = mainBlock.replace(dbLine, (...args) => {
 	const valMatches = values.match(new RegExp(dbValue, 'gm'));
 	for (const valMatch of valMatches!) {
 		let numValue = Number(`0x${valMatch.trim()}`);
-		result += `CONST db_$${curAddr.toString(16).toUpperCase()} = ${numValue.toString()}\n`;
+		result += `CONST ${addrPrefix}db_$${curAddr.toString(16).toUpperCase()} = ${numValue.toString()}\n`;
 		curAddr++;
 	}
 
