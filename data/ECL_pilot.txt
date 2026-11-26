@@ -4,7 +4,7 @@ REF
 
 SHORTHAND
 
-$str(addr: hex) string starting at addr
+$str@[addr] string starting at addr
 
 OPS
 
