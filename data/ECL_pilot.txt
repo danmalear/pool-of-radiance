@@ -1660,8 +1660,8 @@ ECL_1_9CEE
 ECL_1_9D11
 	IF @4A13 != 0
 		GOTO ECL_1_B59A
-	pictureLoading = 6
-	SETUP_MONSTER (spriteId: 16, maxDistance: 0, picId: 3)
+	pictureLoading = head_m_brunette_eye_patch_2_id
+	SETUP_MONSTER (spriteId: 16, maxDistance: 0, picId: body_hairy_chest_id)
 	pictureLoading = no_picture
 	PRINT_CLEAR (message: `SOME GUARDS RUSH FOWARD AND ATTACK.`)
 	moraleThreshold = 100
@@ -1710,8 +1710,8 @@ ECL_1_9F6F
 	PRINT_CLEAR (message: `YOU PUNCH THE MERCHANT IN THE NOSE AND HE FALLS TO THE GROUND, BADLY BLEEDING.  THE MERCHANT YELLS FOR HIS GUARDS AND THEY COME RUNNING.`)
 	moraleThreshold = 60
 	ECL_1_B613()
-	pictureLoading = 1
-	SETUP_MONSTER (spriteId: 16, maxDistance: 2, picId: 1)
+	pictureLoading = head_m_brunette_smiling_id
+	SETUP_MONSTER (spriteId: 16, maxDistance: 2, picId: body_breastplate_id)
 	DELAY ()
 	APPROACH ()
 	DELAY ()
@@ -1759,8 +1759,8 @@ ECL_1_A27C
 		GOTO ECL_1_B59A
 
 ECL_1_A2E5
-	pictureLoading = 6
-	SETUP_MONSTER (spriteId: 16, maxDistance: 0, picId: 3)
+	pictureLoading = head_m_brunette_eye_patch_2_id
+	SETUP_MONSTER (spriteId: 16, maxDistance: 0, picId: body_hairy_chest_id)
 	PRINT_CLEAR (message: `YOU ARE NEAR THE FRONT GATE TO THE SLAVE PEN.  TWO GUARDS GUARD THE DOOR.  WHAT WILL YOU DO?`)
 	@6E79 = HORIZONTAL_MENU (opts: [`ATTACK`, `TRY TO SNEAK BY`, `LEAVE`])
 	SWITCH @6E79
@@ -1784,8 +1784,8 @@ ECL_1_A36A
 	GOTO ECL_1_B59A
 
 ECL_1_A3A6
-	pictureLoading = 6
-	SETUP_MONSTER (spriteId: 16, maxDistance: 2, picId: 3)
+	pictureLoading = head_m_brunette_eye_patch_2_id
+	SETUP_MONSTER (spriteId: 16, maxDistance: 2, picId: body_hairy_chest_id)
 	DELAY ()
 	APPROACH ()
 	DELAY ()
@@ -1828,8 +1828,8 @@ ECL_1_A557
 	IF @4A1B != 0
 		GOTO ECL_1_A7C7
 	PRINT_CLEAR (message: `THE SLAVES CHEER YOUR VICTORY.  A LARGE GROUP OF BUCCANEERS STANDS IN DISBELIEF.  THE BUCCANEERS PART AS A LARGE MAN IN GLEAMING CHAIN MAIL STEPS FORTH.  THE SLAVES FALL SILENT.`)
-	pictureLoading = 9
-	SETUP_MONSTER (spriteId: 16, maxDistance: 2, picId: 5)
+	pictureLoading = head_m_brunette_grumpy_id
+	SETUP_MONSTER (spriteId: 16, maxDistance: 2, picId: body_coat_of_arms_armor_id)
 	DELAY ()
 	APPROACH ()
 	DELAY ()
@@ -1865,8 +1865,8 @@ ECL_1_A743
 	GOTO ECL_1_B59A
 
 ECL_1_A7C7
-	pictureLoading = 6
-	SETUP_MONSTER (spriteId: 16, maxDistance: 2, picId: 3)
+	pictureLoading = head_m_brunette_eye_patch_2_id
+	SETUP_MONSTER (spriteId: 16, maxDistance: 2, picId: body_hairy_chest_id)
 	PRINT_CLEAR (message: `THE LAST OF THE BUCCANNEERS FORM INTO A FINAL WAVE AND ATTACK.`)
 	moraleThreshold = 60
 	CLEAR_MONSTERS ()
@@ -1919,8 +1919,8 @@ ECL_1_AA17
 		GOTO ECL_1_B59A
 	IF @4A0E != 0
 		GOTO ECL_1_B59A
-	pictureLoading = 6
-	SETUP_MONSTER (spriteId: 16, maxDistance: 0, picId: 3)
+	pictureLoading = head_m_brunette_eye_patch_2_id
+	SETUP_MONSTER (spriteId: 16, maxDistance: 0, picId: body_hairy_chest_id)
 	pictureLoading = no_picture
 	IF @4AA9 >= 254
 		GOTO ECL_1_A9BC
@@ -1973,12 +1973,12 @@ ECL_1_AC16
 		GOTO ECL_1_B59A
 	IF @4A1B == 1
 		GOTO ECL_1_B59A
-	pictureLoading = 6
-	SETUP_MONSTER (spriteId: 16, maxDistance: 0, picId: 3)
+	pictureLoading = head_m_brunette_eye_patch_2_id
+	SETUP_MONSTER (spriteId: 16, maxDistance: 0, picId: body_hairy_chest_id)
 	PRINT_CLEAR (message: `YOU ENTER A ROOM WITH FOUR GUARDS IN GLEAMING CHAIN MAIL.  AS YOU ENTER, ONE OF THEM GOES THROUGH THE SOUTH DOOR AND RETURNS WITH THE BUCCANEER CAPTAIN.`)
 	ECL_1_B5D4()
-	pictureLoading = 9
-	SETUP_MONSTER (spriteId: 16, maxDistance: 0, picId: 5)
+	pictureLoading = head_m_brunette_grumpy_id
+	SETUP_MONSTER (spriteId: 16, maxDistance: 0, picId: body_coat_of_arms_armor_id)
 	PRINT_CLEAR (message: `THE CAPTAIN LOOKS YOU OVER AND SAYS 'WHAT DO YOU WANT?'`)
 	@6E79 = HORIZONTAL_MENU (opts: [`ATTACK`, `MENTION YOUNG BOY`, `LEAVE`])
 	SWITCH @6E79
@@ -2037,8 +2037,8 @@ ECL_1_AFA2
 		GOTO ECL_1_B59A
 	IF @4AA9 >= 254
 		GOTO ECL_1_B59A
-	pictureLoading = 10
-	SETUP_MONSTER (spriteId: 16, maxDistance: 0, picId: 9)
+	pictureLoading = head_m_brunette_ghoulish_id
+	SETUP_MONSTER (spriteId: 16, maxDistance: 0, picId: body_worker_id)
 	PRINT_CLEAR (message: `THERE IS A SEEDY LITTLE MAN HERE WHO WHISPERS 'PSSST, BUDDY.  WANT TO BUY A PASS TO SEE THE CAPTAIN?'`)
 	@6E7A = HORIZONTAL_MENU (opts: [`BUY PASS`, `LEAVE`])
 	SWITCH @6E7A
@@ -2059,8 +2059,8 @@ ECL_1_B034
 ECL_1_B08E
 	IF @4A09 != 0
 		GOTO ECL_1_B59A
-	pictureLoading = 6
-	SETUP_MONSTER (spriteId: 16, maxDistance: 0, picId: 3)
+	pictureLoading = head_m_brunette_eye_patch_2_id
+	SETUP_MONSTER (spriteId: 16, maxDistance: 0, picId: body_hairy_chest_id)
 	IF @4AA9 >= 254
 		GOTO ECL_1_B142
 	PRINT_CLEAR (message: `YOU HAVE ENTERED ONE OF THE GUARD TOWERS.  INSIDE ARE FOUR BUCCANEERS.  ONE OF THEM SAYS 'THIS IS A RESTRICTED AREA, LEAVE NOW!'  WHAT WILL YOU DO?`)
@@ -2090,8 +2090,8 @@ ECL_1_B173
 ECL_1_B191
 	IF @4A09 != 0
 		GOTO ECL_1_B59A
-	pictureLoading = 6
-	SETUP_MONSTER (spriteId: 16, maxDistance: 0, picId: 3)
+	pictureLoading = head_m_brunette_eye_patch_2_id
+	SETUP_MONSTER (spriteId: 16, maxDistance: 0, picId: body_hairy_chest_id)
 	IF @4AA9 >= 254
 		GOTO ECL_1_B23C
 	PRINT_CLEAR (message: `YOU ENTER A BARRACKS FILED WITH TWENTY BUCCANEERS.  ONE OF THE BUCCANEERS SAYS 'THIS AREA IS OFF LIMITS.  LEAVE NOW.' WHAT WILL YOU DO?`)
