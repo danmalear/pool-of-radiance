@@ -8,7 +8,7 @@ $str(addr: hex) string starting at addr
 
 OPS
 
-COMBAT_OR_SHOP:
+COMBAT:
 monstersLoaded == false && combat_type == normal
 	? gbvmEnterShop
 		? CityShop()
