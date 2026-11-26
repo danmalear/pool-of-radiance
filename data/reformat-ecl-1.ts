@@ -170,7 +170,7 @@ replaceLine(
 replaceLine(
 	'ADD',
 	new RegExp(
-		`^ADD (?<val1>\\d+|${str}|${addrRef}), (?<val2>\\d+|${str}|${addrRef}), (?<var>${addrRef})`,
+		`^ADD (?<val1>\\d+|${addrRef}), (?<val2>\\d+|${addrRef}), (?<var>${addrRef})`,
 		'gm',
 	),
 	'\t$<var> = $<val1> + $<val2>',
@@ -225,7 +225,7 @@ replaceLine('DELAY', /^DELAY$/gm, '\tDELAY ()');
 replaceLine(
 	'DIVIDE',
 	new RegExp(
-		`^DIVIDE (?<val1>\\d+|${str}|${addrRef}), (?<val2>\\d+|${str}|${addrRef}), (?<var>${addrRef})`,
+		`^DIVIDE (?<val1>\\d+|${addrRef}), (?<val2>\\d+|${addrRef}), (?<var>${addrRef})`,
 		'gm',
 	),
 	'\t$<var> = $<val1> / $<val2>',
@@ -356,7 +356,7 @@ replaceLine(
 replaceLine(
 	'MULTIPLY',
 	new RegExp(
-		`^MULTIPLY (?<val1>\\d+|${str}|${addrRef}), (?<val2>\\d+|${str}|${addrRef}), (?<var>${addrRef})`,
+		`^MULTIPLY (?<val1>\\d+|${addrRef}), (?<val2>\\d+|${addrRef}), (?<var>${addrRef})`,
 		'gm',
 	),
 	'\t$<var> = $<val1> * $<val2>',
@@ -398,25 +398,13 @@ replaceLine(
 replaceLine(
 	'PRINT',
 	new RegExp(`^PRINT (?<message>${str}|${addrRef})$`, 'gm'),
-	(...args) => {
-		const { message } = args[args.length - 1];
-		if (message.startsWith('"')) {
-			`\tPRINT_APPEND (message: ${message.replace('"', '`').replace("'", '"')})`;
-		}
-		return `\tPRINT_APPEND (message: ${message})`;
-	},
+	`\tPRINT_APPEND (message: $<message>)`,
 );
 
 replaceLine(
 	'PRINT_CLEAR',
 	new RegExp(`^PRINT_CLEAR (?<message>${str}|${addrRef})$`, 'gm'),
-	(...args) => {
-		const { message } = args[args.length - 1];
-		if (message.startsWith('"')) {
-			`\tPRINT_CLEAR (message: ${message.replace('"', '`').replace("'", '"')})`;
-		}
-		return `\tPRINT_CLEAR (message: ${message})`;
-	},
+	`\tPRINT_CLEAR (message: $<message>)`,
 );
 
 replaceLine('PRINT_RETURN', /^PRINT_RETURN$/gm, '\tPRINT_RETURN ()');
@@ -561,7 +549,7 @@ mainBlock = mainBlock.replace(horizontalLine, (...args) => {
 
 	const optMatches = opts.match(new RegExp(opt, 'gm'));
 	for (const optMatch of optMatches!) {
-		newOpts += `${optMatch.replaceAll('"', '`')}`;
+		newOpts += optMatch;
 	}
 
 	return `\t${var1} = HORIZONTAL_MENU (opts: [${newOpts}])`;
@@ -596,11 +584,11 @@ mainBlock = mainBlock.replace(verticalLine, (...args) => {
 	} = args[args.length - 1];
 
 	let newOpts = '';
-	const newPrompt = prompt.replaceAll('"', '`');
+	const newPrompt = prompt;
 
 	const optMatches = opts.match(new RegExp(opt, 'gm'));
 	for (const optMatch of optMatches!) {
-		newOpts += `${optMatch.replaceAll('"', '`')}`;
+		newOpts += optMatch;
 	}
 
 	return `\t${var1} = VERTICAL_MENU (prompt: ${newPrompt}, opts: [${newOpts}])`;
@@ -921,6 +909,8 @@ mainBlock = mainBlock.replace(new RegExp(ifLine, 'gm'), (...args) => {
 });
 
 // #endregion Op Lines
+
+mainBlock = mainBlock.replaceAll('"', '`');
 
 const output =
 	'\n\n/* ENTRY POINTS */\n' +
