@@ -352,10 +352,11 @@ VAR curCharPlatinum = 0 // @6BC3
 VAR curCharAlignment = 0 // @6BD8
 VAR curCharXpAward = 0 // @6BF7
 VAR curCharXpBonusPerHp = 0 // @6BF9
-CONST char_enabled_not_found = 0
 CONST char_enabled_true = 1
-CONST char_enabled_false = 128
-VAR curCharEnabled = char_enabled_not_found // @6C00
+CONST char_enabled_read_false = 128
+CONST char_enabled_write_false = 0
+CONST char_enabled_not_found = 0
+VAR curCharEnabled = char_enabled_write_false // @6C00
 CONST char_combat_role_ally = 0
 CONST char_combat_role_ally_quick = 128
 CONST char_combat_role_hostile = 129
@@ -401,7 +402,7 @@ VAR mirrorDuel = 0 // @6DE6
 VAR gbvmNoCombatItems = 0 // @6DE3
 
 /* ENTRY POINTS */
-ECL_0_beforeMoveAfterLoad	GOTO ECL_0_9914<@49EB, @49FD, @49FE, @4A03, @4AC0, @6E79, @6E7B, @6E7D, @6E82, @9801, @9802>
+ECL_0_beforeMoveAfterLoad	GOTO ECL_0_9914<@49EB, @49FD, @49FE, @4A03, @4AC0, @6E79, @6E7B, @6E7D, @6E82, @9801, @9802, EXIT>
 ECL_0_onSearchLook	GOTO ECL_0_99EB
 ECL_0_beforeCamp	GOTO ECL_0_9A5E
 ECL_0_onCampInterrupt	GOTO ECL_0_9A93
@@ -576,7 +577,7 @@ ECL_29_onCampInterrupt	GOTO ECL_29_9C2B
 ECL_29_onLoad	GOTO ECL_29_9C46
 
 /* MAIN SCRIPT */
-ECL_0_9914<@49EB, @49FD, @49FE, @4A03, @4AC0, @6E79, @6E7B, @6E7D, @6E82, @9801, @9802>
+ECL_0_9914<@49EB, @49FD, @49FE, @4A03, @4AC0, @6E79, @6E7B, @6E7D, @6E82, @9801, @9802, EXIT>
 	@6E7B = 0
 	@6E7D = 11
 	IF @49C9 >= 14
@@ -621,7 +622,7 @@ ECL_0_99EB
 	@6E79 = RANDOM (max: 19)
 	IF @6E79 == 19
 		$str@9890 = `MAD MAN`
-		ECL_0_AF56()
+		ECL_0_AF56<@4A05, @9802, LOOP, RETURN>()
 	IF @4A05 != 0
 		GOTO ECL_0_AF9E
 	@9800 = 0
@@ -903,7 +904,7 @@ ECL_0_A064
 		GOTO refuseService<EXIT>
 	PRINT_CLEAR (message: `THE PRIESTS OF TYR WELCOME YOU TO THE TEMPLE.`)
 	$str@9890 = `MAD MAN`
-	ECL_0_AF56()
+	ECL_0_AF56<@4A05, @9802, LOOP, RETURN>()
 	IF @4A05 != 0
 		ECL_0_AFE3()
 	GOTO ECL_0_AA16<@6E79, EXIT>
@@ -1320,7 +1321,7 @@ ECL_0_AB9A
 	@4A05 = 0
 	$str@985E = `LIX.`
 	$str@9890 = `SKULLCRUSHER`
-	ECL_0_AF56()
+	ECL_0_AF56<@4A05, @9802, LOOP, RETURN>()
 	IF @4A05 == 1
 		GOTO ECL_0_AD2C
 	IF @4A13 != 0
@@ -1497,27 +1498,27 @@ enterCityWatch<RETURN>
 	DELAY ()
 	RETURN
 
-ECL_0_AF56
+ECL_0_AF56<@4A05, @9802, LOOP, RETURN>
 	@9802 = 0
-	GOTO ECL_0_AF5C
+	GOTO ECL_0_AF5C<@4A05, @9802, LOOP, RETURN>
 
-ECL_0_AF5C
+ECL_0_AF5C<@4A05, @9802, LOOP, RETURN>
 	LOAD_CHARACTER (charId: @9802)
 	IF curCharEnabled > 127 // false
-		GOTO ECL_0_AF77
+		GOTO ECL_0_AF77<@4A05, @9802, LOOP, RETURN>
 	IF curCharName == $str@9890
-		GOTO ECL_0_AF8C
-	GOTO ECL_0_AF77
+		GOTO ECL_0_AF8C<@4A05, LOOP, RETURN>
+	GOTO ECL_0_AF77<@4A05, @9802, LOOP, RETURN>
 
-ECL_0_AF77
+ECL_0_AF77<@4A05, @9802, LOOP, RETURN>
 	@9802 = 1 + @9802
 	IF @9802 < 8
-		GOTO ECL_0_AF5C
+		GOTO ECL_0_AF5C<@4A05, LOOP, RETURN>
 	RETURN
 
-ECL_0_AF8C
+ECL_0_AF8C<@4A05, @9802, LOOP, RETURN>
 	IF curCharNpc < 128 // is not NPC
-		GOTO ECL_0_AF77
+		GOTO ECL_0_AF77<@4A05, @9802, LOOP, RETURN>
 	@4A05 = 1
 	RETURN
 
