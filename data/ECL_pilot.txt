@@ -80,7 +80,7 @@ CONST pic_boat_dock_id = 41
 CONST pic_caged_child_id = 42
 CONST pic_pipes_id = 45
 CONST pic_medusa_id = 49
-CONST pic_(eyepatch_man?)_id = 50
+CONST pic_(eye_patch_man?)_id = 50
 CONST pic_lizard_man_id = 51
 CONST pic_(giant?)_id = 55
 CONST pic_(enemy?)_id = 56
@@ -138,7 +138,7 @@ CONST head_a_laurel_elven_id = 59
 CONST head_m_keffiyeh_beard_id = 61
 CONST head_m_keffiyeh_old_id = 62
 CONST head_f_brunette_smiling_id = 63
-CONST head_m_brunette_bowlcut_id = 67
+CONST head_m_brunette_bowl_cut_id = 67
 CONST head_a_brunette_elven_circlet_id = 68
 CONST head_m_brunette_serious_1_id = 69
 CONST head_m_brunette_earring_id = 70
@@ -152,7 +152,7 @@ CONST body_hairy_chest_id = 3
 CONST body_cross_armor_id = 4
 CONST body_coat_of_arms_armor_id = 5
 CONST body_blue_plate_id = 6
-CONST body_chainmail_id = 7
+CONST body_chain_mail_id = 7
 CONST body_ruffian_id = 8
 CONST body_worker_id = 9
 CONST body_leather_cape_1_id = 13
@@ -219,7 +219,7 @@ CONST monster_aides_id = 53
 CONST monster_corporal_id = 54
 CONST monster_hill_giant_id = 55
 CONST monster_fire_giant_id = 56
-CONST monster_lizardman_id = 57
+CONST monster_lizard_man_id = 57
 CONST monster_mutant_liz_man_id = 58
 CONST monster_giant_lizard_id = 59
 CONST monster_giant_snake_id = 60
@@ -237,7 +237,7 @@ CONST monster_ghoul_id = 72
 CONST monster_gnoll_id = 73
 CONST monster_giant_mantis_id = 74
 CONST monster_lv6_fighter_id = 75
-CONST monster_lv7_dw_figh_id = 76
+CONST monster_lv7_dw_fighter_id = 76
 CONST monster_lv7_thief_id = 77
 CONST monster_lv2_cleric_id = 78
 CONST monster_diane_id = 79
@@ -603,7 +603,7 @@ ECL_0_9C2E
 	NEW_ECL (eclId: 27)
 
 CONST harbor_master_head_id = head_m_old_bald_id
-CONST harbor_master_body_id = body_chainmail_id
+CONST harbor_master_body_id = body_chain_mail_id
 
 ECL_0_9C43
 	IF partyPosFacing != dir_north
@@ -888,7 +888,7 @@ ECL_0_A413
 	EXIT
 
 CONST croupier_head_id = head_m_blonde_smiling_id
-CONST croupier_body_id = body_chainmail_id
+CONST croupier_body_id = body_chain_mail_id
 
 ECL_0_A452
 	pictureLoading = croupier_head_id
@@ -944,7 +944,7 @@ ECL_0_A67B
 	GOTO ECL_0_A609
 
 CONST tavern_brawler_head_id = head_a_old_frowning_id
-CONST tavern_brawler_body_id = body_chainmail_id
+CONST tavern_brawler_body_id = body_chain_mail_id
 
 ECL_0_A696
 	pictureLoading = tavern_brawler_head_id
@@ -1313,7 +1313,7 @@ ECL_0_AF1F
 	RETURN
 
 CONST city_watch_head_id = head_m_brunette_grumpy_id
-CONST city_watch_body_id = body_chainmail_id
+CONST city_watch_body_id = body_chain_mail_id
 
 ECL_0_AF43
 	pictureLoading = city_watch_head_id
