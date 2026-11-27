@@ -1797,7 +1797,7 @@ ECL_1_9C50
 	IF @6E7B == 10
 		GOTO ECL_1_9D6E
 	partyPosMapY = 1 + partyPosMapY
-	CALL (opAddr: @2C90)
+	CALL (opAddr: op_refresh_view)
 	ECL_1_B5F8()
 	@6E7B = 1 + @6E7B
 	GOTO ECL_1_9C50
@@ -1894,7 +1894,7 @@ ECL_1_A0F1
 	PRINT_CLEAR (message: `YOU RUN AWAY FROM THE BATTLE BACK TO THE MERCHANT'S AREA.  FROM BEHIND YOU HEAR PEOPLE CALLING YOU NAMES LIKE 'PANSY' AND 'WIMP.'`)
 	partyPosMapX = 8
 	partyPosMapY = 10
-	CALL (opAddr: @2C90)
+	CALL (opAddr: op_refresh_view)
 	GOTO ECL_1_B59A
 
 ECL_1_A169
@@ -1917,7 +1917,7 @@ ECL_1_A27C
 	partyPosFacing = 2
 	partyPosMapX = 7
 	partyPosMapY = 6
-	CALL (opAddr: @2C90)
+	CALL (opAddr: op_refresh_view)
 	IF @4A11 != 0
 		GOTO ECL_1_B59A
 
@@ -2169,7 +2169,7 @@ ECL_1_ADB3
 	partyPosMapX = 7
 	partyPosMapY = 11
 	partyPosFacing = 0
-	CALL (opAddr: @2C90)
+	CALL (opAddr: op_refresh_view)
 	PRINT_CLEAR (message: `YOU HAVE RUN OUTSIDE THE CAPTAINS QUARTERS.  AN ALARM GOES OFF IN THE DISTANCE.  YOU SEE A LARGE GROUP OF ANGRY BUCCANEERS CHARGING TOWARD YOU!`)
 	GOTO ECL_1_A426
 
@@ -2192,7 +2192,7 @@ ECL_1_AEDF
 	partyPosMapX = 7
 	partyPosMapY = 11
 	partyPosFacing = 0
-	CALL (opAddr: @2C90)
+	CALL (opAddr: op_refresh_view)
 	GOTO ECL_1_B59A
 
 ECL_1_AFA2
@@ -2346,7 +2346,7 @@ ECL_1_B53B
 	partyPosMapX = 7
 	partyPosMapY = 6
 	partyPosFacing = 0
-	CALL (opAddr: @2C90)
+	CALL (opAddr: op_refresh_view)
 	GOTO ECL_1_B59A
 
 ECL_1_B59A
@@ -2359,13 +2359,13 @@ ECL_1_B5A5
 	IF @49F1 != 12
 		GOTO ECL_1_B5BE
 	partyPosMapY = 10
-	CALL (opAddr: @2C90)
+	CALL (opAddr: op_refresh_view)
 	GOTO ECL_1_B59A
 
 ECL_1_B5BE
 	partyPosMapX = @49F0
 	partyPosMapY = @49F1
-	CALL (opAddr: @2C90)
+	CALL (opAddr: op_refresh_view)
 	GOTO ECL_1_B59A
 
 ECL_1_B5D4
@@ -2417,7 +2417,7 @@ ECL_1_B6A0
 	partyPosMapY = 0
 	partyPosMapX = 8
 	partyPosFacing = 2
-	CALL (opAddr: @2C90)
+	CALL (opAddr: op_refresh_view)
 	@6E79 = 0
 
 ECL_1_B6C7
@@ -2458,7 +2458,7 @@ ECL_2_9957
 ECL_2_995B
 	IF leaveMap == 0
 		EXIT
-	CALL (opAddr: @C01E)
+	CALL (opAddr: op_move_forward)
 	moveLocked = 255
 	SWITCH partyPosFacing
 		CASE 0
@@ -2872,7 +2872,7 @@ ECL_2_A2E8
 	ECL_2_ABAE()
 	@4A73 = 255
 	pictureLoading = 255
-	CALL (opAddr: @2C90)
+	CALL (opAddr: op_refresh_view)
 	EXIT
 
 ECL_2_A315
@@ -2944,7 +2944,7 @@ ECL_2_A48E
 	PRINT_CLEAR (message: `YOU FLEE THE ROOM.`)
 	partyPosMapX = @49F0
 	partyPosMapY = @49F1
-	CALL (opAddr: @2C90)
+	CALL (opAddr: op_refresh_view)
 	pictureLoading = 255
 	EXIT
 
@@ -2979,7 +2979,7 @@ ECL_2_A55F
 	ECL_2_ABAE()
 	@4A73 = 255
 	pictureLoading = 255
-	CALL (opAddr: @2C90)
+	CALL (opAddr: op_refresh_view)
 	EXIT
 
 ECL_2_A5D2
@@ -3030,7 +3030,7 @@ ECL_2_A7D0
 	IF @4A75 != 0
 		EXIT
 	partyPosFacing = 2
-	CALL (opAddr: @2C90)
+	CALL (opAddr: op_refresh_view)
 	PRINT_CLEAR (message: `THIS ROOM IS DIMLY LIT WITH GUTTERING TORCHES.`)
 	SETUP_MONSTER (spriteId: 6, maxDistance: 1, picId: 6)
 	PRINT_CLEAR (message: `YOU SEE THE CHIEF OF THE HOBGOBLINS, A HUGE OGRE. AS YOU ENTER, HE RISES TO HIS FULL, TEN FEET OF HEIGHT; HIS HEAD WREATHED IN THE FLICKERING SHADOWS.`)
@@ -3148,7 +3148,7 @@ ECL_2_AB54
 	partyPosMapY = 13
 
 ECL_2_AB60
-	CALL (opAddr: @2C90)
+	CALL (opAddr: op_refresh_view)
 	EXIT
 
 ECL_2_AB65
@@ -3182,7 +3182,7 @@ ECL_2_AC6D
 ECL_2_ACB1
 	partyPosMapX = 0
 	partyPosFacing = 1
-	CALL (opAddr: @2C90)
+	CALL (opAddr: op_refresh_view)
 	ECL_2_ABAE()
 	@6E79 = RANDOM (max: 99)
 	IF @6E79 < curCharThiefSkills[7]
@@ -3222,7 +3222,7 @@ ECL_2_AD90
 		GOTO ECL_2_ADF6
 	partyPosMapX = 1
 	partyPosFacing = 3
-	CALL (opAddr: @2C90)
+	CALL (opAddr: op_refresh_view)
 	PRINT_CLEAR (message: `YOUR FRIEND FLOATS OUT OF THE WELL.`)
 	EXIT
 
@@ -3291,13 +3291,13 @@ ECL_2_B049
 	partyPosMapY = 11
 	partyPosFacing = 0
 	@4A74 = 1
-	CALL (opAddr: @2C90)
+	CALL (opAddr: op_refresh_view)
 	pictureLoading = 255
 	EXIT
 
 ECL_2_B0BE
 	partyPosFacing = 3
-	CALL (opAddr: @2C90)
+	CALL (opAddr: op_refresh_view)
 	pictureLoading = 52
 	PICTURE (blockId: 8)
 	RETURN
@@ -3306,7 +3306,7 @@ ECL_2_B0D2
 	partyPosMapX = 1
 	pictureLoading = 255
 	PICTURE (blockId: 255)
-	CALL (opAddr: @2C90)
+	CALL (opAddr: op_refresh_view)
 	RETURN
 
 ECL_2_B0E6
@@ -3400,7 +3400,7 @@ ECL_3_9A80
 	IF leaveMap == 0
 		GOTO ECL_3_9AAA
 	@6E79 = db_$9AA6[partyPosFacing]
-	CALL (opAddr: @C01E)
+	CALL (opAddr: op_move_forward)
 	NEW_ECL (eclId: @6E79)
 
 CONST ECL_3_db_$9AA6 = 4
@@ -3549,7 +3549,7 @@ ECL_3_9BC7
 
 ECL_3_9BF2
 	SPRITE_OFF ()
-	CALL (opAddr: @2C90)
+	CALL (opAddr: op_refresh_view)
 	EXIT
 
 ECL_3_9BF8
@@ -3806,7 +3806,7 @@ ECL_3_A2F5
 	@6DCB = 0
 	partyPosFacing = 1
 	PRINT_CLEAR (message: `AS YOU BREAK THROUGH THE DOOR INTO A WELL FITTED APARTMENT, TWO GIANTS COME LUMBERING UP TO YOU. YOU TURN TO FACE THEM.`)
-	CALL (opAddr: @2C90)
+	CALL (opAddr: op_refresh_view)
 	ECL_3_9A37()
 	@6E82 = ENCOUNTER (displayMonsterId: 55, distanceRequirement: 1, displayPicId: 55, combatResp: 0, waitResp: 3, fleeResp: 0, parlayResp: 3, failFleeResp: 4, message1: `THE GIANTS STAND IN FRONT OF YOU LOOKING SUSPICIOUS.`, message2: `THE GIANTS ARE WALKING TOWARD YOU.`, message3: ``, partyFlee: 12, monsterFlee: 12)
 	SWITCH @6E82
@@ -4020,7 +4020,7 @@ ECL_3_AA3E
 	IF $str@9836 != `RHODIA`
 		GOTO ECL_3_AABE
 	PRINT_CLEAR (message: `'ALL RIGHT, THEN. PASS!' AND WITH THAT THE GATES SWING OPEN AND YOU PASS THROUGH THE GATE.`)
-	CALL (opAddr: @C01E)
+	CALL (opAddr: op_move_forward)
 	moveLocked = 255
 	EXIT
 
@@ -4065,7 +4065,7 @@ ECL_3_AB8B
 	IF 0 != @6E82
 		EXIT
 	partyPosFacing = 1
-	CALL (opAddr: @2C90)
+	CALL (opAddr: op_refresh_view)
 	PRINT_CLEAR (message: `TWO GIANTS COME BOUNDING OUT OF A DOORWAY. ONE STAYS BY THE DOOR.`)
 
 ECL_3_ABDF
@@ -4384,7 +4384,7 @@ ECL_4_9A80
 	AND @4A65, 254, @4A65
 	IF leaveMap == 0
 		EXIT
-	CALL (opAddr: @C01E)
+	CALL (opAddr: op_move_forward)
 	moveLocked = 255
 	NEW_ECL (eclId: 3)
 
@@ -4442,7 +4442,7 @@ ECL_4_9B32
 
 ECL_4_9B5D
 	SPRITE_OFF ()
-	CALL (opAddr: @2C90)
+	CALL (opAddr: op_refresh_view)
 	EXIT
 
 ECL_4_9B63
@@ -5214,7 +5214,7 @@ ECL_5_9A80
 	IF @49C5 == 6
 		@6E82 = db_$9AF7[partyPosFacing]
 	LOAD_FILES (fileId: @6E82, unused: 2, loadTiles: 255)
-	CALL (opAddr: @C01E)
+	CALL (opAddr: op_move_forward)
 	moveLocked = 255
 	EXIT
 
@@ -5260,7 +5260,7 @@ ECL_5_9B4B
 		EXIT
 	PRINT_APPEND (message: ` AS YOU SLICE THROUGH SOMEONE IS PRICKED BY A THORN.`)
 	DAMAGE (attack: 128, dice: 1, sides: 1, bonus: 200, value: 0)
-	CALL (opAddr: @C01E)
+	CALL (opAddr: op_move_forward)
 	moveLocked = 255
 	EXIT
 
@@ -5315,7 +5315,7 @@ ECL_5_9C4E
 
 ECL_5_9C79
 	SPRITE_OFF ()
-	CALL (opAddr: @2C90)
+	CALL (opAddr: op_refresh_view)
 	EXIT
 
 ECL_5_9C7F
@@ -5333,7 +5333,7 @@ ECL_5_9C8A
 	partyPosMapX = db_$9CE1[@6E82]
 	partyPosMapY = db_$9CE5[@6E82]
 	LOAD_FILES (fileId: @6E79, unused: 2, loadTiles: 255)
-	CALL (opAddr: @2C90)
+	CALL (opAddr: op_refresh_view)
 	EXIT
 
 CONST ECL_5_db_$9CE1 = 12
@@ -5527,7 +5527,7 @@ ECL_5_A19C
 	IF $str@9836 != `RHODIA`
 		GOTO ECL_5_A21C
 	PRINT_CLEAR (message: `'ALL RIGHT, THEN. PASS!' AND WITH THAT THE GATES SWING OPEN AND YOU PASS THROUGH THE GATE.`)
-	CALL (opAddr: @C01E)
+	CALL (opAddr: op_move_forward)
 	moveLocked = 255
 	EXIT
 
@@ -5863,7 +5863,7 @@ ECL_6_9B3A
 	@49E8 = 0
 
 ECL_6_9B8B
-	CALL (opAddr: @C01E)
+	CALL (opAddr: op_move_forward)
 	moveLocked = 255
 	NEW_ECL (eclId: @6E79)
 
@@ -5919,7 +5919,7 @@ ECL_6_9C13
 
 ECL_6_9C3E
 	SPRITE_OFF ()
-	CALL (opAddr: @2C90)
+	CALL (opAddr: op_refresh_view)
 	EXIT
 
 ECL_6_9C44
@@ -6091,7 +6091,7 @@ ECL_6_A38B
 	IF 0 != @6E82
 		EXIT
 	partyPosFacing = 0
-	CALL (opAddr: @2C90)
+	CALL (opAddr: op_refresh_view)
 	ECL_6_9AF1()
 	pictureLoading = 14
 	SETUP_MONSTER (spriteId: 29, maxDistance: 2, picId: 7)
@@ -6486,7 +6486,7 @@ ECL_7_9A91
 
 ECL_7_9ABC
 	SPRITE_OFF ()
-	CALL (opAddr: @2C90)
+	CALL (opAddr: op_refresh_view)
 	EXIT
 
 ECL_7_9AC2
@@ -6615,7 +6615,7 @@ ECL_7_9CFC
 	DAMAGE (attack: 224, dice: 3, sides: 6, bonus: 0, value: 0)
 	partyPosMapX = 11
 	partyPosMapY = 5
-	CALL (opAddr: @2C90)
+	CALL (opAddr: op_refresh_view)
 
 ECL_7_9D6A
 	IF @4A02 != 0
@@ -6829,7 +6829,7 @@ ECL_7_A455
 	ECL_7_993D()
 	PRINT_CLEAR (message: `IN THE CENTER OF THE ROOM IS A GLOWING POOL. AN ANCIENT BRONZE DRAGON, SURROUNDED BY A FIERY AURA, RISES FROM WHERE IT WAS COILED NEARBY.`)
 	ECL_7_993D()
-	CALL (opAddr: @2C90)
+	CALL (opAddr: op_refresh_view)
 	@4A6D = 8 | @4A6D
 
 ECL_7_A558
@@ -7045,7 +7045,7 @@ ECL_8_9A52
 	@4A04 = 1 + @4A04
 	DELAY ()
 	partyPosFacing = 2
-	CALL (opAddr: @2C90)
+	CALL (opAddr: op_refresh_view)
 	IF @4AC8 == 128
 		GOTO ECL_8_9ABD
 	PRINT_CLEAR (message: `YOU ENTER THE CITY HALL.  AS YOU FACE DOWN THE HALLWAY, YOU SEE A GUARDED DOOR.`)
@@ -7699,7 +7699,7 @@ ECL_8_B444
 	partyPosFacing = 0
 	partyPosMapX = 4
 	partyPosMapY = 5
-	CALL (opAddr: @2C90)
+	CALL (opAddr: op_refresh_view)
 	EXIT
 
 ECL_8_B45B
@@ -7738,7 +7738,7 @@ ECL_8_B4BE
 	partyPosFacing = 1
 	ECL_8_B570()
 	partyPosMapX = 5
-	CALL (opAddr: @2C90)
+	CALL (opAddr: op_refresh_view)
 	EXIT
 
 ECL_8_B555
@@ -7754,9 +7754,9 @@ ECL_8_B566
 	RETURN
 
 ECL_8_B570
-	CALL (opAddr: @2C90)
+	CALL (opAddr: op_refresh_view)
 	@03DE = 8
-	CALL (opAddr: @BA03)
+	CALL (opAddr: op_play_sound)
 	DELAY ()
 
 ECL_8_B57F
@@ -8106,7 +8106,7 @@ ECL_9_9C68
 	@4A64 = 0
 
 ECL_9_9C9C
-	CALL (opAddr: @C01E)
+	CALL (opAddr: op_move_forward)
 	NEW_ECL (eclId: @6E79)
 
 ECL_9_9CA4
@@ -8321,7 +8321,7 @@ ECL_9_A06E
 
 ECL_9_A0A1
 	SPRITE_OFF ()
-	CALL (opAddr: @2C90)
+	CALL (opAddr: op_refresh_view)
 	EXIT
 
 ECL_9_A0A7
@@ -8368,7 +8368,7 @@ ECL_9_A16A
 
 ECL_9_A188
 	moveLocked = 255
-	CALL (opAddr: @2C90)
+	CALL (opAddr: op_refresh_view)
 	GOTO ECL_9_9D20
 
 CONST ECL_9_db_$A196 = 4
@@ -8734,7 +8734,7 @@ ECL_9_AC3C
 
 ECL_9_AC97
 	partyPosMapY = partyPosMapY - 1
-	CALL (opAddr: @2C90)
+	CALL (opAddr: op_refresh_view)
 	DELAY ()
 	IF partyPosMapY > 5
 		GOTO ECL_9_AC97
@@ -9036,7 +9036,7 @@ ECL_10_9A72
 	IF @4A00 == 0
 		@4A16 = @C059
 	@C059 = 11
-	CALL (opAddr: @2C90)
+	CALL (opAddr: op_refresh_view)
 	@49FB = 0
 	IF @4A00 > 0
 		EXIT
@@ -9087,15 +9087,15 @@ ECL_10_9B93
 	IF @49C9 < 14
 		PRINT_APPEND (message: `THE SKY DARKENS. `)
 	@49FD = 8
-	CALL (opAddr: @2C90)
+	CALL (opAddr: op_refresh_view)
 	PRINT_APPEND (message: `FIERCE GUSTS OF WIND HOWL PAST AND THE GROUND SHAKES AS PEALS OF THUNDER ROCK THE LAND.  THE SWIRLING MURK HIDES WHAT LIES AHEAD.`)
 	ECL_10_B672()
 	@49FD = 15
-	CALL (opAddr: @2C90)
+	CALL (opAddr: op_refresh_view)
 	@49FD = 8
-	CALL (opAddr: @2C90)
+	CALL (opAddr: op_refresh_view)
 	@03DE = 10
-	CALL (opAddr: @BA03)
+	CALL (opAddr: op_play_sound)
 	PRINT_CLEAR (message: `UNTIL AN EXPLOSION OF LIGHTNING REVEALS THE NIGHTMARE SCENE OF A GRAVEYARD TURNED UPSIDE DOWN.`)
 	@4A00 = 1 + @4A00
 	EXIT
@@ -9859,7 +9859,7 @@ ECL_10_B18A
 ECL_10_B1C9
 	partyPosMapX = 14
 	partyPosFacing = 3
-	CALL (opAddr: @2C90)
+	CALL (opAddr: op_refresh_view)
 	IF @4A41 > 255
 		EXIT
 
@@ -9867,7 +9867,7 @@ ECL_10_B1E1
 	IF @4A41 >= 250
 		GOTO ECL_10_B312
 	@49FD = 15
-	CALL (opAddr: @2C90)
+	CALL (opAddr: op_refresh_view)
 	PRINT_CLEAR (message: `THE CHAMBER LIGHTS UP TO REVEAL A TALL, PALE MAN WITH VERY WHITE TEETH.`)
 	SETUP_MONSTER (spriteId: 23, maxDistance: 1, picId: 23)
 	APPROACH ()
@@ -10069,7 +10069,7 @@ ECL_10_B60E
 	@49FB = 1
 
 ECL_10_B634
-	CALL (opAddr: @2C90)
+	CALL (opAddr: op_refresh_view)
 	EXIT
 
 ECL_10_B639
@@ -10316,7 +10316,7 @@ ECL_11_9C72
 
 ECL_11_9CA5
 	CLEAR_MONSTERS ()
-	CALL (opAddr: @8000)
+	CALL (opAddr: op_start_mirror)
 	COMBAT ()
 	EXIT
 
@@ -10538,7 +10538,7 @@ ECL_11_A119
 	partyPosMapX = db_$A168[@9802]
 	partyPosMapY = db_$A16C[@9802]
 	PRINT_CLEAR (message: ``)
-	CALL (opAddr: @2C90)
+	CALL (opAddr: op_refresh_view)
 	NEW_ECL (eclId: 0)
 	EXIT
 
@@ -10911,7 +10911,7 @@ ECL_13_9FFE
 
 ECL_13_A01B
 	partyPosFacing = 0
-	CALL (opAddr: @2C90)
+	CALL (opAddr: op_refresh_view)
 	SETUP_MONSTER (spriteId: 0, maxDistance: 2, picId: 0)
 	PRINT_CLEAR (message: `BEFORE YOU IS A HORDE OF KOBOLDS. BEHIND THEM ARE TWO MEN AND AN ANCIENT KOBOLD ON A WOODEN THRONE.`)
 	APPROACH ()
@@ -11073,7 +11073,7 @@ ECL_13_A509
 		EXIT
 
 	partyPosFacing = 2
-	CALL (opAddr: @2C90)
+	CALL (opAddr: op_refresh_view)
 	PRINT_CLEAR (message: `YOU SEE A BRASS BOTTLE JAMMED INTO A CRACK HERE.`)
 	ECL_13_B49E()
 	@6E79 = HORIZONTAL_MENU (opts: [`LEAVE IT`, `PULL IT OUT`])
@@ -11100,7 +11100,7 @@ ECL_13_A570
 ECL_13_A633
 	PRINT_CLEAR (message: `'FOOLS, SUMMON ME ONLY WHEN A VAMPIRE IS NEAR OR FACE MY WRATH.' HE RETURNS TO THE BOTTLE.`)
 	SPRITE_OFF ()
-	CALL (opAddr: @2C90)
+	CALL (opAddr: op_refresh_view)
 	DELAY ()
 	CLEAR_MONSTERS ()
 	TREASURE (cp: 0, sp: 0, ep: 0, gp: 0, pp: 0, gems: 0, jewels: 0, itemId: 50)
@@ -11136,7 +11136,7 @@ ECL_13_A720
 	PRINT_CLEAR (message: `YOU HEAR MUFFLED SOUNDS AND TURN TO INVESTIGATE.`)
 	ECL_13_B4ED()
 	partyPosFacing = 0
-	CALL (opAddr: @2C90)
+	CALL (opAddr: op_refresh_view)
 
 ECL_13_A768
 	pictureLoading = 67
@@ -11219,7 +11219,7 @@ ECL_13_A990
 ECL_13_A9DA
 	partyPosMapX = @49F0
 	partyPosMapY = @49F1
-	CALL (opAddr: @2C90)
+	CALL (opAddr: op_refresh_view)
 	EXIT
 
 ECL_13_A9ED
@@ -11232,7 +11232,7 @@ ECL_13_AA0F
 		EXIT
 	PRINT_CLEAR (message: `THE NOISE HAS DISTURBED SOMETHING. WITH A BEATING OF WINGS, A HUGE BEAST LANDS UPON YOU.`)
 	partyPosFacing = 1
-	CALL (opAddr: @2C90)
+	CALL (opAddr: op_refresh_view)
 	SETUP_MONSTER (spriteId: 121, maxDistance: 2, picId: 121)
 	DELAY ()
 	APPROACH ()
@@ -11402,7 +11402,7 @@ ECL_13_AEB7
 ECL_13_AEBE
 	partyPosMapX = @49F0
 	partyPosMapY = @49F1
-	CALL (opAddr: @2C90)
+	CALL (opAddr: op_refresh_view)
 	EXIT
 
 ECL_13_AED1
@@ -11433,7 +11433,7 @@ ECL_13_AEDA
 ECL_13_AF29
 	@6E7A = 1
 	IF @6E79 == 0
-		CALL (opAddr: @2C90)
+		CALL (opAddr: op_refresh_view)
 	IF @6E79 == 0
 		DELAY ()
 	IF @6E79 == 0
@@ -11451,7 +11451,7 @@ ECL_13_AF3E
 			ECL_13_AF7F()
 		CASE 3
 			ECL_13_AF89()
-	CALL (opAddr: @2C90)
+	CALL (opAddr: op_refresh_view)
 	DELAY ()
 	@6E7A = 1 + @6E7A
 	GOTO ECL_13_AF3E
@@ -11542,7 +11542,7 @@ ECL_13_B1DC
 	partyPosMapX = 4
 	partyPosMapY = 3
 	partyPosFacing = 3
-	CALL (opAddr: @2C90)
+	CALL (opAddr: op_refresh_view)
 	PRINT_CLEAR (message: `THE KOBOLDS HERD YOU TOWARD YOUR PRISON. SOME NAB BITS OF YOUR EQUIPMENT AND LEAVE.`)
 	ROB (allParty: 1, coinPct: 25, unused: 10)
 	@6E7E = 22
@@ -11586,7 +11586,7 @@ ECL_13_B32C
 	@6E79 = RANDOM (max: 5)
 	partyPosMapX = db_$B582[@6E79]
 	partyPosMapY = db_$B588[@6E79]
-	CALL (opAddr: @2C90)
+	CALL (opAddr: op_refresh_view)
 	PRINT_CLEAR (message: `THE KOBOLDS CHASE FOR A WHILE, BUT YOU ESCAPE.`)
 	EXIT
 
@@ -11594,7 +11594,7 @@ ECL_13_B371
 	partyPosMapX = 11
 	partyPosMapY = 14
 	partyPosFacing = 1
-	CALL (opAddr: @2C90)
+	CALL (opAddr: op_refresh_view)
 	EXIT
 
 ECL_13_B388
@@ -11645,7 +11645,7 @@ ECL_13_B45A
 	PRINT_CLEAR (message: `KOBOLDS APPEAR AND BOMBARD YOU WITH ROCKS.`)
 	DAMAGE (attack: 7, dice: 1, sides: 4, bonus: 1, value: 50)
 	SPRITE_OFF ()
-	CALL (opAddr: @2C90)
+	CALL (opAddr: op_refresh_view)
 	PICTURE (blockId: 255)
 	EXIT
 
@@ -11658,7 +11658,7 @@ ECL_13_B4AE
 	ROB (allParty: 1, coinPct: 100, unused: 255)
 	partyPosMapX = 0
 	partyPosMapY = 0
-	CALL (opAddr: @2C90)
+	CALL (opAddr: op_refresh_view)
 	EXIT
 
 ECL_13_B4ED
@@ -11803,7 +11803,7 @@ ECL_14_9964
 	NEW_ECL (eclId: 26)
 
 ECL_14_9979
-	CALL (opAddr: @C01E)
+	CALL (opAddr: op_move_forward)
 	gbvmDiskNum = 1
 	NEW_ECL (eclId: 24)
 	EXIT
@@ -12609,7 +12609,7 @@ ECL_14_B23E
 ECL_14_B2D9
 	@6E7A = 1
 	IF @6E79 == 0
-		CALL (opAddr: @2C90)
+		CALL (opAddr: op_refresh_view)
 	IF @6E79 == 0
 		DELAY ()
 	IF @6E79 == 0
@@ -12627,7 +12627,7 @@ ECL_14_B2EE
 			ECL_14_B32F()
 		CASE 3
 			ECL_14_B339()
-	CALL (opAddr: @2C90)
+	CALL (opAddr: op_refresh_view)
 	DELAY ()
 	@6E7A = 1 + @6E7A
 	GOTO ECL_14_B2EE
@@ -12881,11 +12881,11 @@ ECL_15_99E9
 
 ECL_15_9AE5
 	SPRITE_OFF ()
-	CALL (opAddr: @2C90)
+	CALL (opAddr: op_refresh_view)
 	EXIT
 
 ECL_15_9AEB
-	CALL (opAddr: @C01E)
+	CALL (opAddr: op_move_forward)
 	@6E7F = db_$9B09[partyPosFacing]
 	gbvmDiskNum = db_$9B0D[partyPosFacing]
 	NEW_ECL (eclId: @6E7F)
@@ -13829,7 +13829,7 @@ ECL_16_9BD8
 
 ECL_16_9BE4
 	SPRITE_OFF ()
-	CALL (opAddr: @2C90)
+	CALL (opAddr: op_refresh_view)
 
 ECL_16_9BE9
 	EXIT
@@ -13898,7 +13898,7 @@ ECL_16_9D41
 	@4A61 = @4A61 | 254
 	SPRITE_OFF ()
 	moveLocked = 255
-	CALL (opAddr: @2C90)
+	CALL (opAddr: op_refresh_view)
 	@6E7F = 4
 	ECL_16_9971()
 	IF @6E7C < 2
@@ -13991,7 +13991,7 @@ ECL_16_9F8D
 
 ECL_16_A005
 	SPRITE_OFF ()
-	CALL (opAddr: @2C90)
+	CALL (opAddr: op_refresh_view)
 	DELAY ()
 	DELAY ()
 	@4A52 = 254 & @4A52
@@ -14060,7 +14060,7 @@ ECL_16_A337
 	@6DCB = 0
 	moraleThreshold = 100
 	CLEAR_MONSTERS ()
-	CALL (opAddr: @8001)
+	CALL (opAddr: op_start_solo_fight)
 	LOAD_MONSTER (monsterId: 95, copies: 1, cpicId: 57)
 	COMBAT ()
 	IF gbvmCombatResult == 129
@@ -14580,7 +14580,7 @@ ECL_17_9ABA
 	RETURN
 
 ECL_17_9AD5
-	CALL (opAddr: @C018)
+	CALL (opAddr: op_get_wall_ahead)
 	@4A00 = 0
 	@6E82 = 4 & @4A7C
 	IF 0 != @6E82
@@ -14594,7 +14594,7 @@ ECL_17_9AD5
 	@4A00 = @6E82 + @4A00
 
 ECL_17_9B20
-	CALL (opAddr: @C018)
+	CALL (opAddr: op_get_wall_ahead)
 	@6E82 = PARTY_STRENGTH ()
 	@6E81 = 56 - @4A00
 	IF @6E82 > @6E81
@@ -14638,7 +14638,7 @@ ECL_17_9BFD
 	partyPosMapY = db_$ACC1[@6E82]
 	partyPosFacing = 1
 	SPRITE_OFF ()
-	CALL (opAddr: @2C90)
+	CALL (opAddr: op_refresh_view)
 	ECL_17_9C26()
 	compareResult = COMPARE (1, 1)
 	RETURN
@@ -14661,7 +14661,7 @@ ECL_17_9C5B
 	PRINT_APPEND (message: ` YOU SPIN TO FACE THE SOUND.`)
 	ECL_17_9D7F()
 	partyPosFacing = 3
-	CALL (opAddr: @2C90)
+	CALL (opAddr: op_refresh_view)
 	RETURN
 
 ECL_17_9C8D
@@ -14714,9 +14714,9 @@ ECL_17_9D37
 	IF @6E82 == 255
 		RETURN
 	IF @6E82 == partyPosFacing
-		CALL (opAddr: @C01E)
+		CALL (opAddr: op_move_forward)
 	partyPosFacing = @6E82
-	CALL (opAddr: @2C90)
+	CALL (opAddr: op_refresh_view)
 	DELAY ()
 	DELAY ()
 	compareResult = COMPARE (1, 0)
@@ -14821,7 +14821,7 @@ ECL_17_9ECD
 
 ECL_17_9ED1
 	SPRITE_OFF ()
-	CALL (opAddr: @2C90)
+	CALL (opAddr: op_refresh_view)
 	EXIT
 
 ECL_17_9ED7
@@ -14937,7 +14937,7 @@ ECL_17_A1BC
 
 ECL_17_A1C2
 	SPRITE_OFF ()
-	CALL (opAddr: @2C90)
+	CALL (opAddr: op_refresh_view)
 	pictureLoading = 255
 	@6E82 = 4 & @4A7C
 	IF 0 != @6E82
@@ -15030,11 +15030,11 @@ ECL_17_A65A
 	SPRITE_OFF ()
 	ECL_17_9CFF()
 	partyPosFacing = 1
-	CALL (opAddr: @2C90)
+	CALL (opAddr: op_refresh_view)
 	PRINT_CLEAR (message: `YOU ARE TREATED AS HONORED GUESTS FOR THE REST OF THE DAY. THERE ARE CONTESTS OF STRENGTH AND SKILL IN YOUR HONOR.`)
 	ECL_17_9D7F()
 	@49FD = 8
-	CALL (opAddr: @2C90)
+	CALL (opAddr: op_refresh_view)
 	PRINT_CLEAR (message: `AS NIGHT FALLS, THE NOMADS BUILD A HUGE CAMPFIRE IN THE CENTER OF THE CAMP. THE WHOLE TRIBE GATHERS FOR THE FEAST. AFTER THE FEAST THERE IS DANCING AND WILD CELEBRATIONS.`)
 	ECL_17_9D7F()
 	pictureLoading = 74
@@ -15061,7 +15061,7 @@ ECL_17_A98A
 	PRINT_CLEAR (message: `AS THE GUARD TURNS TO ESCORT YOU BACK TO YOUR TENT, YOU SMILE AND STICK HIM IN THE BACK. WITH A CHOKED CRY HE COLLAPSES.`)
 	ECL_17_9D7F()
 	SPRITE_OFF ()
-	CALL (opAddr: @2C90)
+	CALL (opAddr: op_refresh_view)
 	PRINT_CLEAR (message: `HOWEVER, AWAKENED BY THE TALK SOMEONE IN THE TENT HAS SEEN YOUR ACT AND A SCREAM GOES OUT 'TREACHERY! THEY HAVE SLAIN SAMIR!' THE CAMP BEGINS TO STIR.`)
 	ECL_17_9D7F()
 	@6DCB = 2
@@ -15909,7 +15909,7 @@ ECL_18_99A5
 ECL_18_99B9
 	IF leaveMap == 0
 		GOTO ECL_18_9A1A
-	CALL (opAddr: @C01E)
+	CALL (opAddr: op_move_forward)
 	moveLocked = 255
 	@49FB = 0
 	SWITCH partyPosFacing
@@ -16177,7 +16177,7 @@ ECL_18_9E23
 	pictureLoading = 255
 	partyPosMapX = db_$B258[@6E79]
 	partyPosMapY = @6E79
-	CALL (opAddr: @2C90)
+	CALL (opAddr: op_refresh_view)
 	@49FB = 1
 
 ECL_18_9E68
@@ -16518,7 +16518,7 @@ ECL_18_A985
 
 ECL_18_A9D2
 	CLEAR_MONSTERS ()
-	CALL (opAddr: @8001)
+	CALL (opAddr: op_start_solo_fight)
 	LOAD_MONSTER (monsterId: 41, copies: 1, cpicId: 16)
 	COMBAT ()
 	@4A37 = 1
@@ -16603,7 +16603,7 @@ ECL_18_AC34
 	partyPosMapX = 2
 	partyPosMapY = 10
 	partyPosFacing = 2
-	CALL (opAddr: @2C90)
+	CALL (opAddr: op_refresh_view)
 	ROB (allParty: 1, coinPct: 100, unused: 50)
 	@49FB = 1
 	PRINT_CLEAR (message: `YOU HAD A GREAT TIME UNTIL YOU ALL PASSED OUT. YOUR PURSE IS MISSING.`)
@@ -16614,7 +16614,7 @@ ECL_18_AC34
 ECL_18_AC9C
 	partyPosMapX = @49F0
 	partyPosMapY = @49F1
-	CALL (opAddr: @2C90)
+	CALL (opAddr: op_refresh_view)
 	EXIT
 
 ECL_18_ACAF
@@ -17031,7 +17031,7 @@ ECL_20_9914
 	IF leaveMap == 0
 		GOTO ECL_20_996B
 	@49FB = 0
-	CALL (opAddr: @C01E)
+	CALL (opAddr: op_move_forward)
 	moveLocked = 255
 	IF partyPosFacing == 1
 		gbvmDiskNum = 3
@@ -17916,7 +17916,7 @@ ECL_20_B225
 	PRINT_CLEAR (message: ``)
 
 ECL_20_B248
-	CALL (opAddr: @2C90)
+	CALL (opAddr: op_refresh_view)
 	GOTO ECL_20_9975
 
 ECL_20_B250
@@ -18212,7 +18212,7 @@ ECL_21_9A6B
 	partyPosFacing = 0
 	partyPosMapX = 8
 	partyPosMapY = 14
-	CALL (opAddr: @2C90)
+	CALL (opAddr: op_refresh_view)
 	PRINT_CLEAR (message: `THE BOAT DISEMBARKS YOU AT SOKAL KEEP.`)
 	ECL_21_AE0E()
 	IF @6DD3 == @49FF
@@ -18725,7 +18725,7 @@ ECL_21_ADE3
 	partyPosMapX = db_$AF43[@9809]
 	partyPosMapY = db_$AF47[@9809]
 	PRINT_CLEAR (message: ``)
-	CALL (opAddr: @2C90)
+	CALL (opAddr: op_refresh_view)
 
 ECL_21_AE0A
 	PICTURE (blockId: 255)
@@ -19132,7 +19132,7 @@ ECL_22_9BB7
 
 ECL_22_9BFD
 	SPRITE_OFF ()
-	CALL (opAddr: @2C90)
+	CALL (opAddr: op_refresh_view)
 	EXIT
 
 ECL_22_9C03
@@ -19236,7 +19236,7 @@ ECL_22_9CE9
 		GOTO ECL_22_9CE9
 	PRINT_CLEAR (message: `YOU BREAK THROUGH. THE PRIEST TEARFULLY THANKS YOU AND GOES THROUGH THE HOLE.`)
 	SPRITE_OFF ()
-	CALL (opAddr: @2C90)
+	CALL (opAddr: op_refresh_view)
 	ECL_22_99E3()
 	@4A4B = 128 | @4A4B
 
@@ -19709,7 +19709,7 @@ ECL_23_9914
 	partyPosFacing = db_$9965[@6E79]
 	moveLocked = 255
 	SPRITE_OFF ()
-	CALL (opAddr: @2C90)
+	CALL (opAddr: op_refresh_view)
 	IF @6E79 == 3
 		GOTO ECL_23_9E1D
 	EXIT
@@ -19988,7 +19988,7 @@ ECL_23_9BD7
 
 ECL_23_9BE3
 	SPRITE_OFF ()
-	CALL (opAddr: @2C90)
+	CALL (opAddr: op_refresh_view)
 
 ECL_23_9BE8
 	pictureLoading = 255
@@ -20519,7 +20519,7 @@ ECL_24_9914
 	@6E82 = partyPosFacing
 	IF 31 == @49C5
 		@6E82 = 4 + @6E82
-	CALL (opAddr: @C01E)
+	CALL (opAddr: op_move_forward)
 	moveLocked = 255
 	@6E79 = db_$99A8[@6E82]
 	IF @6E79 == 26
@@ -21020,7 +21020,7 @@ ECL_24_A93B
 		GOTO ECL_24_A9D0
 	PRINT_CLEAR (message: `AS YOU DESTROY THE ALTAR, THE TEMPLE DOORS FLY OPEN AND A SCREAMING HORDE OF ORCS LED BY A HALF-ORC CLERIC ATTACK.  YOU TURN TO FACE THEM.`)
 	partyPosFacing = 3
-	CALL (opAddr: @2C90)
+	CALL (opAddr: op_refresh_view)
 	SETUP_MONSTER (spriteId: 4, maxDistance: 2, picId: 4)
 	ECL_24_B602()
 	@4A02 = 1
@@ -21289,7 +21289,7 @@ ECL_24_B0B5
 	partyPosMapX = @49F0
 	partyPosMapY = @49F1
 	@49C5 = @4A03
-	CALL (opAddr: @2C90)
+	CALL (opAddr: op_refresh_view)
 	GOTO ECL_24_B0A3
 
 ECL_24_B0D2
@@ -22125,7 +22125,7 @@ ECL_25_A4CA
 	partyPosMapY = @4A19
 	@49FE = 8
 	CLEAR_BOX ()
-	CALL (opAddr: @2C90)
+	CALL (opAddr: op_refresh_view)
 	NEW_ECL (eclId: 25)
 
 ECL_25_A517
@@ -22342,20 +22342,20 @@ ECL_25_AB24
 	@49E6 = 0
 	LOAD_FILES (fileId: 4, unused: 4, loadTiles: 0)
 	@4A9E = 0
-	CALL (opAddr: @2C90)
+	CALL (opAddr: op_refresh_view)
 	NEW_ECL (eclId: 25)
 
 ECL_25_AB3E
 	EXIT
 
 ECL_25_AB3F
-	CALL (opAddr: @2C90)
+	CALL (opAddr: op_refresh_view)
 	EXIT
 
 ECL_25_AB44
 	partyPosMapX = @49F0
 	partyPosMapY = @49F1
-	CALL (opAddr: @2C90)
+	CALL (opAddr: op_refresh_view)
 	EXIT
 
 ECL_25_AB57
@@ -22521,7 +22521,7 @@ ECL_25_ADA1
 	@00FB = 12
 	@00FC = 31
 	@00B1 = 97
-	CALL (opAddr: @C018)
+	CALL (opAddr: op_get_wall_ahead)
 	RETURN
 
 ECL_25_ADC0
@@ -23211,7 +23211,7 @@ ECL_26_9F22
 ECL_26_9F80
 	@49C3 = 6
 	@49C4 = 16
-	CALL (opAddr: @2C90)
+	CALL (opAddr: op_refresh_view)
 	DELAY ()
 	CLEAR_BOX ()
 	CALL (opAddr: @0806)
@@ -23231,7 +23231,7 @@ ECL_26_A016
 
 ECL_26_A01E
 	@49C4 = 14
-	CALL (opAddr: @2C90)
+	CALL (opAddr: op_refresh_view)
 	PICTURE (blockId: 255)
 	GOTO ECL_26_AD47
 
@@ -23463,7 +23463,7 @@ ECL_26_A537
 	partyPosMapX = @4A18
 	partyPosMapY = @4A19
 	CLEAR_BOX ()
-	CALL (opAddr: @2C90)
+	CALL (opAddr: op_refresh_view)
 	NEW_ECL (eclId: 26)
 
 ECL_26_A592
@@ -23638,7 +23638,7 @@ ECL_26_AAE7
 	@49E6 = 0
 	LOAD_FILES (fileId: 5, unused: 5, loadTiles: 0)
 	@4A9E = 0
-	CALL (opAddr: @2C90)
+	CALL (opAddr: op_refresh_view)
 	NEW_ECL (eclId: 26)
 
 ECL_26_AB01
@@ -23649,7 +23649,7 @@ ECL_26_AB02
 	partyPosMapY = @49F1
 
 ECL_26_AB10
-	CALL (opAddr: @2C90)
+	CALL (opAddr: op_refresh_view)
 	EXIT
 
 ECL_26_AB15
@@ -23888,7 +23888,7 @@ ECL_26_AE8F
 	ECL_26_AD24()
 	@49C3 = 7
 	@49C4 = 17
-	CALL (opAddr: @2C90)
+	CALL (opAddr: op_refresh_view)
 	@6E79 = 9
 	@6E7A = 72
 	@D015 = 0
@@ -23909,27 +23909,27 @@ ECL_26_AF52
 	@00FB = 5
 	@00FC = 16
 	@00B1 = 75
-	CALL (opAddr: @C018)
+	CALL (opAddr: op_get_wall_ahead)
 	@00FB = 6
 	@00FC = 16
 	@00B1 = 87
-	CALL (opAddr: @C018)
+	CALL (opAddr: op_get_wall_ahead)
 	@00FB = 7
 	@00FC = 16
 	@00B1 = 22
-	CALL (opAddr: @C018)
+	CALL (opAddr: op_get_wall_ahead)
 	@00FB = 5
 	@00FC = 17
 	@00B1 = 6
-	CALL (opAddr: @C018)
+	CALL (opAddr: op_get_wall_ahead)
 	@00FB = 6
 	@00FC = 17
 	@00B1 = 6
-	CALL (opAddr: @C018)
+	CALL (opAddr: op_get_wall_ahead)
 	@00FB = 7
 	@00FC = 17
 	@00B1 = 10
-	CALL (opAddr: @C018)
+	CALL (opAddr: op_get_wall_ahead)
 
 ECL_26_AFE1
 	IF @4AD2 != 0
@@ -23944,7 +23944,7 @@ ECL_26_B002
 	@00FB = 12
 	@00FC = 11
 	@00B1 = 57
-	CALL (opAddr: @C018)
+	CALL (opAddr: op_get_wall_ahead)
 	RETURN
 
 CONST ECL_26_db_$B019 = 39
@@ -24805,7 +24805,7 @@ ECL_27_9B4A
 	@00FB = 11
 	@00FC = 8
 	@00B1 = 113
-	CALL (opAddr: @C018)
+	CALL (opAddr: op_get_wall_ahead)
 	CLEAR_BOX ()
 	CALL (opAddr: @0806)
 	PICTURE (blockId: 24)
@@ -24855,7 +24855,7 @@ ECL_27_9CE0
 	@00FB = 6
 	@00FC = 15
 	@00B1 = 73
-	CALL (opAddr: @C018)
+	CALL (opAddr: op_get_wall_ahead)
 	CLEAR_BOX ()
 	PICTURE (blockId: 27)
 	PRINT_CLEAR (message: `YOU SEE A SMALL GROUP OF KOBOLDS ENTERING A SMALL,   CONCEALED CAVE.  A LARGER, MORE NOTICEABLE CAVE LIES JUST EAST OF THE SMALL HIDDEN, CAVE.  WHAT CAVE WILL YOU ENTER?`)
@@ -25114,7 +25114,7 @@ ECL_27_A2AF
 	partyPosMapY = @4A19
 	CLEAR_BOX ()
 	@49FE = 8
-	CALL (opAddr: @2C90)
+	CALL (opAddr: op_refresh_view)
 	NEW_ECL (eclId: 27)
 
 ECL_27_A2FC
@@ -25358,13 +25358,13 @@ ECL_27_A84E
 	EXIT
 
 ECL_27_A84F
-	CALL (opAddr: @2C90)
+	CALL (opAddr: op_refresh_view)
 	EXIT
 
 ECL_27_A854
 	partyPosMapX = @49F0
 	partyPosMapY = @49F1
-	CALL (opAddr: @2C90)
+	CALL (opAddr: op_refresh_view)
 	EXIT
 
 ECL_27_A867
@@ -25531,7 +25531,7 @@ ECL_27_AAAF
 	@00FB = 11
 	@00FC = 8
 	@00B1 = 34
-	CALL (opAddr: @C018)
+	CALL (opAddr: op_get_wall_ahead)
 
 ECL_27_AAD3
 	@6E79 = 2 & @4AA0
@@ -25540,7 +25540,7 @@ ECL_27_AAD3
 	@00FB = 6
 	@00FC = 15
 	@00B1 = 48
-	CALL (opAddr: @C018)
+	CALL (opAddr: op_get_wall_ahead)
 
 ECL_27_AAF7
 	@6E79 = 4 & @4AA0
@@ -25549,7 +25549,7 @@ ECL_27_AAF7
 	@00FB = 7
 	@00FC = 23
 	@00B1 = 17
-	CALL (opAddr: @C018)
+	CALL (opAddr: op_get_wall_ahead)
 	RETURN
 
 ECL_27_AB19
@@ -26015,7 +26015,7 @@ ECL_28_9AB9
 ECL_28_9B0E
 	@6E7A = 1
 	IF @6E79 == 0
-		CALL (opAddr: @2C90)
+		CALL (opAddr: op_refresh_view)
 	IF @6E79 == 0
 		DELAY ()
 	IF @6E79 == 0
@@ -26033,7 +26033,7 @@ ECL_28_9B23
 			ECL_28_9B64()
 		CASE 3
 			ECL_28_9B6E()
-	CALL (opAddr: @2C90)
+	CALL (opAddr: op_refresh_view)
 	DELAY ()
 	@6E7A = 1 + @6E7A
 	GOTO ECL_28_9B23
@@ -26124,7 +26124,7 @@ ECL_28_9F54
 	partyPosMapX = 5
 	partyPosMapY = 0
 	partyPosFacing = 1
-	CALL (opAddr: @2C90)
+	CALL (opAddr: op_refresh_view)
 	GOTO ECL_28_B5E7
 
 ECL_28_9F87
@@ -26232,7 +26232,7 @@ ECL_28_A304
 	partyPosMapX = 7
 	partyPosMapY = 0
 	partyPosFacing = 0
-	CALL (opAddr: @2C90)
+	CALL (opAddr: op_refresh_view)
 	pictureLoading = 57
 	SETUP_MONSTER (spriteId: 16, maxDistance: 2, picId: 11)
 	PRINT_CLEAR (message: `YOU RUN FOR YOUR LIVES AS THE GARRISON CHASES BEHIND YOU.  YOU RUN FOR THE FRONT GATE BUT ARE STOPPED BY SOME GUARDS.`)
@@ -26316,7 +26316,7 @@ ECL_28_A5F7
 	PRINT_CLEAR (message: `YOU MANAGE TO RUN AWAY AND HIDE.  YOU HEAR AN ALARM IN THE DISTANCE AS GUARDS ARE ISSUING OUT OF BARRACKS.`)
 	partyPosMapX = 3
 	partyPosMapY = 12
-	CALL (opAddr: @2C90)
+	CALL (opAddr: op_refresh_view)
 	@4A17 = 1
 	GOTO ECL_28_B5E7
 
@@ -26701,7 +26701,7 @@ ECL_28_B693
 	partyPosMapY = 0
 	partyPosFacing = 2
 	@4A00 = 2
-	CALL (opAddr: @2C90)
+	CALL (opAddr: op_refresh_view)
 	@49C9 = 0
 	EXIT
 
@@ -26714,7 +26714,7 @@ ECL_29_9914
 	ECL_29_AF30()
 	IF leaveMap == 0
 		GOTO ECL_29_994B
-	CALL (opAddr: @C01E)
+	CALL (opAddr: op_move_forward)
 	moveLocked = 255
 	gbvmDiskNum = db_$AFC7[partyPosFacing]
 	@6E82 = db_$AFCA[partyPosFacing]
@@ -26755,12 +26755,12 @@ ECL_29_99D6
 	ECL_29_AF96()
 	@6E7A = partyPosMapX
 	@6E7C = partyPosMapY
-	CALL (opAddr: @C01E)
-	CALL (opAddr: @C018)
+	CALL (opAddr: op_move_forward)
+	CALL (opAddr: op_get_wall_ahead)
 	@6E79 = 127 & partyPosEventAtCell
 	partyPosMapX = @6E7A
 	partyPosMapY = @6E7C
-	CALL (opAddr: @C018)
+	CALL (opAddr: op_get_wall_ahead)
 	IF @6E79 != 3
 		EXIT
 	@6E7C = 1
@@ -26880,7 +26880,7 @@ ECL_29_9BA3
 	EXIT
 
 ECL_29_9BDD
-	CALL (opAddr: @C018)
+	CALL (opAddr: op_get_wall_ahead)
 	@6DD2 = 0
 	@6DD3 = 100
 	IF @4A10 != 1
@@ -27022,7 +27022,7 @@ ECL_29_9F9E
 ECL_29_A002
 	@4ADB = 0
 	ECL_29_AF30()
-	CALL (opAddr: @2C90)
+	CALL (opAddr: op_refresh_view)
 	IF @4A12 == 255
 		EXIT
 	PRINT_CLEAR (message: `YOU PASS INTO HIDDEN CATACOMBS. THIS LARGE ROOM IS DIMLY LIT BY SPUTTERING TORCHES. THROUGH THE SMOKE YOU SEE CURTAINS HUNG TO COVER DOORWAYS.`)
@@ -27074,13 +27074,13 @@ ECL_29_A168
 	DAMAGE (attack: 1, dice: 1, sides: 6, bonus: 0, value: 39)
 	PRINT_CLEAR (message: `THROUGH THE SMOKE AND DARKNESS, A DIMLY SEEN FIGURE FIRES AN ARROW INTO THE PARTY.  THE FIGURE FADES AWAY.`)
 	SPRITE_OFF ()
-	CALL (opAddr: @2C90)
+	CALL (opAddr: op_refresh_view)
 	RETURN
 
 ECL_29_A1CC
 	@4ADB = 2
 	ECL_29_AF30()
-	CALL (opAddr: @2C90)
+	CALL (opAddr: op_refresh_view)
 	PRINT_CLEAR (message: `JUST ABOVE THE WATERLINE, A SECRET DOOR HAS BEEN LEFT AJAR IN THE SOUTH WALL OF THE WELL.  DO YOU WANT TO CLIMB UP THE RUNGS?`)
 	ECL_29_AF71()
 	@4A10 = 0
@@ -27089,7 +27089,7 @@ ECL_29_A1CC
 	LOAD_PIECES (wallSetId1: 3, wallSetId2: 20, wallSetId3: 1)
 	@4ADB = 1
 	ECL_29_AF30()
-	CALL (opAddr: @2C90)
+	CALL (opAddr: op_refresh_view)
 	GOTO ECL_29_9A23
 
 ECL_29_A28A
@@ -27429,13 +27429,13 @@ ECL_29_AD1A
 	partyPosMapX = db_$AFB4[@9809]
 	partyPosMapY = db_$AFBC[@9809]
 	PRINT_CLEAR (message: ``)
-	CALL (opAddr: @2C90)
+	CALL (opAddr: op_refresh_view)
 	GOTO ECL_29_9A23
 
 ECL_29_AD51
 	SPRITE_OFF ()
 	pictureLoading = 255
-	CALL (opAddr: @2C90)
+	CALL (opAddr: op_refresh_view)
 	EXIT
 
 ECL_29_AD5D
