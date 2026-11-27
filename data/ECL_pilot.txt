@@ -6608,7 +6608,8 @@ ECL_7_9C69
 	GOTO ECL_7_9CFC
 
 ECL_7_9CC1
-	curCharEnabled = 135
+	curCharEnabled = 0
+	curCharStatus = 7 // stoned
 	@6E79 = curCharIdx + 128
 	PRINT_CLEAR (message: `WITH A SCREAM OF HORROR `)
 	PRINT_APPEND (message: curCharName)
