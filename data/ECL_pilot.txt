@@ -13,13 +13,13 @@ $str@[addr] string starting at addr
 OPS
 
 COMBAT:
-monstersLoaded == false && combat_type == normal
-	? gbvmEnterShop
-		? CityShop()
-		: gbvmEnterTemple
-			? TempleShop()
-			: AfterCombatExpAndTreasure()
-	: DoCombat()
+	monstersLoaded == false && combat_type == normal
+		? gbvmEnterShop
+			? CityShop()
+			: gbvmEnterTemple
+				? TempleShop()
+				: AfterCombatExpAndTreasure()
+		: DoCombat()
 
 LOAD_FILES (fileId, unused, loadTiles):
 	filesLoaded = true
