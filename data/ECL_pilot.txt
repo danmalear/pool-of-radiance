@@ -21,6 +21,11 @@ COMBAT:
 				: AfterCombatExpAndTreasure()
 		: DoCombat()
 
+LOAD_CHARACTER (charId):
+	sets curChar to the character at index charId
+	if bit 7, dumpOnStatusClear, dumpOnNameClear all set, removes character from party
+	EXIT and PROGRAM restore previous character to curChar
+
 LOAD_FILES (fileId, unused, loadTiles):
 	filesLoaded = true
 	mapLoaded = true
