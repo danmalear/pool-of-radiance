@@ -1228,7 +1228,7 @@ ECL_0_AD21
 ECL_0_AD2C
 	PRINT_CLEAR (message: `SKULLCRUSHER SPEAKS, 'I MUST GO TO MY MASTER NOW.' `)
 	curCharEnabled = char_enabled_not_found
-	curCharName = ``
+	curChar = null
 	@9802 = 128 + @9802
 	LOAD_CHARACTER (charId: @9802)
 	PRINT_APPEND (message: `HE LEAVES.`)
@@ -2300,11 +2300,11 @@ ECL_2_9957
 	GOTO ECL_2_9A2A
 
 ECL_2_995B
-	IF @6DD5 == 0
+	IF leaveMap == 0
 		EXIT
 	CALL (opAddr: @C01E)
-	@6DC9 = 255
-	SWITCH @C04D
+	moveLocked = 255
+	SWITCH partyPosFacing
 		CASE 0
 			GOTO ECL_2_997F
 		CASE 1
@@ -2315,24 +2315,24 @@ ECL_2_995B
 			GOTO ECL_2_9993
 
 ECL_2_997F
-	@6E12 = 1
+	gbvmDiskNum = 1
 	NEW_ECL (eclId: 18)
 	EXIT
 
 ECL_2_9989
-	@6E12 = 2
+	gbvmDiskNum = 2
 	NEW_ECL (eclId: 15)
 	EXIT
 
 ECL_2_9993
-	@6E12 = 7
+	gbvmDiskNum = 7
 	@49C3 = 11
 	@49C4 = 28
 	NEW_ECL (eclId: 26)
 	EXIT
 
 ECL_2_99A9
-	@6E82 = @C04F & 127
+	@6E82 = partyPosEventAtCell & 127
 	PRINT_CLEAR (message: ` `)
 	SWITCH @6E82
 		CASE 0
@@ -2425,19 +2425,19 @@ ECL_2_9A85
 		GOTO ECL_2_9B91
 	IF @6E79 > 3
 		GOTO ECL_2_9BE2
-	@6DC6 = 60
+	moraleThreshold = 60
 	SETUP_MONSTER (spriteId: 37, maxDistance: 0, picId: 37)
 	PRINT_CLEAR (message: `EVIL LOOKING FROGS BOIL UP FROM BELOW.`)
 	ECL_2_ABAE()
 	CLEAR_MONSTERS ()
 	LOAD_MONSTER (monsterId: 38, copies: 8, cpicId: 37)
 	COMBAT ()
-	IF @6DC7 > 128
+	IF gbvmCombatResult > 128
 		GOTO ECL_2_9CFB
 	EXIT
 
 ECL_2_9AF7
-	@6DC6 = 60
+	moraleThreshold = 60
 	SETUP_MONSTER (spriteId: 6, maxDistance: 2, picId: 6)
 	PRINT_CLEAR (message: `HOBGOBLINS CHARGE SCREAMING.`)
 	ECL_2_ABAE()
@@ -2445,12 +2445,12 @@ ECL_2_9AF7
 	LOAD_MONSTER (monsterId: 6, copies: 8, cpicId: 6)
 	LOAD_MONSTER (monsterId: 7, copies: 1, cpicId: 7)
 	COMBAT ()
-	IF @6DC7 > 128
+	IF gbvmCombatResult > 128
 		GOTO ECL_2_9CFB
 	EXIT
 
 ECL_2_9B3C
-	@6DC6 = 100
+	moraleThreshold = 100
 	SETUP_MONSTER (spriteId: 34, maxDistance: 2, picId: 34)
 	PRINT_CLEAR (message: `A SKELETAL FORCE SPOTS YOU AND ATTACKS.`)
 	ECL_2_ABAE()
@@ -2459,12 +2459,12 @@ ECL_2_9B3C
 	LOAD_MONSTER (monsterId: 34, copies: 10, cpicId: 34)
 	LOAD_MONSTER (monsterId: 35, copies: 8, cpicId: 35)
 	COMBAT ()
-	IF @6DC7 > 128
+	IF gbvmCombatResult > 128
 		GOTO ECL_2_9CFB
 	EXIT
 
 ECL_2_9B91
-	@6DC6 = 100
+	moraleThreshold = 100
 	SETUP_MONSTER (spriteId: 72, maxDistance: 2, picId: 72)
 	PRINT_CLEAR (message: `SOME GHOULS DECIDE TO ADD YOU TO THEIR MENU.`)
 	ECL_2_ABAE()
@@ -2472,20 +2472,20 @@ ECL_2_9B91
 	LOAD_MONSTER (monsterId: 20, copies: 1, cpicId: 20)
 	LOAD_MONSTER (monsterId: 72, copies: 5, cpicId: 72)
 	COMBAT ()
-	IF @6DC7 > 128
+	IF gbvmCombatResult > 128
 		GOTO ECL_2_9CFB
 	EXIT
 
 ECL_2_9BE2
 	SETUP_MONSTER (spriteId: 18, maxDistance: 1, picId: 18)
-	@6DC6 = 50
+	moraleThreshold = 50
 	PRINT_CLEAR (message: `SCORPIONS APPROACH HUNGRILY.`)
 	ECL_2_ABAE()
 	CLEAR_MONSTERS ()
 	LOAD_MONSTER (monsterId: 18, copies: 3, cpicId: 18)
 	LOAD_MONSTER (monsterId: 39, copies: 1, cpicId: 18)
 	COMBAT ()
-	IF @6DC7 > 128
+	IF gbvmCombatResult > 128
 		GOTO ECL_2_9CFB
 	EXIT
 
@@ -2494,13 +2494,13 @@ ECL_2_9C27
 		EXIT
 	SETUP_MONSTER (spriteId: 6, maxDistance: 0, picId: 6)
 	PRINT_CLEAR (message: `YOU ARE ENTERING A WEEDY, GARBAGE STREWN COURTYARD. A DRUM BEGINS TO BEAT AND HOBGOBLINS ATTACK.`)
-	@6DC6 = 60
+	moraleThreshold = 60
 	ECL_2_ABAE()
 	CLEAR_MONSTERS ()
 	LOAD_MONSTER (monsterId: 6, copies: 12, cpicId: 6)
 	LOAD_MONSTER (monsterId: 7, copies: 2, cpicId: 7)
 	COMBAT ()
-	IF @6DC7 > 128
+	IF gbvmCombatResult > 128
 		GOTO ECL_2_9CDD
 	@4A74 = 1
 	PRINT_CLEAR (message: `THINGS SEEM STRANGELY QUIET. THE DRUM HAS FADED TO SILENCE.`)
@@ -2518,13 +2518,13 @@ ECL_2_9CFB
 			GOTO ECL_2_9D1A
 
 ECL_2_9D0D
-	@C04B = 4
-	@C04C = 2
+	partyPosMapX = 4
+	partyPosMapY = 2
 	EXIT
 
 ECL_2_9D1A
-	@C04B = 12
-	@C04C = 2
+	partyPosMapX = 12
+	partyPosMapY = 2
 	EXIT
 
 ECL_2_9D27
@@ -2655,7 +2655,7 @@ ECL_2_A109
 		EXIT
 	IF @4A73 == 128
 		GOTO ECL_2_A3FC
-	@6DE1 = 32
+	pictureLoading = 32
 	SETUP_MONSTER (spriteId: 14, maxDistance: 0, picId: 3)
 	PRINT_APPEND (message: `A MUSCULAR MAN LOCKED IN CHAINS LIES HERE. NEAR HIM IS A PAGE THAT YOU PLACE IN YOUR JOURNAL UNDER ENTRY 47.`)
 
@@ -2676,7 +2676,7 @@ ECL_2_A19F
 			GOTO ECL_2_A1E8
 
 ECL_2_A1E8
-	@6DE1 = 255
+	pictureLoading = 255
 	GOTO ECL_2_9A07
 
 ECL_2_A1F2
@@ -2715,7 +2715,7 @@ ECL_2_A2E8
 	PRINT_CLEAR (message: `THE MAN DIES A CRUEL DEATH.`)
 	ECL_2_ABAE()
 	@4A73 = 255
-	@6DE1 = 255
+	pictureLoading = 255
 	CALL (opAddr: @2C90)
 	EXIT
 
@@ -2772,12 +2772,12 @@ ECL_2_A3FC
 			GOTO ECL_2_A1E8
 
 ECL_2_A457
-	@6DC6 = 100
+	moraleThreshold = 100
 	CLEAR_MONSTERS ()
 	LOAD_MONSTER (monsterId: 27, copies: 1, cpicId: 11)
 	COMBAT ()
 	@4A73 = 255
-	@6DE1 = 255
+	pictureLoading = 255
 	EXIT
 
 ECL_2_A473
@@ -2786,10 +2786,10 @@ ECL_2_A473
 
 ECL_2_A48E
 	PRINT_CLEAR (message: `YOU FLEE THE ROOM.`)
-	@C04B = @49F0
-	@C04C = @49F1
+	partyPosMapX = @49F0
+	partyPosMapY = @49F1
 	CALL (opAddr: @2C90)
-	@6DE1 = 255
+	pictureLoading = 255
 	EXIT
 
 ECL_2_A4B8
@@ -2812,7 +2812,7 @@ ECL_2_A4D2
 			GOTO ECL_2_A5D2
 
 ECL_2_A52F
-	IF @6E3E != 8
+	IF partySize != 8
 		GOTO ECL_2_A55F
 	PRINT_CLEAR (message: `THERE IS NO ROOM IN YOUR PARTY FOR HIM.`)
 	GOTO ECL_2_A5D2
@@ -2822,14 +2822,14 @@ ECL_2_A55F
 	ADD_NPC (npcId: 27, morale: 100)
 	ECL_2_ABAE()
 	@4A73 = 255
-	@6DE1 = 255
+	pictureLoading = 255
 	CALL (opAddr: @2C90)
 	EXIT
 
 ECL_2_A5D2
 	PRINT_CLEAR (message: `'OH WELL.' HE LEAVES.`)
 	@4A73 = 255
-	@6DE1 = 255
+	pictureLoading = 255
 	EXIT
 
 ECL_2_A5F2
@@ -2844,14 +2844,14 @@ ECL_2_A60C
 	SETUP_MONSTER (spriteId: 6, maxDistance: 0, picId: 9)
 	PRINT_CLEAR (message: `ATOP A SMALL BONE ALTAR, STANDS AN ANCIENT, HOBGOBLIN. SHE SCREAMS 'I AM THE MIGHTY GRISHNAK! YOU HAVE INTERRUPTED MY UNHOLY RITES! FEEL MY INFERNAL WRATH!'`)
 	SETUP_MONSTER (spriteId: 6, maxDistance: 0, picId: 6)
-	@6DC6 = 100
+	moraleThreshold = 100
 	CLEAR_MONSTERS ()
 	LOAD_MONSTER (monsterId: 28, copies: 1, cpicId: 2)
 	LOAD_MONSTER (monsterId: 7, copies: 3, cpicId: 7)
 	LOAD_MONSTER (monsterId: 6, copies: 12, cpicId: 6)
 	TREASURE (cp: 100, sp: 20, ep: 30, gp: 40, pp: 8, gems: 0, jewels: 0, itemId: 38)
 	COMBAT ()
-	IF @6DC7 > 128
+	IF gbvmCombatResult > 128
 		GOTO ECL_2_AAE3
 	@4A74 = 2
 	EXIT
@@ -2873,7 +2873,7 @@ ECL_2_A76B
 ECL_2_A7D0
 	IF @4A75 != 0
 		EXIT
-	@C04D = 2
+	partyPosFacing = 2
 	CALL (opAddr: @2C90)
 	PRINT_CLEAR (message: `THIS ROOM IS DIMLY LIT WITH GUTTERING TORCHES.`)
 	SETUP_MONSTER (spriteId: 6, maxDistance: 1, picId: 6)
@@ -2881,13 +2881,13 @@ ECL_2_A7D0
 	ECL_2_ABAE()
 	PRINT_CLEAR (message: `'PUNY CREATURES,' HE BELLOWS.'I ALLOWED YOU TO TOY WITH MY MINIONS, BUT NOW I'LL CRUSH THE LIFE FROM YOUR LIMBS.'`)
 	ECL_2_ABAE()
-	@6DC6 = 100
+	moraleThreshold = 100
 	CLEAR_MONSTERS ()
 	LOAD_MONSTER (monsterId: 8, copies: 1, cpicId: 8)
 	LOAD_MONSTER (monsterId: 6, copies: 18, cpicId: 6)
 	LOAD_MONSTER (monsterId: 7, copies: 4, cpicId: 7)
 	COMBAT ()
-	IF @6DC7 > 128
+	IF gbvmCombatResult > 128
 		GOTO ECL_2_AAE3
 	@4A75 = 255
 	PRINT_CLEAR (message: `YOU FIND AN IRON BOX, ACROSS THE LOCK IS THE SEAL OF THE FAMILY OF CADORNA. OPENING THE BOX WILL DAMAGE THE SEAL BEYOND REPAIR. WHAT DO YOU DO?`)
@@ -2921,13 +2921,13 @@ ECL_2_A9D1
 
 ECL_2_AA45
 	SETUP_MONSTER (spriteId: 6, maxDistance: 0, picId: 6)
-	@6DC6 = 60
+	moraleThreshold = 60
 	ECL_2_ABAE()
 	CLEAR_MONSTERS ()
 	LOAD_MONSTER (monsterId: 6, copies: @9800, cpicId: 6)
 	LOAD_MONSTER (monsterId: 7, copies: @9802, cpicId: 7)
 	COMBAT ()
-	IF @6DC7 > 128
+	IF gbvmCombatResult > 128
 		GOTO ECL_2_AAE3
 	IF @6E82 == 2
 		GOTO ECL_2_9D64
@@ -2943,7 +2943,7 @@ ECL_2_AA95
 
 ECL_2_AAA1
 	LOAD_CHARACTER (charId: @6E7A)
-	IF $str@6B00 == `SKULLCRUSHER`
+	IF curCharName == `SKULLCRUSHER`
 		GOTO ECL_2_AAD1
 	@6E7A = 1 + @6E7A
 	IF @6E7A != 9
@@ -2951,7 +2951,7 @@ ECL_2_AAA1
 	GOTO ECL_2_AAE2
 
 ECL_2_AAD1
-	IF @6C00 != 1
+	IF curCharEnabled != 1
 		GOTO ECL_2_AAE2
 	@6E7B = 255
 
@@ -2973,23 +2973,23 @@ ECL_2_AAE3
 			GOTO ECL_2_AB54
 
 ECL_2_AB24
-	@C04B = 4
-	@C04C = 11
+	partyPosMapX = 4
+	partyPosMapY = 11
 	GOTO ECL_2_AB60
 
 ECL_2_AB34
-	@C04B = 8
-	@C04C = 8
+	partyPosMapX = 8
+	partyPosMapY = 8
 	GOTO ECL_2_AB60
 
 ECL_2_AB44
-	@C04B = 4
-	@C04C = 14
+	partyPosMapX = 4
+	partyPosMapY = 14
 	GOTO ECL_2_AB60
 
 ECL_2_AB54
-	@C04B = 12
-	@C04C = 13
+	partyPosMapX = 12
+	partyPosMapY = 13
 
 ECL_2_AB60
 	CALL (opAddr: @2C90)
@@ -3017,19 +3017,19 @@ ECL_2_ABD3
 
 ECL_2_AC6D
 	WHO (prompt: `WHO WILL CLIMB DOWN?`)
-	IF @6C00 == 1
+	IF curCharEnabled == 1
 		GOTO ECL_2_ACB1
 	PRINT_CLEAR (message: `THAT ONE IS NOT WELL ENOUGH TO CLIMB.`)
 	ECL_2_ABAE()
 	GOTO ECL_2_AC6D
 
 ECL_2_ACB1
-	@C04B = 0
-	@C04D = 1
+	partyPosMapX = 0
+	partyPosFacing = 1
 	CALL (opAddr: @2C90)
 	ECL_2_ABAE()
 	@6E79 = RANDOM (max: 99)
-	IF @6E79 < @6BAB
+	IF @6E79 < curCharThiefSkills[7]
 		GOTO ECL_2_AE19
 	PRINT_CLEAR (message: `YOU BEGIN A LONG FALL.`)
 	ECL_2_ABAE()
@@ -3049,7 +3049,7 @@ ECL_2_AD0A
 ECL_2_AD22
 	@6E7A = 64 + @6E79
 	@6E7B = db_$4900[@6E7A]
-	IF @6E7B != @6DB4
+	IF @6E7B != curCharIdx
 		GOTO ECL_2_AD0A
 	PRINT_CLEAR (message: `YOU FLOAT DOWN THE WELL.`)
 	ECL_2_ABAE()
@@ -3062,10 +3062,10 @@ ECL_2_AD90
 	PRINT_CLEAR (message: `YOU HIT AN UNYIELDING STONE FLOOR.`)
 	ECL_2_ABAE()
 	DAMAGE (attack: 160, dice: 15, sides: 6, bonus: 0, value: 128)
-	IF @6C00 == 1
+	IF curCharEnabled == 1
 		GOTO ECL_2_ADF6
-	@C04B = 1
-	@C04D = 3
+	partyPosMapX = 1
+	partyPosFacing = 3
 	CALL (opAddr: @2C90)
 	PRINT_CLEAR (message: `YOUR FRIEND FLOATS OUT OF THE WELL.`)
 	EXIT
@@ -3131,24 +3131,24 @@ ECL_2_AFBF
 
 ECL_2_B049
 	PRINT_CLEAR (message: `YOU ARE BLINDFOLDED AND TAKEN ON A LONG, TWISTING WALK, THEN UP A LADDER.'ONLY MEET US AT THE MAIN WELL.'`)
-	@C04B = 6
-	@C04C = 11
-	@C04D = 0
+	partyPosMapX = 6
+	partyPosMapY = 11
+	partyPosFacing = 0
 	@4A74 = 1
 	CALL (opAddr: @2C90)
-	@6DE1 = 255
+	pictureLoading = 255
 	EXIT
 
 ECL_2_B0BE
-	@C04D = 3
+	partyPosFacing = 3
 	CALL (opAddr: @2C90)
-	@6DE1 = 52
+	pictureLoading = 52
 	PICTURE (blockId: 8)
 	RETURN
 
 ECL_2_B0D2
-	@C04B = 1
-	@6DE1 = 255
+	partyPosMapX = 1
+	pictureLoading = 255
 	PICTURE (blockId: 255)
 	CALL (opAddr: @2C90)
 	RETURN
@@ -3247,9 +3247,9 @@ ECL_3_9A5F
 
 ECL_3_9A80
 	@4A67 = 127 & @4A67
-	IF @6DD5 == 0
+	IF leaveMap == 0
 		GOTO ECL_3_9AAA
-	@6E79 = db_$9AA6[@C04D]
+	@6E79 = db_$9AA6[partyPosFacing]
 	CALL (opAddr: @C01E)
 	NEW_ECL (eclId: @6E79)
 
@@ -3261,14 +3261,14 @@ CONST ECL_3_db_$9AA9 = 6
 
 ECL_3_9AAA
 	ECL_3_9A5F()
-	@6E82 = 31 & @C04F
-	IF @C04D == 1 && @6E82 == 30
+	@6E82 = 31 & partyPosEventAtCell
+	IF partyPosFacing == 1 && @6E82 == 30
 		GOTO ECL_3_A8A0
 
-	IF @C04D == 3 && @6E82 == 31
+	IF partyPosFacing == 3 && @6E82 == 31
 		GOTO ECL_3_A8A0
 
-	IF @C04D == 0 && @6E82 == 17
+	IF partyPosFacing == 0 && @6E82 == 17
 		GOTO ECL_3_ADBB
 
 	EXIT
@@ -3277,13 +3277,13 @@ ECL_3_9AE8
 	ECL_3_995D()
 	IF compareResult == '<'
 		GOTO ECL_3_9B38
-	@6E82 = 64 & @C04F
+	@6E82 = 64 & partyPosEventAtCell
 	IF 0 != @6E82
 		GOTO ECL_3_9B38
 	@6E79 = 2
 	IF @6DCA == 0
 		@6E79 = 20
-	@6E82 = 32 & @C04F
+	@6E82 = 32 & partyPosEventAtCell
 	IF 0 != @6E82
 		@6E79 = @6E79 + @6E79
 	@6E82 = RANDOM (max: @6E79)
@@ -3291,7 +3291,7 @@ ECL_3_9AE8
 		GOTO ECL_3_9C7C
 
 ECL_3_9B38
-	@6E79 = 31 & @C04F
+	@6E79 = 31 & partyPosEventAtCell
 	IF @6E79 > 22
 		EXIT
 	@6E7A = db_$9B99[@6E79]
@@ -3391,7 +3391,7 @@ ECL_3_9BC7
 	@6DD3 = 10
 	IF @4A64 == 0
 		EXIT
-	@6E82 = 64 & @C04F
+	@6E82 = 64 & partyPosEventAtCell
 	IF 0 != @6E82
 		EXIT
 	@6DD2 = 1
@@ -3407,7 +3407,7 @@ ECL_3_9BF8
 	@49FB = 1
 	IF @49F2 == 3
 		EXIT
-	@6E82 = db_$9C24[@C04D]
+	@6E82 = db_$9C24[partyPosFacing]
 	LOAD_FILES (fileId: @6E82, unused: 2, loadTiles: 255)
 	LOAD_PIECES (wallSetId1: 24, wallSetId2: 25, wallSetId3: 1)
 	EXIT
@@ -3419,28 +3419,28 @@ CONST ECL_3_db_$9C27 = 3
 
 
 ECL_3_9C28
-	@6DC7 = 129
+	gbvmCombatResult = 129
 
 ECL_3_9C2E
-	IF @6DC7 == 0
+	IF gbvmCombatResult == 0
 		RETURN
 	ECL_3_99D9()
 	@4A65 = 254 & @4A65
-	IF @6DC7 != 129
+	IF gbvmCombatResult != 129
 		RETURN
 
 ECL_3_9C4B
-	@6DC9 = 255
-	@C04B = @49F0
-	@C04C = @49F1
-	@C04D = @C04D + 2
-	IF @C04D > 3
-		@C04D = @C04D - 4
+	moveLocked = 255
+	partyPosMapX = @49F0
+	partyPosMapY = @49F1
+	partyPosFacing = partyPosFacing + 2
+	IF partyPosFacing > 3
+		partyPosFacing = partyPosFacing - 4
 	GOTO ECL_3_9BF2
 
 ECL_3_9C7C
 	$str@980E = `A PATROL OF GIANTS LED BY A HUMAN FIGHTER`
-	@6DE1 = 9
+	pictureLoading = 9
 	SETUP_MONSTER (spriteId: 16, maxDistance: 2, picId: 1)
 	ECL_3_9914()
 	IF compareResult == '!='
@@ -3458,7 +3458,7 @@ ECL_3_9C7C
 
 ECL_3_9D00
 	PRINT_APPEND (message: `'BLASPHEMERS! GET THEM!'`)
-	@6DE1 = 255
+	pictureLoading = 255
 	GOTO ECL_3_9E79
 
 ECL_3_9D1F
@@ -3481,7 +3481,7 @@ ECL_3_9D6E
 ECL_3_9D8D
 	ECL_3_9A37()
 	@6E82 = ENCOUNTER (displayMonsterId: 16, distanceRequirement: 2, displayPicId: 1, combatResp: 0, waitResp: 0, fleeResp: 0, parlayResp: 1, failFleeResp: 0, message1: `THEY ADVANCE, WEAPONS READY`, message2: ``, message3: ``, partyFlee: 12, monsterFlee: 9)
-	@6DE1 = 255
+	pictureLoading = 255
 	SWITCH @6E82
 		CASE 0
 			GOTO ECL_3_9BF2
@@ -3498,7 +3498,7 @@ ECL_3_9DDC
 	PRINT_APPEND (message: $str@980F)
 	DELAY ()
 	@6E82 = ENCOUNTER (displayMonsterId: 16, distanceRequirement: 2, displayPicId: 1, combatResp: 0, waitResp: 3, fleeResp: 0, parlayResp: 3, failFleeResp: 4, message1: `'WHAT ARE YOU DOING HERE?'`, message2: `THE LEADER ADVANCES.`, message3: ``, partyFlee: 12, monsterFlee: 9)
-	@6DE1 = 255
+	pictureLoading = 255
 	SWITCH @6E82
 		CASE 0
 			GOTO ECL_3_9BF2
@@ -3518,8 +3518,8 @@ ECL_3_9DDC
 
 ECL_3_9E79
 	DELAY ()
-	@6DC6 = 60
-	@6DE1 = 255
+	moraleThreshold = 60
+	pictureLoading = 255
 	DELAY ()
 	SPRITE_OFF ()
 	CLEAR_MONSTERS ()
@@ -3560,12 +3560,12 @@ ECL_3_9FA5
 	@6E82 = 1 & @4A00
 	IF 0 != @6E82
 		EXIT
-	@6DE1 = 12
+	pictureLoading = 12
 	SETUP_MONSTER (spriteId: 16, maxDistance: 0, picId: 1)
-	@6DE1 = 255
+	pictureLoading = 255
 	PRINT_CLEAR (message: `YOU CONFRONT AN ARMED MAN WHO IMMEDIATELY ATTACKS YOU.`)
 	ECL_3_99D8()
-	@6DC6 = 50
+	moraleThreshold = 50
 	CLEAR_MONSTERS ()
 	LOAD_MONSTER (monsterId: 75, copies: 1, cpicId: 11)
 	COMBAT ()
@@ -3591,10 +3591,10 @@ ECL_3_A034
 ECL_3_A060
 	@6DCB = 0
 	PRINT_CLEAR (message: `A FIGHTER EMERGES FROM THE BUILDING NEARBY AND CONFRONTS YOU.`)
-	@6DE1 = 12
+	pictureLoading = 12
 	DELAY ()
 	@6E82 = ENCOUNTER (displayMonsterId: 16, distanceRequirement: 0, displayPicId: 1, combatResp: 0, waitResp: 4, fleeResp: 0, parlayResp: 4, failFleeResp: 4, message1: `'WHAT ARE YOU DOING HERE?'`, message2: ``, message3: ``, partyFlee: 9, monsterFlee: 9)
-	@6DE1 = 255
+	pictureLoading = 255
 	SWITCH @6E82
 		CASE 0
 			GOTO ECL_3_9BF2
@@ -3624,13 +3624,13 @@ ECL_3_A12D
 			GOTO ECL_3_9C28
 
 ECL_3_A1D6
-	@6DC6 = 100
+	moraleThreshold = 100
 	CLEAR_MONSTERS ()
 	LOAD_MONSTER (monsterId: 75, copies: 1, cpicId: 11)
 	COMBAT ()
 	ECL_3_9C2E()
 	@4A00 = 1 | @4A00
-	@6DE1 = 9
+	pictureLoading = 9
 	SETUP_MONSTER (spriteId: 16, maxDistance: 2, picId: 1)
 	PRINT_CLEAR (message: `A PATROL ROUNDS THE CORNER..`)
 	GOTO ECL_3_9D6E
@@ -3654,7 +3654,7 @@ ECL_3_A2F5
 	IF 0 != @6E82
 		EXIT
 	@6DCB = 0
-	@C04D = 1
+	partyPosFacing = 1
 	PRINT_CLEAR (message: `AS YOU BREAK THROUGH THE DOOR INTO A WELL FITTED APARTMENT, TWO GIANTS COME LUMBERING UP TO YOU. YOU TURN TO FACE THEM.`)
 	CALL (opAddr: @2C90)
 	ECL_3_9A37()
@@ -3673,7 +3673,7 @@ ECL_3_A2F5
 	GOTO ECL_3_9BF2
 
 ECL_3_A43B
-	@6DC6 = 50
+	moraleThreshold = 50
 	CLEAR_MONSTERS ()
 	LOAD_MONSTER (monsterId: 55, copies: 2, cpicId: 55)
 	COMBAT ()
@@ -3744,7 +3744,7 @@ ECL_3_A671
 	PRINT_CLEAR (message: `AS YOU SNEAK TOWARD THEM A LOOSE BOARD CREAKS. THE GIANTS GET TO THEIR FEET SHAKING THE SLEEP FROM THEIR EYES.`)
 
 ECL_3_A728
-	@6DC6 = 100
+	moraleThreshold = 100
 	ECL_3_9A37()
 	CLEAR_MONSTERS ()
 	LOAD_MONSTER (monsterId: 56, copies: @6E7D, cpicId: 56)
@@ -3791,7 +3791,7 @@ ECL_3_A824
 	@6E71 = 5
 
 ECL_3_A82A
-	@6DC6 = 40
+	moraleThreshold = 40
 	CLEAR_MONSTERS ()
 	LOAD_MONSTER (monsterId: 55, copies: 8, cpicId: 55)
 	COMBAT ()
@@ -3871,7 +3871,7 @@ ECL_3_AA3E
 		GOTO ECL_3_AABE
 	PRINT_CLEAR (message: `'ALL RIGHT, THEN. PASS!' AND WITH THAT THE GATES SWING OPEN AND YOU PASS THROUGH THE GATE.`)
 	CALL (opAddr: @C01E)
-	@6DC9 = 255
+	moveLocked = 255
 	EXIT
 
 ECL_3_AABE
@@ -3914,7 +3914,7 @@ ECL_3_AB8B
 	@6E82 = 1 & @4A65
 	IF 0 != @6E82
 		EXIT
-	@C04D = 1
+	partyPosFacing = 1
 	CALL (opAddr: @2C90)
 	PRINT_CLEAR (message: `TWO GIANTS COME BOUNDING OUT OF A DOORWAY. ONE STAYS BY THE DOOR.`)
 
@@ -3962,7 +3962,7 @@ ECL_3_AD31
 ECL_3_AD46
 	ECL_3_99D9()
 	@6DCB = 0
-	@6DC6 = 50
+	moraleThreshold = 50
 	CLEAR_MONSTERS ()
 	LOAD_MONSTER (monsterId: 55, copies: 2, cpicId: 55)
 	COMBAT ()
@@ -3991,13 +3991,13 @@ ECL_3_ADE7
 
 ECL_3_ADED
 	WHO (prompt: `WHO WILL DIVE IN?`)
-	IF @6C00 != 1
+	IF curCharEnabled != 1
 		GOTO ECL_3_ADED
 	@6E7C = 0
-	IF @6B18 < 12
+	IF curCharConCur < 12
 		GOTO ECL_3_AE7E
 	@6E82 = RANDOM (max: 20)
-	IF @6E82 > @6B18
+	IF @6E82 > curCharConCur
 		GOTO ECL_3_AE7E
 	PRINT_CLEAR (message: `YOU REACH THE BOTTOM AND FEEL AROUND... `)
 	DELAY ()
@@ -4020,13 +4020,13 @@ ECL_3_AEC8
 ECL_3_AEF2
 	DELAY ()
 	@6E81 = 0
-	IF @6C1B < 12
-		@6E81 = 12 - @6C1B
+	IF curCharMovementCur < 12
+		@6E81 = 12 - curCharMovementCur
 	@6E82 = RANDOM (max: 19)
 	@6E82 = @6E81 + @6E82
 	PRINT_CLEAR (message: `YOU ARE RUNNING OUT OF AIR... `)
 	DELAY ()
-	IF @6E82 > @6B18
+	IF @6E82 > curCharConCur
 		GOTO ECL_3_AF65
 	PRINT_APPEND (message: `YOU BREAK THE SURFACE GASPING FOR AIR.`)
 	DELAY ()
@@ -4134,7 +4134,7 @@ ECL_3_B321
 			GOTO ECL_3_9C4B
 
 ECL_3_B36D
-	@6DC6 = 100
+	moraleThreshold = 100
 	CLEAR_MONSTERS ()
 	LOAD_MONSTER (monsterId: 60, copies: 5, cpicId: 60)
 	COMBAT ()
@@ -4238,23 +4238,23 @@ ECL_4_9A80
 	@6E82 = 3 & @4A6A
 	IF 0 != @6E82
 	AND @4A65, 254, @4A65
-	IF @6DD5 == 0
+	IF leaveMap == 0
 		EXIT
 	CALL (opAddr: @C01E)
-	@6DC9 = 255
+	moveLocked = 255
 	NEW_ECL (eclId: 3)
 
 ECL_4_9AB5
 	ECL_4_995D()
 	IF compareResult == '<'
 		GOTO ECL_4_9B05
-	@6E82 = 64 & @C04F
+	@6E82 = 64 & partyPosEventAtCell
 	IF 0 != @6E82
 		GOTO ECL_4_9B05
 	@6E79 = 2
 	IF @6DCA == 0
 		@6E79 = 20
-	@6E82 = 32 & @C04F
+	@6E82 = 32 & partyPosEventAtCell
 	IF 0 != @6E82
 		@6E79 = @6E79 + @6E79
 	@6E82 = RANDOM (max: @6E79)
@@ -4262,7 +4262,7 @@ ECL_4_9AB5
 		GOTO ECL_4_9BD1
 
 ECL_4_9B05
-	@6E79 = 31 & @C04F
+	@6E79 = 31 & partyPosEventAtCell
 	SWITCH @6E79
 		CASE 0
 			GOTO ECL_4_9B5D
@@ -4290,7 +4290,7 @@ ECL_4_9B32
 	@6DD3 = 10
 	IF @4A64 == 0
 		EXIT
-	@6E82 = 64 & @C04F
+	@6E82 = 64 & partyPosEventAtCell
 	IF 0 != @6E82
 		EXIT
 	@6DD2 = 1
@@ -4310,28 +4310,28 @@ ECL_4_9B63
 	EXIT
 
 ECL_4_9B7D
-	@6DC7 = 129
+	gbvmCombatResult = 129
 
 ECL_4_9B83
-	IF @6DC7 == 0
+	IF gbvmCombatResult == 0
 		RETURN
 	ECL_4_99D9()
 	@4A65 = 254 & @4A65
-	IF @6DC7 != 129
+	IF gbvmCombatResult != 129
 		RETURN
 
 ECL_4_9BA0
-	@6DC9 = 255
-	@C04B = @49F0
-	@C04C = @49F1
-	@C04D = @C04D + 2
-	IF @C04D > 3
-		@C04D = @C04D - 4
+	moveLocked = 255
+	partyPosMapX = @49F0
+	partyPosMapY = @49F1
+	partyPosFacing = partyPosFacing + 2
+	IF partyPosFacing > 3
+		partyPosFacing = partyPosFacing - 4
 	GOTO ECL_4_9B5D
 
 ECL_4_9BD1
 	$str@980E = `A PATROL OF GIANTS LED BY A HUMAN FIGHTER`
-	@6DE1 = 9
+	pictureLoading = 9
 	SETUP_MONSTER (spriteId: 16, maxDistance: 2, picId: 1)
 	ECL_4_9914()
 	IF compareResult == '!='
@@ -4349,7 +4349,7 @@ ECL_4_9BD1
 
 ECL_4_9C55
 	PRINT_APPEND (message: `'BLASPHEMERS! GET THEM!'`)
-	@6DE1 = 255
+	pictureLoading = 255
 	GOTO ECL_4_9DD1
 
 ECL_4_9C74
@@ -4372,7 +4372,7 @@ ECL_4_9CC3
 ECL_4_9CE2
 	ECL_4_9A37()
 	@6E82 = ENCOUNTER (displayMonsterId: 16, distanceRequirement: 2, displayPicId: 1, combatResp: 0, waitResp: 0, fleeResp: 0, parlayResp: 1, failFleeResp: 0, message1: `THEY ADVANCE, WEAPONS READY`, message2: ``, message3: ``, partyFlee: 12, monsterFlee: 9)
-	@6DE1 = 255
+	pictureLoading = 255
 	SWITCH @6E82
 		CASE 0
 			GOTO ECL_4_9B5D
@@ -4389,7 +4389,7 @@ ECL_4_9D31
 	PRINT_APPEND (message: $str@980F)
 	ECL_4_9A37()
 	@6E82 = ENCOUNTER (displayMonsterId: 16, distanceRequirement: 2, displayPicId: 1, combatResp: 0, waitResp: 3, fleeResp: 0, parlayResp: 3, failFleeResp: 4, message1: `'WHAT ARE YOU DOING HERE?'`, message2: `THE LEADER ADVANCES.`, message3: ``, partyFlee: 12, monsterFlee: 9)
-	@6DE1 = 255
+	pictureLoading = 255
 	SWITCH @6E82
 		CASE 0
 			GOTO ECL_4_9B5D
@@ -4410,8 +4410,8 @@ ECL_4_9D31
 ECL_4_9DD1
 	DELAY ()
 	SPRITE_OFF ()
-	@6DC6 = 60
-	@6DE1 = 255
+	moraleThreshold = 60
+	pictureLoading = 255
 	CLEAR_MONSTERS ()
 	LOAD_MONSTER (monsterId: 75, copies: 1, cpicId: 11)
 	LOAD_MONSTER (monsterId: 55, copies: 5, cpicId: 55)
@@ -4452,12 +4452,12 @@ ECL_4_9EFB
 	@6E82 = 8 & @4A66
 	IF 0 != @6E82
 		EXIT
-	@6DE1 = 52
+	pictureLoading = 52
 	SETUP_MONSTER (spriteId: 16, maxDistance: 0, picId: 1)
-	@6DE1 = 255
+	pictureLoading = 255
 	PRINT_CLEAR (message: `YOU CONFRONT AN ARMED MAN WHO IMMEDIATELY ATTACKS YOU.`)
 	ECL_4_99D8()
-	@6DC6 = 50
+	moraleThreshold = 50
 	CLEAR_MONSTERS ()
 	LOAD_MONSTER (monsterId: 84, copies: 1, cpicId: 11)
 	COMBAT ()
@@ -4483,10 +4483,10 @@ ECL_4_9F8A
 ECL_4_9FB9
 	@6DCB = 0
 	PRINT_CLEAR (message: `A FIGHTER EMERGES FROM THE BUILDING NEARBY AND CONFRONTS YOU.`)
-	@6DE1 = 52
+	pictureLoading = 52
 	ECL_4_9A37()
 	@6E82 = ENCOUNTER (displayMonsterId: 16, distanceRequirement: 0, displayPicId: 1, combatResp: 0, waitResp: 4, fleeResp: 0, parlayResp: 4, failFleeResp: 4, message1: `'WHAT ARE YOU DOING HERE?'`, message2: ``, message3: ``, partyFlee: 9, monsterFlee: 9)
-	@6DE1 = 255
+	pictureLoading = 255
 	SWITCH @6E82
 		CASE 0
 			GOTO ECL_4_9B5D
@@ -4516,7 +4516,7 @@ ECL_4_A08A
 			GOTO ECL_4_9B7D
 
 ECL_4_A133
-	@6DC6 = 50
+	moraleThreshold = 50
 	@6E82 = 16 & @4A66
 	IF 0 != @6E82
 		GOTO ECL_4_A180
@@ -4531,7 +4531,7 @@ ECL_4_A180
 	ECL_4_9B83()
 	@4A66 = 8 | @4A66
 	@4A66 = 16 | @4A66
-	@6DE1 = 9
+	pictureLoading = 9
 	SETUP_MONSTER (spriteId: 16, maxDistance: 2, picId: 1)
 	PRINT_CLEAR (message: `A PATROL ROUNDS THE CORNER..`)
 	GOTO ECL_4_9CC3
@@ -4558,7 +4558,7 @@ ECL_4_A213
 
 ECL_4_A298
 	CLEAR_MONSTERS ()
-	@6DC6 = 80
+	moraleThreshold = 80
 	LOAD_MONSTER (monsterId: 56, copies: 4, cpicId: 56)
 	COMBAT ()
 	ECL_4_9B83()
@@ -4788,12 +4788,12 @@ ECL_4_AAE3
 		GOTO ECL_4_ACCE
 	PRINT_CLEAR (message: `YOU ENTER A BRIGHTLY LIT BUILDING WHICH REEKS OF TALLOW AND LEATHER. YOU SEE SIX SCRIBES BUSILY WRITING DOWN THE REPORTS OF A COUPLE OF OFFICERS.`)
 	ECL_4_9A37()
-	@6DE1 = 53
+	pictureLoading = 53
 	@6E82 = 1 & @4A65
 	IF 0 != @6E82
 		GOTO ECL_4_ABDE
 	@6E82 = ENCOUNTER (displayMonsterId: 24, distanceRequirement: 2, displayPicId: 7, combatResp: 0, waitResp: 3, fleeResp: 0, parlayResp: 3, failFleeResp: 0, message1: `'YOU DON'T BELONG HERE!'`, message2: ``, message3: ``, partyFlee: 12, monsterFlee: 12)
-	@6DE1 = 255
+	pictureLoading = 255
 	ECL_4_99D9()
 	SWITCH @6E82
 		CASE 0
@@ -4805,7 +4805,7 @@ ECL_4_AAE3
 
 ECL_4_ABDE
 	@6E82 = ENCOUNTER (displayMonsterId: 24, distanceRequirement: 2, displayPicId: 7, combatResp: 0, waitResp: 3, fleeResp: 0, parlayResp: 3, failFleeResp: 4, message1: `AN OFFICER LOOKS AT YOU, 'WHAT ARE YOU DOING HERE?'`, message2: ``, message3: ``, partyFlee: 12, monsterFlee: 12)
-	@6DE1 = 255
+	pictureLoading = 255
 	SWITCH @6E82
 		CASE 0
 			GOTO ECL_4_9B5D
@@ -4830,7 +4830,7 @@ ECL_4_AC3B
 
 ECL_4_AC70
 	PRINT_CLEAR (message: `THE SIX SCRIBES DIVE FOR COVER AS THE TWO OFFICERS ATTACK.`)
-	@6DC6 = 100
+	moraleThreshold = 100
 	DELAY ()
 	CLEAR_MONSTERS ()
 	LOAD_MONSTER (monsterId: 87, copies: 2, cpicId: 14)
@@ -4945,9 +4945,9 @@ ECL_4_B10A
 	EXIT
 
 ECL_4_B15A
-	@6DE1 = 72
+	pictureLoading = 72
 	SETUP_MONSTER (spriteId: 22, maxDistance: 1, picId: 30)
-	@6DE1 = 255
+	pictureLoading = 255
 	ECL_4_9914()
 	IF compareResult == '<'
 		GOTO ECL_4_B1CF
@@ -5065,19 +5065,19 @@ ECL_5_9A5F
 
 ECL_5_9A80
 	@4A67 = 127 & @4A67
-	IF @6DD5 == 0
+	IF leaveMap == 0
 		GOTO ECL_5_9AFB
 	IF @49C5 == 3
-		@6E82 = db_$9AEB[@C04D]
+		@6E82 = db_$9AEB[partyPosFacing]
 	IF @49C5 == 4
-		@6E82 = db_$9AEF[@C04D]
+		@6E82 = db_$9AEF[partyPosFacing]
 	IF @49C5 == 5
-		@6E82 = db_$9AF3[@C04D]
+		@6E82 = db_$9AF3[partyPosFacing]
 	IF @49C5 == 6
-		@6E82 = db_$9AF7[@C04D]
+		@6E82 = db_$9AF7[partyPosFacing]
 	LOAD_FILES (fileId: @6E82, unused: 2, loadTiles: 255)
 	CALL (opAddr: @C01E)
-	@6DC9 = 255
+	moveLocked = 255
 	EXIT
 
 CONST ECL_5_db_$9AEB = 3
@@ -5100,19 +5100,19 @@ CONST ECL_5_db_$9AFA = 6
 
 ECL_5_9AFB
 	ECL_5_9A5F()
-	@6E79 = 31 & @C04F
-	IF @6E79 == 21 && @C04D == 3
+	@6E79 = 31 & partyPosEventAtCell
+	IF @6E79 == 21 && partyPosFacing == 3
 		GOTO ECL_5_A060
 
-	IF @6E79 == 22 && @C04D == 1
+	IF @6E79 == 22 && partyPosFacing == 1
 		GOTO ECL_5_A060
 
-	IF @6E79 == 4 && @C04D == 1
+	IF @6E79 == 4 && partyPosFacing == 1
 		GOTO ECL_5_A467
 
-	IF @C04E == 7
+	IF partyPosWallAhead == 7
 		GOTO ECL_5_9B4B
-	IF @C04E != 9
+	IF partyPosWallAhead != 9
 		EXIT
 
 ECL_5_9B4B
@@ -5123,14 +5123,14 @@ ECL_5_9B4B
 	PRINT_APPEND (message: ` AS YOU SLICE THROUGH SOMEONE IS PRICKED BY A THORN.`)
 	DAMAGE (attack: 128, dice: 1, sides: 1, bonus: 200, value: 0)
 	CALL (opAddr: @C01E)
-	@6DC9 = 255
+	moveLocked = 255
 	EXIT
 
 ECL_5_9BD9
 	ECL_5_995D()
 	IF compareResult == '<'
 		GOTO ECL_5_9C15
-	@6E82 = 64 & @C04F
+	@6E82 = 64 & partyPosEventAtCell
 	IF 0 != @6E82
 		GOTO ECL_5_9C15
 	@6E79 = 2
@@ -5141,7 +5141,7 @@ ECL_5_9BD9
 		GOTO ECL_5_ABF0
 
 ECL_5_9C15
-	@6E79 = 31 & @C04F
+	@6E79 = 31 & partyPosEventAtCell
 	IF @6E79 > 29
 		NEW_ECL (eclId: 3)
 	IF @6E79 > 20
@@ -5169,7 +5169,7 @@ ECL_5_9C4E
 	@6DD3 = 10
 	IF @4A64 == 0
 		EXIT
-	@6E82 = 64 & @C04F
+	@6E82 = 64 & partyPosEventAtCell
 	IF 0 != @6E82
 		EXIT
 	@6DD2 = 1
@@ -5192,8 +5192,8 @@ ECL_5_9C8A
 	PRINT_CLEAR (message: `YOU FEEL A SUDDEN DISORIENTATION.`)
 	@6E82 = RANDOM (max: 3)
 	@6E79 = 3 + @6E82
-	@C04B = db_$9CE1[@6E82]
-	@C04C = db_$9CE5[@6E82]
+	partyPosMapX = db_$9CE1[@6E82]
+	partyPosMapY = db_$9CE5[@6E82]
 	LOAD_FILES (fileId: @6E79, unused: 2, loadTiles: 255)
 	CALL (opAddr: @2C90)
 	EXIT
@@ -5209,23 +5209,23 @@ CONST ECL_5_db_$9CE8 = 5
 
 
 ECL_5_9CE9
-	@6DC7 = 129
+	gbvmCombatResult = 129
 
 ECL_5_9CEF
-	IF @6DC7 == 0
+	IF gbvmCombatResult == 0
 		RETURN
 	ECL_5_99D9()
 	@4A65 = 254 & @4A65
-	IF @6DC7 != 129
+	IF gbvmCombatResult != 129
 		RETURN
 
 ECL_5_9D0C
-	@6DC9 = 255
-	@C04B = @49F0
-	@C04C = @49F1
-	@C04D = @C04D + 2
-	IF @C04D > 3
-		@C04D = @C04D - 4
+	moveLocked = 255
+	partyPosMapX = @49F0
+	partyPosMapY = @49F1
+	partyPosFacing = partyPosFacing + 2
+	IF partyPosFacing > 3
+		partyPosFacing = partyPosFacing - 4
 	GOTO ECL_5_9C79
 
 ECL_5_9D3D
@@ -5283,7 +5283,7 @@ ECL_5_9EEE
 
 ECL_5_9F11
 	DELAY ()
-	@6DC6 = 60
+	moraleThreshold = 60
 	SPRITE_OFF ()
 	CLEAR_MONSTERS ()
 	LOAD_MONSTER (monsterId: 55, copies: 3, cpicId: 55)
@@ -5340,7 +5340,7 @@ ECL_5_A00B
 	APPROACH ()
 
 ECL_5_A043
-	@6DC6 = 100
+	moraleThreshold = 100
 	CLEAR_MONSTERS ()
 	LOAD_MONSTER (monsterId: 31, copies: 8, cpicId: 31)
 	COMBAT ()
@@ -5390,7 +5390,7 @@ ECL_5_A19C
 		GOTO ECL_5_A21C
 	PRINT_CLEAR (message: `'ALL RIGHT, THEN. PASS!' AND WITH THAT THE GATES SWING OPEN AND YOU PASS THROUGH THE GATE.`)
 	CALL (opAddr: @C01E)
-	@6DC9 = 255
+	moveLocked = 255
 	EXIT
 
 ECL_5_A21C
@@ -5401,9 +5401,9 @@ ECL_5_A245
 	@6E82 = 4 & @4A66
 	IF 0 != @6E82
 		EXIT
-	@6DE1 = 55
+	pictureLoading = 55
 	@6E82 = ENCOUNTER (displayMonsterId: 12, distanceRequirement: 2, displayPicId: 31, combatResp: 2, waitResp: 4, fleeResp: 1, parlayResp: 4, failFleeResp: 4, message1: `YOU SEE A HARMLESS, MIDDLE AGED MAN.`, message2: ``, message3: ``, partyFlee: 12, monsterFlee: 12)
-	@6DE1 = 255
+	pictureLoading = 255
 	SWITCH @6E82
 		CASE 0
 			GOTO ECL_5_A3B6
@@ -5423,7 +5423,7 @@ ECL_5_A2A4
 	SWITCH @6E82
 		CASE 0
 			GOTO ECL_5_A3DA
-	@6DC6 = 50
+	moraleThreshold = 50
 	@6DCB = 0
 	CLEAR_MONSTERS ()
 	LOAD_MONSTER (monsterId: 86, copies: 1, cpicId: 14)
@@ -5445,8 +5445,8 @@ ECL_5_A3DA
 
 ECL_5_A467
 	PRINT_CLEAR (message: `YOU GO UPSTAIRS.`)
-	@C04B = 5
-	@C04C = 7
+	partyPosMapX = 5
+	partyPosMapY = 7
 	NEW_ECL (eclId: 7)
 
 ECL_5_A485
@@ -5501,7 +5501,7 @@ ECL_5_A7E7
 ECL_5_A826
 	ECL_5_9A37()
 	@6DCB = 0
-	@6DC6 = 50
+	moraleThreshold = 50
 	CLEAR_MONSTERS ()
 	LOAD_MONSTER (monsterId: 56, copies: 4, cpicId: 56)
 	COMBAT ()
@@ -5526,13 +5526,13 @@ ECL_5_A8C4
 		EXIT
 	PRINT_CLEAR (message: `YOU ENTER A CHAMBER WHICH IS LAVISHLY APPOINTED WITH HANGINGS, CARPETS AND FURNITURE. SITTING ON A THRONE IS A POWERFUL LOOKING MAN CLAD IN BARBARIC SPLENDOR.`)
 	ECL_5_9A37()
-	@6DE1 = 54
+	pictureLoading = 54
 	SETUP_MONSTER (spriteId: 16, maxDistance: 1, picId: 1)
 	PRINT_CLEAR (message: `'WHAT IS YOUR BUSINESS WITH TYRANTHRAXUS, LORD OF PHLAN?'`)
 	APPROACH ()
 	DELAY ()
 	@6E82 = ENCOUNTER (displayMonsterId: 16, distanceRequirement: 0, displayPicId: 1, combatResp: 0, waitResp: 0, fleeResp: 1, parlayResp: 0, failFleeResp: 4, message1: ``, message2: ``, message3: ``, partyFlee: 0, monsterFlee: 0)
-	@6DE1 = 255
+	pictureLoading = 255
 	SWITCH @6E82
 		CASE 0
 			GOTO ECL_5_9C79
@@ -5549,7 +5549,7 @@ ECL_5_A8C4
 		CASE 2
 			GOTO ECL_5_AB5F
 	@6E82 = PARTY_STRENGTH ()
-	@6E82 = @6DCF + @6E82
+	@6E82 = curCharLoyaltyBase + @6E82
 	IF @6E82 >= 85
 		GOTO ECL_5_AAE5
 	PRINT_CLEAR (message: `HE SEEMS TO COLLAPSE. 'ALL RIGHT. I'M NOT TYRANTHRAXUS. HE JUST HIRED ME TO IMPERSONATE HIM. IT'S NOT A BAD LIFE, BUT, HEY! I CAN TELL WHICH WAY THE WIND'S BLOWING.'`)
@@ -5587,7 +5587,7 @@ ECL_5_ABB0
 	DELAY ()
 	ECL_5_99D9()
 	@6DCB = 0
-	@6DC6 = 60
+	moraleThreshold = 60
 	CLEAR_MONSTERS ()
 	LOAD_MONSTER (monsterId: 92, copies: 1, cpicId: 11)
 	LOAD_MONSTER (monsterId: 93, copies: 2, cpicId: 12)
@@ -5609,11 +5609,11 @@ ECL_5_ABF0
 			GOTO ECL_5_9D0C
 
 ECL_5_AC31
-	@6DC6 = 100
+	moraleThreshold = 100
 	CLEAR_MONSTERS ()
 	LOAD_MONSTER (monsterId: 60, copies: 4, cpicId: 60)
 	COMBAT ()
-	IF @6DC7 == 129
+	IF gbvmCombatResult == 129
 		GOTO ECL_5_9D0C
 	EXIT
 
@@ -5720,32 +5720,32 @@ ECL_6_9B3A
 	@6E82 = 3 & @4A6A
 	IF 0 != @6E82
 	AND @4A65, 254, @4A65
-	IF @6DD5 == 0
+	IF leaveMap == 0
 		EXIT
 	@6E79 = 3
-	IF @C04D != 2
+	IF partyPosFacing != 2
 		GOTO ECL_6_9B8B
 	@6E79 = 9
-	@6E12 = 2
+	gbvmDiskNum = 2
 	@49E7 = 0
 	@49E8 = 0
 
 ECL_6_9B8B
 	CALL (opAddr: @C01E)
-	@6DC9 = 255
+	moveLocked = 255
 	NEW_ECL (eclId: @6E79)
 
 ECL_6_9B99
 	ECL_6_9A18()
 	IF compareResult == '<'
 		GOTO ECL_6_9BE9
-	@6E82 = 64 & @C04F
+	@6E82 = 64 & partyPosEventAtCell
 	IF 0 != @6E82
 		GOTO ECL_6_9BE9
 	@6E79 = 2
 	IF @6DCA == 0
 		@6E79 = 20
-	@6E82 = 32 & @C04F
+	@6E82 = 32 & partyPosEventAtCell
 	IF 0 != @6E82
 		@6E79 = @6E79 + @6E79
 	@6E82 = RANDOM (max: @6E79)
@@ -5753,7 +5753,7 @@ ECL_6_9B99
 		GOTO ECL_6_A8D1
 
 ECL_6_9BE9
-	@6E79 = 31 & @C04F
+	@6E79 = 31 & partyPosEventAtCell
 	SWITCH @6E79
 		CASE 0
 			GOTO ECL_6_9C3E
@@ -5779,7 +5779,7 @@ ECL_6_9C13
 	@6DD3 = 10
 	IF @4A64 == 0
 		EXIT
-	@6E82 = 64 & @C04F
+	@6E82 = 64 & partyPosEventAtCell
 	IF 0 != @6E82
 		EXIT
 	@6DD2 = 1
@@ -5880,10 +5880,10 @@ ECL_6_9FCE
 	IF @49C9 > 14
 		GOTO ECL_6_A22A
 	PRINT_APPEND (message: ` THE SMITH (A HUMAN) AND THREE FIRE GIANTS ARE WORKING ON A SUIT OF ARMOR. PILED UP OUT OF THE WAY ARE AN ASSORTMENT OF WEAPONS AND ARMOR.`)
-	@6DE1 = 13
+	pictureLoading = 13
 	ECL_6_9AF1()
 	@6E82 = ENCOUNTER (displayMonsterId: 12, distanceRequirement: 2, displayPicId: 9, combatResp: 0, waitResp: 1, fleeResp: 1, parlayResp: 1, failFleeResp: 4, message1: `THE SMITH LOOKS UP FROM HIS WORK. 'WHAT DO YOU NEED?'`, message2: `THE SMITH IGNORES YOU AS HE HAMMERS ON A GREAVE.`, message3: ``, partyFlee: 9, monsterFlee: 9)
-	@6DE1 = 255
+	pictureLoading = 255
 	SWITCH @6E82
 		CASE 0
 			GOTO ECL_6_9C3E
@@ -5927,7 +5927,7 @@ ECL_6_A28B
 	@6DCB = 2
 
 ECL_6_A291
-	@6DC6 = 30
+	moraleThreshold = 30
 	CLEAR_MONSTERS ()
 	LOAD_MONSTER (monsterId: 41, copies: 1, cpicId: 11)
 	LOAD_MONSTER (monsterId: 56, copies: 3, cpicId: 56)
@@ -5958,10 +5958,10 @@ ECL_6_A38B
 	@6E82 = 128 & @4A69
 	IF 0 != @6E82
 		EXIT
-	@C04D = 0
+	partyPosFacing = 0
 	CALL (opAddr: @2C90)
 	ECL_6_9AF1()
-	@6DE1 = 14
+	pictureLoading = 14
 	SETUP_MONSTER (spriteId: 29, maxDistance: 2, picId: 7)
 	PRINT_CLEAR (message: `A PRIEST AND TWO ACOLYTES TURN FROM THE ALTER, 'WELCOME MY CHILDREN. COME FORWARD AND ACCEPT THE BLESSING OF LORD BANE.'`)
 	APPROACH ()
@@ -5970,7 +5970,7 @@ ECL_6_A38B
 
 ECL_6_A47D
 	@6E82 = HORIZONTAL_MENU (opts: [`ACCEPT BLESSING`, `TALK`, `LEAVE`, `KILL THEM`])
-	@6DE1 = 255
+	pictureLoading = 255
 	SWITCH @6E82
 		CASE 0
 			GOTO ECL_6_A4ED
@@ -5980,7 +5980,7 @@ ECL_6_A47D
 			GOTO ECL_6_A5A6
 
 ECL_6_A4BA
-	@6DC6 = 100
+	moraleThreshold = 100
 	@6DCB = 0
 	CLEAR_MONSTERS ()
 	LOAD_MONSTER (monsterId: 91, copies: 1, cpicId: 13)
@@ -6008,13 +6008,13 @@ ECL_6_A4ED
 
 ECL_6_A536
 	LOAD_CHARACTER (charId: @6E79)
-	IF @6C00 != 1
+	IF curCharEnabled != 1
 		GOTO ECL_6_A584
-	@6E82 = db_$A4E4[@6BD8]
+	@6E82 = db_$A4E4[curCharAlignment]
 	SWITCH @6E82
 		CASE 0
 			GOTO ECL_6_A584
-	PRINT_CLEAR (message: $str@6B00)
+	PRINT_CLEAR (message: curCharName)
 	PRINT_APPEND (message: ` DOUBLES UP IN AGONY.`)
 	DELAY ()
 	@4A6A = 4 | @4A6A
@@ -6085,28 +6085,28 @@ ECL_6_A817
 	EXIT
 
 ECL_6_A87D
-	@6DC7 = 129
+	gbvmCombatResult = 129
 
 ECL_6_A883
-	IF @6DC7 == 0
+	IF gbvmCombatResult == 0
 		RETURN
 	ECL_6_9A93()
 	@4A65 = 254 & @4A65
-	IF @6DC7 != 129
+	IF gbvmCombatResult != 129
 		RETURN
 
 ECL_6_A8A0
-	@6DC9 = 255
-	@C04B = @49F0
-	@C04C = @49F1
-	@C04D = @C04D + 2
-	IF @C04D > 3
-		@C04D = @C04D - 4
+	moveLocked = 255
+	partyPosMapX = @49F0
+	partyPosMapY = @49F1
+	partyPosFacing = partyPosFacing + 2
+	IF partyPosFacing > 3
+		partyPosFacing = partyPosFacing - 4
 	GOTO ECL_6_9C3E
 
 ECL_6_A8D1
 	$str@980E = `A PATROL OF GIANTS LED BY A HUMAN FIGHTER`
-	@6DE1 = 9
+	pictureLoading = 9
 	SETUP_MONSTER (spriteId: 16, maxDistance: 2, picId: 1)
 	ECL_6_99CF()
 	IF compareResult == '!='
@@ -6124,7 +6124,7 @@ ECL_6_A8D1
 
 ECL_6_A955
 	PRINT_APPEND (message: `'BLASPHEMERS! GET THEM!'`)
-	@6DE1 = 255
+	pictureLoading = 255
 	GOTO ECL_6_ABD4
 
 ECL_6_A974
@@ -6145,7 +6145,7 @@ ECL_6_A9B5
 ECL_6_A9E2
 	ECL_6_9AF1()
 	@6E82 = ENCOUNTER (displayMonsterId: 16, distanceRequirement: 2, displayPicId: 1, combatResp: 0, waitResp: 0, fleeResp: 0, parlayResp: 1, failFleeResp: 0, message1: `THEY ADVANCE, WEAPONS READY`, message2: ``, message3: ``, partyFlee: 12, monsterFlee: 9)
-	@6DE1 = 255
+	pictureLoading = 255
 	SWITCH @6E82
 		CASE 0
 			GOTO ECL_6_9C3E
@@ -6162,7 +6162,7 @@ ECL_6_AA31
 	PRINT_APPEND (message: $str@980F)
 	ECL_6_9AF1()
 	@6E82 = ENCOUNTER (displayMonsterId: 16, distanceRequirement: 2, displayPicId: 1, combatResp: 0, waitResp: 3, fleeResp: 0, parlayResp: 3, failFleeResp: 4, message1: `'WHAT ARE YOU DOING HERE?'`, message2: `THE LEADER ADVANCES.`, message3: ``, partyFlee: 12, monsterFlee: 9)
-	@6DE1 = 255
+	pictureLoading = 255
 	SWITCH @6E82
 		CASE 0
 			GOTO ECL_6_9C3E
@@ -6203,8 +6203,8 @@ ECL_6_ABA5
 
 ECL_6_ABD4
 	DELAY ()
-	@6DC6 = 60
-	@6DE1 = 255
+	moraleThreshold = 60
+	pictureLoading = 255
 	DELAY ()
 	SPRITE_OFF ()
 	CLEAR_MONSTERS ()
@@ -6246,13 +6246,13 @@ ECL_7_9964
 
 ECL_7_9971
 	ECL_7_9964()
-	@6E7A = 127 & @C04F
+	@6E7A = 127 & partyPosEventAtCell
 	@6E79 = 0
 
 ECL_7_9984
 	@6E7B = db_$99D8[@6E79]
 	@6E7C = db_$99E0[@6E79]
-	IF @6E7A == @6E7B && @6E7C == @C04D
+	IF @6E7A == @6E7B && @6E7C == partyPosFacing
 		GOTO ECL_7_99BF
 
 	@6E79 = 1 + @6E79
@@ -6299,7 +6299,7 @@ CONST ECL_7_db_$99EF = 2
 
 
 ECL_7_99F0
-	@6E79 = 127 & @C04F
+	@6E79 = 127 & partyPosEventAtCell
 	SWITCH @6E79
 		CASE 0
 			GOTO ECL_7_9ABC
@@ -6349,12 +6349,12 @@ ECL_7_9A74
 	PRINT_CLEAR (message: `DO YOU WANT TO GO UP THESE STAIRS?`)
 
 ECL_7_9A91
-	@6DC9 = 255
+	moveLocked = 255
 	ECL_7_9923()
 	IF compareResult == '!='
 		EXIT
-	@C04B = db_$9ACC[@6E79]
-	@C04C = db_$9AD3[@6E79]
+	partyPosMapX = db_$9ACC[@6E79]
+	partyPosMapY = db_$9AD3[@6E79]
 	IF @6E79 == 0
 		GOTO ECL_7_9AC2
 
@@ -6386,7 +6386,7 @@ CONST ECL_7_db_$9AD9 = 8
 ECL_7_9ADA
 	@6E82 = 8 & @4A6C
 	IF 0 == @6E82
-		@6DC9 = 255
+		moveLocked = 255
 	EXIT
 
 ECL_7_9AEB
@@ -6397,7 +6397,7 @@ ECL_7_9AEB
 
 ECL_7_9AFF
 	LOAD_CHARACTER (charId: @6E82)
-	IF @6C00 == 0
+	IF curCharEnabled == 0
 		GOTO ECL_7_9B56
 	@6E81 = 1
 	IF @6DCA == 0
@@ -6419,7 +6419,7 @@ ECL_7_9B56
 ECL_7_9B6B
 	@4A6C = 8 | @4A6C
 	PRINT_CLEAR (message: `A SECRET DOOR IS FOUND `)
-	SWITCH @C04D
+	SWITCH partyPosFacing
 		CASE 0
 			ECL_7_9BA0()
 		CASE 1
@@ -6455,27 +6455,27 @@ ECL_7_9BDA
 
 ECL_7_9C25
 	WHO (prompt: `WHO WILL OPEN IT?`)
-	IF @6C00 != 1
+	IF curCharEnabled != 1
 		GOTO ECL_7_9C25
 	@6E82 = 16 & @4A6C
 	IF 0 != @6E82
 		GOTO ECL_7_9C69
 	@6E82 = RANDOM (max: 19)
 	@6E82 = 1 + @6E82
-	IF @6E82 >= @6B9B
+	IF @6E82 >= curCharSaves[C_Save.PETRIFICATION]
 		GOTO ECL_7_9CC1
 
 ECL_7_9C69
 	PRINT_CLEAR (message: `QUICKLY LOOKING AWAY, `)
-	PRINT_APPEND (message: $str@6B00)
+	PRINT_APPEND (message: curCharName)
 	PRINT_APPEND (message: ` SAYS, 'I SAW BROKEN REMAINS OF STATUES... HEADS WITH FACES FULL OF TERROR.`)
 	GOTO ECL_7_9CFC
 
 ECL_7_9CC1
-	@6C00 = 135
-	@6E79 = @6DB1 + 128
+	curCharEnabled = 135
+	@6E79 = curCharIdx + 128
 	PRINT_CLEAR (message: `WITH A SCREAM OF HORROR `)
-	PRINT_APPEND (message: $str@6B00)
+	PRINT_APPEND (message: curCharName)
 	PRINT_APPEND (message: ` TURNS TO STONE.`)
 	LOAD_CHARACTER (charId: @6E79)
 
@@ -6487,8 +6487,8 @@ ECL_7_9CFC
 	PRINT_CLEAR (message: `THE PARTY JUMPS DOWN THROUGH THE TRAP DOOR...`)
 	ECL_7_993D()
 	DAMAGE (attack: 224, dice: 3, sides: 6, bonus: 0, value: 0)
-	@C04B = 11
-	@C04C = 5
+	partyPosMapX = 11
+	partyPosMapY = 5
 	CALL (opAddr: @2C90)
 
 ECL_7_9D6A
@@ -6513,19 +6513,19 @@ ECL_7_9DD7
 
 ECL_7_9E29
 	@6DCB = 0
-	@6DC6 = 100
+	moraleThreshold = 100
 	CLEAR_MONSTERS ()
 	LOAD_MONSTER (monsterId: 49, copies: 1, cpicId: 49)
 	COMBAT ()
-	IF @6DC7 == 129
+	IF gbvmCombatResult == 129
 		GOTO ECL_7_9E53
 	@4A6C = 16 | @4A6C
 	EXIT
 
 ECL_7_9E53
-	@C04B = 5
-	@C04C = 7
-	@C04D = 3
+	partyPosMapX = 5
+	partyPosMapY = 7
+	partyPosFacing = 3
 	GOTO ECL_7_9ABC
 
 ECL_7_9E69
@@ -6547,9 +6547,9 @@ ECL_7_9EA4
 		GOTO ECL_7_A08F
 	PRINT_APPEND (message: ` AS YOU COME IN HE NODS AT YOU.`)
 	ECL_7_993D()
-	@6DE1 = 70
+	pictureLoading = 70
 	@6E82 = ENCOUNTER (displayMonsterId: 11, distanceRequirement: 2, displayPicId: 8, combatResp: 0, waitResp: 1, fleeResp: 1, parlayResp: 1, failFleeResp: 1, message1: `HE STARES MOODILY AT HIS FEET.`, message2: ``, message3: ``, partyFlee: 12, monsterFlee: 12)
-	@6DE1 = 255
+	pictureLoading = 255
 	SWITCH @6E82
 		CASE 0
 			GOTO ECL_7_9ABC
@@ -6568,9 +6568,9 @@ ECL_7_9EA4
 	GOTO ECL_7_9ABC
 
 ECL_7_A079
-	@C04B = 3
-	@C04C = 6
-	@C04D = 1
+	partyPosMapX = 3
+	partyPosMapY = 6
+	partyPosFacing = 1
 	GOTO ECL_7_9ABC
 
 ECL_7_A08F
@@ -6578,12 +6578,12 @@ ECL_7_A08F
 	DELAY ()
 
 ECL_7_A0B4
-	@6DC6 = 100
+	moraleThreshold = 100
 	@6DCB = 0
 	CLEAR_MONSTERS ()
 	LOAD_MONSTER (monsterId: 45, copies: 1, cpicId: 12)
 	COMBAT ()
-	IF @6DC7 == 129
+	IF gbvmCombatResult == 129
 		GOTO ECL_7_A079
 	@4A6C = 32 | @4A6C
 	EXIT
@@ -6606,9 +6606,9 @@ ECL_7_A12E
 	@6E82 = 32 & @4A6C
 	IF 0 != @6E82
 		GOTO ECL_7_A24F
-	@6DE1 = 59
+	pictureLoading = 59
 	@6E82 = ENCOUNTER (displayMonsterId: 24, distanceRequirement: 1, displayPicId: 31, combatResp: 0, waitResp: 4, fleeResp: 1, parlayResp: 4, failFleeResp: 4, message1: `'SO WHAT MESSAGE FROM TYRANTHRAXUS REQUIRES ALL OF YOU TO DELIVER IT?'`, message2: ``, message3: ``, partyFlee: 0, monsterFlee: 0)
-	@6DE1 = 255
+	pictureLoading = 255
 	SWITCH @6E82
 		CASE 0
 			GOTO ECL_7_9ABC
@@ -6627,15 +6627,15 @@ ECL_7_A12E
 			GOTO ECL_7_A3CB
 
 ECL_7_A24F
-	@6DE1 = 59
+	pictureLoading = 59
 	SETUP_MONSTER (spriteId: 24, maxDistance: 0, picId: 31)
 	PRINT_CLEAR (message: `A SUDDEN LOOK OF FEAR COMES OVER HIS FACE. 'IF YOU'VE COME  FROM TYRANTHRAXUS I CAN OFFER A BETTER DEAL. IF YOU KILL HIM INSTEAD OF ME I WILL MAKE YOU ALL GENERALS!'`)
 	ECL_7_993D()
-	IF @6E3E == 8
+	IF partySize == 8
 		GOTO ECL_7_A333
 	PRINT_CLEAR (message: `'IN FACT I WILL JOIN YOU. IS IT A DEAL?'`)
 	ECL_7_9923()
-	@6DE1 = 255
+	pictureLoading = 255
 	IF compareResult == '!='
 		GOTO ECL_7_A3A5
 	PRINT_CLEAR (message: `GOOD.`)
@@ -6646,7 +6646,7 @@ ECL_7_A24F
 ECL_7_A333
 	PRINT_CLEAR (message: `'IS IT A DEAL?`)
 	ECL_7_9923()
-	@6DE1 = 255
+	pictureLoading = 255
 	IF compareResult == '!='
 		GOTO ECL_7_A3A5
 	@4A6D = 2 | @4A6D
@@ -6655,18 +6655,18 @@ ECL_7_A333
 
 ECL_7_A3A5
 	@6DCB = 0
-	@6DC6 = 100
+	moraleThreshold = 100
 	CLEAR_MONSTERS ()
 	LOAD_MONSTER (monsterId: 88, copies: 1, cpicId: 14)
 	COMBAT ()
 	@4A6D = 2 | @4A6D
-	IF @6DC7 != 129
+	IF gbvmCombatResult != 129
 		EXIT
 
 ECL_7_A3CB
-	@C04B = 2
-	@C04C = 6
-	@C04D = 2
+	partyPosMapX = 2
+	partyPosMapY = 6
+	partyPosFacing = 2
 	GOTO ECL_7_9ABC
 
 ECL_7_A3E1
@@ -6679,19 +6679,19 @@ ECL_7_A3E1
 
 ECL_7_A404
 	LOAD_CHARACTER (charId: @9800)
-	IF @6C00 != 1
+	IF curCharEnabled != 1
 		GOTO ECL_7_A43F
-	IF `GENHEERIS` != $str@6B00
+	IF `GENHEERIS` != curCharName
 		GOTO ECL_7_A43F
-	@6C00 = 0
-	@6B00 = 0
+	curCharEnabled = 0
+	curChar = null
 	@9800 = 128 + @9800
 	LOAD_CHARACTER (charId: @9800)
 	EXIT
 
 ECL_7_A43F
 	@9800 = 1 + @9800
-	IF @9800 < @6E3E
+	IF @9800 < partySize
 		GOTO ECL_7_A404
 	EXIT
 
@@ -6710,9 +6710,9 @@ ECL_7_A558
 	@6E82 = 4 & @4A6D
 	IF 0 != @6E82
 		GOTO ECL_7_A629
-	@6DE1 = 12
+	pictureLoading = 12
 	@6E82 = ENCOUNTER (displayMonsterId: 16, distanceRequirement: 0, displayPicId: 1, combatResp: 0, waitResp: 0, fleeResp: 0, parlayResp: 0, failFleeResp: 0, message1: `TWO GUARDS MOVE TO BAR YOUR PATH. THE DRAGON LOOKS AT YOU WITH MALEVOLENCE. 'GUARDS, KILL THESE PESTS.'`, message2: ``, message3: ``, partyFlee: 9, monsterFlee: 9)
-	@6DE1 = 255
+	pictureLoading = 255
 	SWITCH @6E82
 		CASE 0
 			GOTO ECL_7_9ABC
@@ -6720,18 +6720,18 @@ ECL_7_A558
 			GOTO ECL_7_A600
 
 ECL_7_A5EA
-	@C04B = 3
-	@C04C = 6
-	@C04D = 0
+	partyPosMapX = 3
+	partyPosMapY = 6
+	partyPosFacing = 0
 	GOTO ECL_7_9ABC
 
 ECL_7_A600
 	@6DCB = 0
-	@6DC6 = 100
+	moraleThreshold = 100
 	CLEAR_MONSTERS ()
 	LOAD_MONSTER (monsterId: 85, copies: 12, cpicId: 11)
 	COMBAT ()
-	IF @6DC7 == 129
+	IF gbvmCombatResult == 129
 		GOTO ECL_7_A5EA
 	@4A6D = 4 | @4A6D
 
@@ -6748,29 +6748,29 @@ ECL_7_A629
 
 ECL_7_A71E
 	LOAD_CHARACTER (charId: @9800)
-	IF @6C00 != 1
+	IF curCharEnabled != 1
 		GOTO ECL_7_A7C7
-	IF @6BB8 >= 128
+	IF curCharNpc >= 128
 		GOTO ECL_7_A781
-	PRINT_CLEAR (message: $str@6B00)
+	PRINT_CLEAR (message: curCharName)
 	PRINT_APPEND (message: ` HOW DO YOU VOTE?`)
 	@6E82 = HORIZONTAL_MENU (opts: [`ATTACK`, `JOIN TYRANTHRAXUS`])
 	SWITCH @6E82
 		CASE 0
 			GOTO ECL_7_A7BA
-	@6C0C = 129
-	@6BB8 = 178
+	curCharCombatRole = 129
+	curCharNpc = 178
 	GOTO ECL_7_A7BA
 
 ECL_7_A781
-	IF `GENHEERIS` == $str@6B00
+	IF `GENHEERIS` == curCharName
 		GOTO ECL_7_A7C7
-	IF @6BD8 == 2
-		@6C0C = 129
-	IF @6BD8 == 5
-		@6C0C = 129
-	IF @6BD8 == 8
-		@6C0C = 129
+	IF curCharAlignment == 2
+		curCharCombatRole = 129
+	IF curCharAlignment == 5
+		curCharCombatRole = 129
+	IF curCharAlignment == 8
+		curCharCombatRole = 129
 
 ECL_7_A7BA
 	@6E79 = 128 + @9800
@@ -6778,17 +6778,17 @@ ECL_7_A7BA
 
 ECL_7_A7C7
 	@9800 = 1 + @9800
-	IF @9800 < @6E3E
+	IF @9800 < partySize
 		GOTO ECL_7_A71E
 	@6DC2 = 3
 	@6DC3 = 9
 	@6DC0 = 1
 	@6DCB = 0
-	@6DC6 = 100
+	moraleThreshold = 100
 	CLEAR_MONSTERS ()
 	LOAD_MONSTER (monsterId: 66, copies: 1, cpicId: 66)
 	COMBAT ()
-	IF @6DC7 == 129
+	IF gbvmCombatResult == 129
 		GOTO ECL_7_A5EA
 	IF @4ABA != 255
 		@4ABA = 254
@@ -6803,10 +6803,10 @@ ECL_7_A82D
 	DELAY ()
 	@49E7 = 0
 	@49E8 = 0
-	@C04B = 0
-	@C04C = 4
-	@C04D = 1
-	@6E12 = 3
+	partyPosMapX = 0
+	partyPosMapY = 4
+	partyPosFacing = 1
+	gbvmDiskNum = 3
 	@4AE0 = 0
 	NEW_ECL (eclId: 0)
 	EXIT
@@ -6825,12 +6825,12 @@ ECL_8_9914
 	IF @49C9 >= 14
 		@4A02 = 8
 	@49FD = @4A02
-	@6E82 = @C04F & 127
+	@6E82 = partyPosEventAtCell & 127
 	ECL_8_B589()
-	IF @6E82 == 29 && @C04D == 2
+	IF @6E82 == 29 && partyPosFacing == 2
 		GOTO ECL_8_9980
 
-	IF @6E82 == 29 && @C04D == 1
+	IF @6E82 == 29 && partyPosFacing == 1
 		GOTO ECL_8_998C
 
 	EXIT
@@ -6839,7 +6839,7 @@ ECL_8_995C
 	IF @4A07 != 0
 		EXIT
 	PRINT_CLEAR (message: `THE WAY IS BLOCKED.`)
-	@6DC9 = 255
+	moveLocked = 255
 	GOTO ECL_8_B3CB
 
 ECL_8_9980
@@ -6855,7 +6855,7 @@ ECL_8_998C
 ECL_8_9998
 	PRINT_CLEAR (message: ``)
 	ECL_8_B57F()
-	@6E82 = @C04F & 127
+	@6E82 = partyPosEventAtCell & 127
 	ECL_8_B589()
 	@4A03 = 26
 
@@ -6924,7 +6924,7 @@ ECL_8_9A52
 		EXIT
 	@4A04 = 1 + @4A04
 	DELAY ()
-	@C04D = 2
+	partyPosFacing = 2
 	CALL (opAddr: @2C90)
 	IF @4AC8 == 128
 		GOTO ECL_8_9ABD
@@ -6936,7 +6936,7 @@ ECL_8_9ABD
 	@4AC8 = 255
 	IF @4ABE >= 254
 		EXIT
-	@6DE1 = 55
+	pictureLoading = 55
 	PICTURE (blockId: 31)
 	PRINT_CLEAR (message: `COUNCILMAN CADORNA CONFRONTS YOU. 'YOU HAVE TAKEN MY FAMILY TREASURE. I DON'T FORGET SUCH THINGS.' HE STRIDES OFF.`)
 	ECL_8_B57F()
@@ -7511,7 +7511,7 @@ ECL_8_AF7D
 		EXIT
 	IF @4A97 != 254
 		EXIT
-	@6DE1 = 55
+	pictureLoading = 55
 	PICTURE (blockId: 31)
 	PRINT_CLEAR (message: `'WHEN OLD PHLAN WAS OVERRUN, A FAMILY TREASURE WAS HIDDEN IN THE WESTERN BUILDING OF THE TEXTILE COMPLEX.`)
 	ECL_8_B5A0()
@@ -7525,7 +7525,7 @@ ECL_8_B073
 	ECL_8_B589()
 	IF @4A98 != 254
 		EXIT
-	@6DE1 = 55
+	pictureLoading = 55
 	PICTURE (blockId: 1)
 	PRINT_CLEAR (message: `'IT IS IMPERATIVE THAT A MESSAGE BE DELIVERED TO THE ZHENTIL OUTPOST TO THE WEST.  I AM SENDING YOU AS DIPLOMATIC ENVOYS.`)
 	ECL_8_B5A0()
@@ -7537,7 +7537,7 @@ ECL_8_B073
 ECL_8_B158
 	IF @4A99 != 254
 		EXIT
-	@6DE1 = 16
+	pictureLoading = 16
 	PICTURE (blockId: 7)
 	PRINT_CLEAR (message: `'THANK YOU FOR COMING.  I MUST BE BRIEF FOR OUR NEED IS URGENT.  OUR ONE CHANCE TO DEFEAT THE ENEMY IS THROUGH AN ASSAULT ON THE CASTLE. TO DO THIS, WE MUST FIRST SECURE STOJANOW GATE.`)
 	ECL_8_B5A0()
@@ -7549,7 +7549,7 @@ ECL_8_B158
 ECL_8_B299
 	IF @4A9A != 254
 		EXIT
-	@6DE1 = 16
+	pictureLoading = 16
 	PICTURE (blockId: 2)
 	PRINT_CLEAR (message: `IN THE COUNCIL CHAMBERS, THE ENTIRE CITY COUNCIL IS WAITING FOR YOU. THE LORD HIGH MAYOR, ULRICH EBERHARD, SPEAKS: 'OUR FORCES ARE MARSHALLED FOR THE ASSAULT ON VALJEVO CASTLE.`)
 	ECL_8_B5A0()
@@ -7564,7 +7564,7 @@ ECL_8_B3C7
 ECL_8_B3CB
 	IF @4A07 != 0
 		EXIT
-	@6DE1 = 57
+	pictureLoading = 57
 	SETUP_MONSTER (spriteId: 27, maxDistance: 1, picId: 1)
 	APPROACH ()
 	PRINT_CLEAR (message: `YOU ARE INTERCEPTED BY THE COUNCIL GUARD. 'HALT.  YOUR PRESENCE IS NOT AUTHORIZED.  LEAVE.'  DO YOU LEAVE?`)
@@ -7576,15 +7576,15 @@ ECL_8_B3CB
 			GOTO ECL_8_B45B
 
 ECL_8_B444
-	@C04D = 0
-	@C04B = 4
-	@C04C = 5
+	partyPosFacing = 0
+	partyPosMapX = 4
+	partyPosMapY = 5
 	CALL (opAddr: @2C90)
 	EXIT
 
 ECL_8_B45B
 	@6E79 = PARTY_STRENGTH ()
-	@6DC6 = 99
+	moraleThreshold = 99
 	@6DCB = 1
 	CLEAR_MONSTERS ()
 	LOAD_MONSTER (monsterId: 94, copies: 3, cpicId: 14)
@@ -7598,26 +7598,26 @@ ECL_8_B45B
 	EXIT
 
 ECL_8_B4BE
-	@6DE1 = 57
+	pictureLoading = 57
 	PICTURE (blockId: 1)
 	PRINT_CLEAR (message: `THE GUARD CAPTAIN STEPS FORWARD. 'PLEASE LET US SHOW YOU THE WAY.'`)
 	ECL_8_B5A0()
 	ECL_8_B57F()
-	@C04D = 0
+	partyPosFacing = 0
 	ECL_8_B570()
-	@C04D = 3
+	partyPosFacing = 3
 	ECL_8_B570()
-	@C04B = 4
+	partyPosMapX = 4
 	ECL_8_B570()
-	@C04D = 2
+	partyPosFacing = 2
 	ECL_8_B570()
-	@C04C = 6
+	partyPosMapY = 6
 	ECL_8_B570()
-	@C04C = 7
+	partyPosMapY = 7
 	ECL_8_B570()
-	@C04D = 1
+	partyPosFacing = 1
 	ECL_8_B570()
-	@C04B = 5
+	partyPosMapX = 5
 	CALL (opAddr: @2C90)
 	EXIT
 
@@ -7629,7 +7629,7 @@ CONST ECL_8_db_$B565 = 0
 
 
 ECL_8_B566
-	@6DE1 = 24
+	pictureLoading = 24
 	PICTURE (blockId: 32)
 	RETURN
 
@@ -7640,7 +7640,7 @@ ECL_8_B570
 	DELAY ()
 
 ECL_8_B57F
-	@6DE1 = 255
+	pictureLoading = 255
 	PICTURE (blockId: 255)
 	RETURN
 
@@ -7816,14 +7816,14 @@ ECL_9_9962
 	ECL_9_9B3A()
 	IF compareResult == '!='
 		GOTO ECL_9_99DD
-	^6E7E = ^6BBB / 10
-	^6E7E = ^6BBD + ^6E7E
+	^6E7E = curCharCopper / 10
+	^6E7E = curCharSilver + ^6E7E
 	^6E7E = ^6E7E / 10
-	^6E7E = ^6BBF + ^6E7E
+	^6E7E = curCharElectrum + ^6E7E
 	^6E7E = ^6E7E / 2
-	^6E7E = ^6BC1 + ^6E7E
+	^6E7E = curCharGold + ^6E7E
 	^6E7E = ^6E7E / 5
-	^6E7E = ^6BC3 + ^6E7E
+	^6E7E = curCharPlatinum + ^6E7E
 	IF ^6E7E >= ^6E7C
 		GOTO ECL_9_9A13
 	^6E7A = ^6E7E + ^6E7A
@@ -7912,11 +7912,11 @@ ECL_9_9B1F
 	RETURN
 
 ECL_9_9B3A
-	IF @6C00 == 0
+	IF curCharEnabled == 0
 		GOTO ECL_9_9B61
-	IF @6C00 != 1
+	IF curCharEnabled != 1
 		GOTO ECL_9_9B5B
-	IF @6BB8 >= 128
+	IF curCharNpc >= 128
 		GOTO ECL_9_9B61
 
 ECL_9_9B5B
@@ -7981,14 +7981,14 @@ ECL_9_9C40
 	RETURN
 
 ECL_9_9C68
-	IF @6DD5 == 0
+	IF leaveMap == 0
 		GOTO ECL_9_9CA4
-	@6E12 = 5
+	gbvmDiskNum = 5
 	@6E79 = 6
-	IF @C04C == 0
+	IF partyPosMapY == 0
 		GOTO ECL_9_9C9C
 	@6E79 = 18
-	@6E12 = 1
+	gbvmDiskNum = 1
 	@4A64 = 0
 
 ECL_9_9C9C
@@ -7998,12 +7998,12 @@ ECL_9_9C9C
 ECL_9_9CA4
 	ECL_9_9935()
 	@6E7D = 0
-	@6E79 = 31 & @C04F
+	@6E79 = 31 & partyPosEventAtCell
 
 ECL_9_9CB7
 	@6E81 = db_$9D10[@6E7D]
 	@6E80 = db_$9D18[@6E7D]
-	IF @6E79 == @6E81 && @C04D == @6E80
+	IF @6E79 == @6E81 && partyPosFacing == @6E80
 		GOTO ECL_9_9CF2
 
 	@6E7D = @6E7D + 1
@@ -8052,15 +8052,15 @@ ECL_9_9D20
 	ECL_9_9B67()
 	IF compareResult == '<'
 		GOTO ECL_9_9D7B
-	IF @C04C > 6
+	IF partyPosMapY > 6
 		GOTO ECL_9_9D7B
-	@6E82 = 64 & @C04F
+	@6E82 = 64 & partyPosEventAtCell
 	IF 0 != @6E82
 		GOTO ECL_9_9D7B
 	@6E79 = 2
 	IF @6DCA == 0
 		@6E79 = 20
-	@6E82 = 32 & @C04F
+	@6E82 = 32 & partyPosEventAtCell
 	IF 0 != @6E82
 		@6E79 = @6E79 + @6E79
 	@6E79 = RANDOM (max: @6E79)
@@ -8068,7 +8068,7 @@ ECL_9_9D20
 		GOTO ECL_9_9DB4
 
 ECL_9_9D7B
-	@6E79 = 31 & @C04F
+	@6E79 = 31 & partyPosEventAtCell
 	SWITCH @6E79
 		CASE 0
 			GOTO ECL_9_A0A1
@@ -8101,7 +8101,7 @@ ECL_9_9D7B
 
 ECL_9_9DB4
 	$str@980E = `A PATROL OF GIANTS LED BY A HUMAN FIGHTER`
-	@6DE1 = 8
+	pictureLoading = 8
 	@6DCB = 0
 	PRINT_CLEAR (message: `YOU SEE A`)
 	PRINT_APPEND (message: $str@980F)
@@ -8111,7 +8111,7 @@ ECL_9_9DB4
 	PRINT_APPEND (message: `. THE LEADER SEES YOU. 'THAT'S THEM!'`)
 	ECL_9_9C40()
 	@6E82 = ENCOUNTER (displayMonsterId: 16, distanceRequirement: 2, displayPicId: 5, combatResp: 0, waitResp: 0, fleeResp: 0, parlayResp: 0, failFleeResp: 0, message1: `THEY ADVANCE, WEAPONS READY`, message2: ``, message3: ``, partyFlee: 9, monsterFlee: 9)
-	@6DE1 = 255
+	pictureLoading = 255
 	SWITCH @6E82
 		CASE 0
 			GOTO ECL_9_A0A1
@@ -8125,7 +8125,7 @@ ECL_9_9DB4
 ECL_9_9E6F
 	ECL_9_9C40()
 	@6E82 = ENCOUNTER (displayMonsterId: 16, distanceRequirement: 2, displayPicId: 5, combatResp: 0, waitResp: 3, fleeResp: 0, parlayResp: 3, failFleeResp: 4, message1: `'WHAT ARE YOU DOING HERE?'`, message2: `THE LEADER ADVANCES.`, message3: ``, partyFlee: 12, monsterFlee: 9)
-	@6DE1 = 255
+	pictureLoading = 255
 	SWITCH @6E82
 		CASE 0
 			GOTO ECL_9_A0A1
@@ -8165,7 +8165,7 @@ ECL_9_9FCF
 	PRINT_CLEAR (message: `'WELL BOYS, I THINK WE HAVE THE INTRUDERS HERE. GET THEM!'`)
 
 ECL_9_9FFE
-	@6DC6 = 60
+	moraleThreshold = 60
 	DELAY ()
 	CLEAR_MONSTERS ()
 	LOAD_MONSTER (monsterId: 75, copies: 1, cpicId: 11)
@@ -8175,21 +8175,21 @@ ECL_9_9FFE
 	EXIT
 
 ECL_9_A01A
-	@6DC7 = 129
+	gbvmCombatResult = 129
 
 ECL_9_A020
-	IF @6DC7 == 0
+	IF gbvmCombatResult == 0
 		RETURN
 	ECL_9_9BE2()
 	@4A65 = 254 & @4A65
-	IF @6DC7 != 129
+	IF gbvmCombatResult != 129
 		RETURN
-	@6DC9 = 255
-	@C04B = @49F0
-	@C04C = @49F1
-	@C04D = @C04D + 2
-	IF @C04D > 3
-		@C04D = @C04D - 4
+	moveLocked = 255
+	partyPosMapX = @49F0
+	partyPosMapY = @49F1
+	partyPosFacing = partyPosFacing + 2
+	IF partyPosFacing > 3
+		partyPosFacing = partyPosFacing - 4
 	GOTO ECL_9_A0A1
 
 ECL_9_A06E
@@ -8197,10 +8197,10 @@ ECL_9_A06E
 	@6DD3 = 10
 	IF @4A64 == 0
 		EXIT
-	@6E82 = 64 & @C04F
+	@6E82 = 64 & partyPosEventAtCell
 	IF 0 != @6E82
 		EXIT
-	IF @C04C > 6
+	IF partyPosMapY > 6
 		EXIT
 	@6DD2 = 1
 	@6DD3 = 17
@@ -8248,12 +8248,12 @@ ECL_9_A161
 		GOTO ECL_9_A188
 
 ECL_9_A16A
-	@C04B = db_$A196[@6E7D]
-	@C04C = db_$A19C[@6E7D]
-	@C04F = db_$A1A2[@6E7D]
+	partyPosMapX = db_$A196[@6E7D]
+	partyPosMapY = db_$A19C[@6E7D]
+	partyPosEventAtCell = db_$A1A2[@6E7D]
 
 ECL_9_A188
-	@6DC9 = 255
+	moveLocked = 255
 	CALL (opAddr: @2C90)
 	GOTO ECL_9_9D20
 
@@ -8291,11 +8291,11 @@ ECL_9_A1C3
 	IF 0 != @6E82
 		EXIT
 	ECL_9_B1B0()
-	@6DE1 = 52
+	pictureLoading = 52
 	PRINT_CLEAR (message: `YOU OVERHEAR THE MAGE TELL HIS COMPANION, 'HOW MUCH LONGER MUST WE WAIT BEFORE ASSAULTING PHLAN. I AM EAGER TO BECOME A BARON.'`)
 	ECL_9_9C40()
 	@6E82 = ENCOUNTER (displayMonsterId: 24, distanceRequirement: 1, displayPicId: 31, combatResp: 0, waitResp: 1, fleeResp: 1, parlayResp: 1, failFleeResp: 0, message1: `THEY SEEM UNAWARE OF YOU.`, message2: ``, message3: ``, partyFlee: 0, monsterFlee: 0)
-	@6DE1 = 255
+	pictureLoading = 255
 	SPRITE_OFF ()
 	SWITCH @6E82
 		CASE 0
@@ -8309,14 +8309,14 @@ ECL_9_A283
 
 ECL_9_A28D
 	@6DCB = 2
-	@6DC6 = 50
+	moraleThreshold = 50
 	ECL_9_9BE2()
 	CLEAR_MONSTERS ()
 	LOAD_MONSTER (monsterId: 89, copies: 1, cpicId: 14)
 	LOAD_MONSTER (monsterId: 53, copies: 1, cpicId: 11)
 	LOAD_MONSTER (monsterId: 71, copies: 3, cpicId: 71)
 	COMBAT ()
-	IF @6DC7 == 129
+	IF gbvmCombatResult == 129
 		GOTO ECL_9_A283
 	@4A77 = 4 | @4A77
 	EXIT
@@ -8333,11 +8333,11 @@ ECL_9_A2E4
 	IF 0 != @6E82
 		EXIT
 	ECL_9_B1B0()
-	@6DE1 = 11
+	pictureLoading = 11
 	PRINT_CLEAR (message: `YOU OVERHEAR THE FIGHTER TELL THE MAGE, 'YOU BETTER WATCH YOUR TALK. THE LAST GUY WHO GAVE THE BOSS LIP WAS THROWN THROUGH THE TRAPDOOR TO THE MEDUSA!'`)
 	ECL_9_9C40()
 	@6E82 = ENCOUNTER (displayMonsterId: 24, distanceRequirement: 1, displayPicId: 2, combatResp: 0, waitResp: 1, fleeResp: 1, parlayResp: 1, failFleeResp: 0, message1: `THEY SEEM UNAWARE OF YOU.`, message2: ``, message3: ``, partyFlee: 0, monsterFlee: 0)
-	@6DE1 = 255
+	pictureLoading = 255
 	SPRITE_OFF ()
 	SWITCH @6E82
 		CASE 0
@@ -8351,14 +8351,14 @@ ECL_9_A3B6
 
 ECL_9_A3C0
 	@6DCB = 2
-	@6DC6 = 50
+	moraleThreshold = 50
 	ECL_9_9BE2()
 	CLEAR_MONSTERS ()
 	LOAD_MONSTER (monsterId: 24, copies: 1, cpicId: 14)
 	LOAD_MONSTER (monsterId: 53, copies: 1, cpicId: 11)
 	LOAD_MONSTER (monsterId: 71, copies: 3, cpicId: 71)
 	COMBAT ()
-	IF @6DC7 == 129
+	IF gbvmCombatResult == 129
 		GOTO ECL_9_A3B6
 	@4A77 = 8 | @4A77
 	EXIT
@@ -8368,7 +8368,7 @@ ECL_9_A3FC
 	IF compareResult == '<'
 		EXIT
 	@6E7A = 0
-	@6E79 = 1 & @C04F
+	@6E79 = 1 & partyPosEventAtCell
 	SWITCH @6E79
 		CASE 0
 			GOTO ECL_9_A444
@@ -8411,10 +8411,10 @@ ECL_9_A51E
 	@6DC0 = 1
 
 ECL_9_A54E
-	@6DE1 = 11
+	pictureLoading = 11
 	ECL_9_9C40()
 	@6E82 = ENCOUNTER (displayMonsterId: 24, distanceRequirement: @6DC0, displayPicId: 2, combatResp: 0, waitResp: 0, fleeResp: 0, parlayResp: 0, failFleeResp: 0, message1: ``, message2: ``, message3: ``, partyFlee: 12, monsterFlee: 6)
-	@6DE1 = 255
+	pictureLoading = 255
 	SPRITE_OFF ()
 	SWITCH @6E82
 		CASE 0
@@ -8424,15 +8424,15 @@ ECL_9_A54E
 
 ECL_9_A58A
 	ECL_9_9BE2()
-	@C04B = 4
-	@C04C = 15
-	@C04D = 0
+	partyPosMapX = 4
+	partyPosMapY = 15
+	partyPosFacing = 0
 	NEW_ECL (eclId: 6)
 	EXIT
 
 ECL_9_A5A4
 	[@6E81, @6E82] = PARTY_SURPRISE ()
-	@6DC6 = 80
+	moraleThreshold = 80
 	@6E82 = 8 & @4A77
 	SURPRISE (sub1: @6E81, base2: @6E82, sub2: 1, base1: 1)
 	@6E7C = 24
@@ -8446,7 +8446,7 @@ ECL_9_A5A4
 	@6E7B = @6E7B * 3
 	LOAD_MONSTER (monsterId: 71, copies: @6E7B, cpicId: 71)
 	COMBAT ()
-	IF @6DC7 == 129
+	IF gbvmCombatResult == 129
 		GOTO ECL_9_A58A
 
 ECL_9_A60E
@@ -8493,13 +8493,13 @@ ECL_9_A75D
 
 ECL_9_A784
 	@6DCB = 0
-	@6DC6 = 60
+	moraleThreshold = 60
 	ECL_9_9BE2()
 	@4A78 = 3
 	CLEAR_MONSTERS ()
 	LOAD_MONSTER (monsterId: 63, copies: 16, cpicId: 63)
 	COMBAT ()
-	IF @6DC7 == 129
+	IF gbvmCombatResult == 129
 		GOTO ECL_9_A7FD
 	@4A77 = 16 | @4A77
 	EXIT
@@ -8509,19 +8509,19 @@ ECL_9_A7B8
 	ROB (allParty: 1, coinPct: 100, unused: 20)
 
 ECL_9_A7FD
-	@C04D = 2
-	@C04C = 14
+	partyPosFacing = 2
+	partyPosMapY = 14
 	SPRITE_OFF ()
-	IF @C04B < 9
+	IF partyPosMapX < 9
 		GOTO ECL_9_A81F
-	@C04B = 11
+	partyPosMapX = 11
 	GOTO ECL_9_A825
 
 ECL_9_A81F
-	@C04B = 4
+	partyPosMapX = 4
 
 ECL_9_A825
-	@6DC9 = 255
+	moveLocked = 255
 	GOTO ECL_9_A0A1
 
 ECL_9_A82F
@@ -8568,7 +8568,7 @@ ECL_9_A9BE
 	@4A77 = 32 | @4A77
 
 ECL_9_AAC4
-	IF @C04D != 0 || @6DCA != 1
+	IF partyPosFacing != 0 || @6DCA != 1
 		EXIT
 
 	IF @49C9 >= 5
@@ -8614,17 +8614,17 @@ ECL_9_AC3C
 	PRINT_CLEAR (message: `THE BUGBEAR TAKES THE MONEY AND THE GATE OPENS. YOU PROCEED THROUGH.`)
 	SPRITE_OFF ()
 	PICTURE (blockId: 255)
-	@C04D = 0
-	@C04B = 8
-	@C04C = 9
+	partyPosFacing = 0
+	partyPosMapX = 8
+	partyPosMapY = 9
 
 ECL_9_AC97
-	@C04C = @C04C - 1
+	partyPosMapY = partyPosMapY - 1
 	CALL (opAddr: @2C90)
 	DELAY ()
-	IF @C04C > 5
+	IF partyPosMapY > 5
 		GOTO ECL_9_AC97
-	@6DC9 = 255
+	moveLocked = 255
 	EXIT
 
 ECL_9_ACB7
@@ -8658,13 +8658,13 @@ ECL_9_AD0E
 
 ECL_9_AD73
 	@6DCB = 2
-	@6DC6 = 60
+	moraleThreshold = 60
 	ECL_9_9BE2()
 	@4A78 = 3
 	CLEAR_MONSTERS ()
 	LOAD_MONSTER (monsterId: 63, copies: 16, cpicId: 63)
 	COMBAT ()
-	IF @6DC7 == 129
+	IF gbvmCombatResult == 129
 		GOTO ECL_9_A58A
 	@4A77 = 16 | @4A77
 	GOTO ECL_9_A60E
@@ -8688,9 +8688,9 @@ ECL_9_ADD9
 	PRINT_CLEAR (message: `A MAN DRIVING A WAGON FULL OF FOOD AND EQUIPMENT STARTS TO DRIVE PAST YOU, GOING NORTH.`)
 	ECL_9_9C40()
 	@4A00 = 1
-	@6DE1 = 5
+	pictureLoading = 5
 	@6E82 = ENCOUNTER (displayMonsterId: 12, distanceRequirement: 0, displayPicId: 9, combatResp: 0, waitResp: 3, fleeResp: 3, parlayResp: 3, failFleeResp: 4, message1: ``, message2: ``, message3: ``, partyFlee: 0, monsterFlee: 0)
-	@6DE1 = 255
+	pictureLoading = 255
 	SWITCH @6E82
 		CASE 0
 			GOTO ECL_9_A0A1
@@ -8742,10 +8742,10 @@ ECL_9_B081
 	IF 0 == @6E82
 		EXIT
 	PRINT_CLEAR (message: `A GROUP OF MONSTERS IS WAITING ON THE OTHER SIDE OF THE WALL`)
-	@6DE1 = 11
+	pictureLoading = 11
 	ECL_9_9C40()
 	@6E82 = ENCOUNTER (displayMonsterId: 24, distanceRequirement: 1, displayPicId: 2, combatResp: 0, waitResp: 0, fleeResp: 0, parlayResp: 0, failFleeResp: 0, message1: `THEY RUSH TOWARD YOU`, message2: ``, message3: ``, partyFlee: 12, monsterFlee: 12)
-	@6DE1 = 255
+	pictureLoading = 255
 	SPRITE_OFF ()
 	SWITCH @6E82
 		CASE 0
@@ -8757,14 +8757,14 @@ ECL_9_B081
 
 ECL_9_B10F
 	@6DCB = 0
-	@6DC6 = 80
+	moraleThreshold = 80
 	ECL_9_9BE2()
 	CLEAR_MONSTERS ()
 	LOAD_MONSTER (monsterId: 24, copies: 2, cpicId: 14)
 	LOAD_MONSTER (monsterId: 53, copies: 2, cpicId: 11)
 	LOAD_MONSTER (monsterId: 71, copies: 6, cpicId: 71)
 	COMBAT ()
-	IF @6DC7 == 129
+	IF gbvmCombatResult == 129
 		GOTO ECL_9_A7FD
 	GOTO ECL_9_A60E
 
@@ -8798,17 +8798,17 @@ ECL_10_9910	GOTO ECL_10_9A72
 ECL_10_9914
 	@49FD = 8
 	@49FE = 9
-	IF @6DD5 == 0
+	IF leaveMap == 0
 		GOTO ECL_10_9947
 	@C059 = @4A16
 	@49E7 = 0
 	@49E8 = 0
-	@6E12 = 7
+	gbvmDiskNum = 7
 	NEW_ECL (eclId: 26)
 
 ECL_10_9947
 	$str@982C = `THE SPECTRE HAS NOTICED YOU.`
-	@6E82 = @C04F & 127
+	@6E82 = partyPosEventAtCell & 127
 	IF @4A42 < 3
 		GOTO ECL_10_9977
 	EXIT
@@ -8816,17 +8816,17 @@ ECL_10_9947
 ECL_10_9977
 	IF @4A41 == 255
 		EXIT
-	IF @6E82 == 29 && @C04D == 0
-		@6DC9 = 255
+	IF @6E82 == 29 && partyPosFacing == 0
+		moveLocked = 255
 
 	EXIT
 
 ECL_10_9992
 	@6DCB = 0
 	@6DC0 = 0
-	@6DC6 = 101
+	moraleThreshold = 101
 	@6E7E = 0
-	@6E82 = @C04F & 127
+	@6E82 = partyPosEventAtCell & 127
 	IF @4A41 >= 254
 		EXIT
 	@9800 = 0
@@ -8934,9 +8934,9 @@ ECL_10_9A72
 		EXIT
 	@00B8 = 72
 	@00B9 = 189
-	@C04C = 4
-	@C04B = 0
-	@C04D = 1
+	partyPosMapY = 4
+	partyPosMapX = 0
+	partyPosFacing = 1
 	@4A00 = 1 + @4A00
 	@4A1B = PARTY_STRENGTH ()
 	@4A1B = @4A1B / 2
@@ -9227,8 +9227,8 @@ ECL_10_A148
 			GOTO ECL_10_A21A
 
 ECL_10_A20D
-	@C04B = 14
-	@C04D = 3
+	partyPosMapX = 14
+	partyPosFacing = 3
 	EXIT
 
 ECL_10_A21A
@@ -9265,9 +9265,9 @@ ECL_10_A26E
 			GOTO ECL_10_A34B
 
 ECL_10_A335
-	@C04B = 15
-	@C04C = 6
-	@C04D = 0
+	partyPosMapX = 15
+	partyPosMapY = 6
+	partyPosFacing = 0
 	GOTO ECL_10_B634
 
 ECL_10_A34B
@@ -9299,7 +9299,7 @@ ECL_10_A3D1
 	EXIT
 
 ECL_10_A3EB
-	IF @C04D != 2
+	IF partyPosFacing != 2
 		GOTO ECL_10_A446
 	PRINT_CLEAR (message: `A TOWER STANDS CLEARLY ABOVE ALL CRYPTS IN THE AREA.  HUGE PILES OF HUMAN BONES ARE STREWN ABOUT.`)
 	ECL_10_B672()
@@ -9324,7 +9324,7 @@ ECL_10_A4AA
 	@4AF5 = 1 + @4AF5
 
 ECL_10_A4B3
-	IF @C04D != 0
+	IF partyPosFacing != 0
 		PRINT_CLEAR (message: `NOXIOUS FUMES POUR FROM THE TOWER DOORWAY, MAKING IT IMPOSSIBLE TO SEE INSIDE.`)
 	EXIT
 
@@ -9381,7 +9381,7 @@ ECL_10_A5DB
 	EXIT
 
 ECL_10_A62F
-	IF @C04D == 0
+	IF partyPosFacing == 0
 		GOTO ECL_10_A66A
 	PRINT_CLEAR (message: `ALL AROUND THE TOWER, PILES OF HAIR AND FUR COVER THE AREA.`)
 
@@ -9467,7 +9467,7 @@ ECL_10_A82D
 	EXIT
 
 ECL_10_A89D
-	IF @C04D == 2
+	IF partyPosFacing == 2
 		PRINT_CLEAR (message: `THE AIR AROUND THE TOWER IS CHARGED WITH STATIC ELECTRICITY AND BALL LIGHTNING. `)
 	IF @4AF7 > 0
 		GOTO ECL_10_A952
@@ -9489,9 +9489,9 @@ ECL_10_A93E
 	EXIT
 
 ECL_10_A952
-	IF @C04D == 2
+	IF partyPosFacing == 2
 		PRINT_CLEAR (message: `WRITTEN ON THE DOOR (IN THE COMMON TONGUE) IS: 'DO NOT OPEN THIS DOOR. A GREAT EVIL HAS BEEN LAID TO REST HERE.'`)
-	IF @C04D != 2
+	IF partyPosFacing != 2
 		EXIT
 	IF @6DCA == 1
 		PRINT_CLEAR (message: `THERE ARE LARGE SILVER HOLY SYMBOLS UP AND DOWN THE CRACK IN THE DOORWAY.`)
@@ -9556,7 +9556,7 @@ ECL_10_AAF6
 	EXIT
 
 ECL_10_AB5B
-	IF @C04D != 2
+	IF partyPosFacing != 2
 		GOTO ECL_10_AB91
 	PRINT_CLEAR (message: `IN THE ENTRY IS SET A HUGE PAIR OF BRASS DOORS.`)
 	ECL_10_B672()
@@ -9581,7 +9581,7 @@ ECL_10_AB91
 	EXIT
 
 ECL_10_AC0B
-	IF @C04D != 0
+	IF partyPosFacing != 0
 		PRINT_CLEAR (message: `IN THE MIDDLE OF A DOOR IS A PANEL OF A POWERFUL KNIGHT FIGHTING SEVERAL UNDEAD.`)
 	EXIT
 
@@ -9602,7 +9602,7 @@ ECL_10_AD33
 		EXIT
 	IF @4A42 > 249
 		EXIT
-	@6DE1 = 0
+	pictureLoading = 0
 	SETUP_MONSTER (spriteId: 14, maxDistance: 2, picId: 2)
 	ECL_10_B6B3()
 	PRINT_CLEAR (message: `YOU ARE APPROACHED BY A MAN CLAD IN MYSTIC ROBES.`)
@@ -9618,12 +9618,12 @@ ECL_10_AD33
 			GOTO ECL_10_AEAF
 
 ECL_10_AE1D
-	IF @6E3E > 7
+	IF partySize > 7
 		GOTO ECL_10_AE8D
 	@4A42 = 250
 	PRINT_CLEAR (message: `'THE UNDEAD ARE CONTROLLED BY A VAMPIRE WHO LURKS IN THE NORTHEAST CORNER OF THE GRAVEYARD,' THE MAN SAYS.`)
 	ADD_NPC (npcId: 24, morale: 99)
-	@6DE1 = 255
+	pictureLoading = 255
 	EXIT
 
 ECL_10_AE8D
@@ -9633,7 +9633,7 @@ ECL_10_AE8D
 ECL_10_AEAF
 	@6DCB = 1
 	PRINT_CLEAR (message: `'THEN DIE YOU SCUM,' THE MAN SPITS.`)
-	@6DE1 = 255
+	pictureLoading = 255
 	CLEAR_MONSTERS ()
 	LOAD_MONSTER (monsterId: 24, copies: 1, cpicId: 24)
 	COMBAT ()
@@ -9749,8 +9749,8 @@ ECL_10_B18A
 			GOTO ECL_10_9B92
 
 ECL_10_B1C9
-	@C04B = 14
-	@C04D = 3
+	partyPosMapX = 14
+	partyPosFacing = 3
 	CALL (opAddr: @2C90)
 	IF @4A41 > 255
 		EXIT
@@ -9835,7 +9835,7 @@ ECL_10_B37A
 	EXIT
 
 ECL_10_B3DF
-	IF @C04D == 0 && @4A42 == 250
+	IF partyPosFacing == 0 && @4A42 == 250
 		PRINT_CLEAR (message: `THE MYSTIC MAN SPEAKS, 'THE VAMPIRE IS BEHIND THE NORTHERN WALL.'`)
 
 	EXIT
@@ -9949,15 +9949,15 @@ ECL_10_B5C6
 
 ECL_10_B5FA
 	@6E79 = 0
-	IF @6DC7 > 128
+	IF gbvmCombatResult > 128
 		@6E79 = 2
 	RETURN
 
 ECL_10_B60E
-	@C04D = RANDOM (max: 3)
+	partyPosFacing = RANDOM (max: 3)
 	@6E79 = RANDOM (max: 4)
-	@C04B = db_$B6EB[@6E79]
-	@C04C = db_$B6F0[@6E79]
+	partyPosMapX = db_$B6EB[@6E79]
+	partyPosMapY = db_$B6F0[@6E79]
 	@49FB = 1
 
 ECL_10_B634
@@ -10068,14 +10068,14 @@ ECL_11_9914
 		@6E7D = 8
 	@49FD = @6E7D
 	@49FE = 10
-	@6E82 = @C04F & 127
+	@6E82 = partyPosEventAtCell & 127
 	EXIT
 
 ECL_11_993E
 	PRINT_CLEAR (message: ``)
 	PICTURE (blockId: 255)
-	@6DE1 = 255
-	@6E82 = @C04F & 127
+	pictureLoading = 255
+	@6E82 = partyPosEventAtCell & 127
 	IF @6E82 == 0
 		GOTO ECL_11_A08B
 	@9800 = 10
@@ -10102,7 +10102,7 @@ ECL_11_999D
 
 ECL_11_99AA
 	@6DD3 = 0
-	@6DE1 = 57
+	pictureLoading = 57
 	SETUP_MONSTER (spriteId: 15, maxDistance: 2, picId: 1)
 	DELAY ()
 	APPROACH ()
@@ -10166,7 +10166,7 @@ ECL_11_9B56
 	IF @4A09 > 0
 		EXIT
 	@4A09 = 2
-	@6DE1 = 16
+	pictureLoading = 16
 	PICTURE (blockId: 4)
 	@6E7C = 114
 	$str@982C = `CLERICS `
@@ -10176,7 +10176,7 @@ ECL_11_9B83
 	IF @4A09 > 0
 		EXIT
 	@4A09 = 2
-	@6DE1 = 16
+	pictureLoading = 16
 	PICTURE (blockId: 2)
 	@6E7C = 113
 	$str@982C = `MAGIC USERS `
@@ -10188,7 +10188,7 @@ ECL_11_9BB3
 	PRINT_CLEAR (message: `THE ROOM IS FILLED WITH DUELING PAIRS.`)
 	ECL_11_A144()
 	@4A05 = 1
-	@6DE1 = 9
+	pictureLoading = 9
 	SETUP_MONSTER (spriteId: 16, maxDistance: 2, picId: 1)
 	DELAY ()
 	APPROACH ()
@@ -10207,7 +10207,7 @@ ECL_11_9BB3
 
 ECL_11_9C72
 	WHO (prompt: `WHO WILL DUEL?`)
-	IF @6BB8 < 128
+	IF curCharNpc < 128
 		GOTO ECL_11_9CA5
 	PRINT_CLEAR (message: `I CANNOT ARRANGE SUCH A DUEL.`)
 	EXIT
@@ -10256,7 +10256,7 @@ ECL_11_9D61
 	PRINT_CLEAR (message: `'THERE IS NO ONE WHO WILL GO WITH YOU.'`)
 	@4A10 = 8
 	PICTURE (blockId: 255)
-	@6DE1 = 255
+	pictureLoading = 255
 	EXIT
 
 ECL_11_9D92
@@ -10340,7 +10340,7 @@ ECL_11_9F23
 ECL_11_9F56
 	@4A08 = 1
 	PICTURE (blockId: 255)
-	@6DE1 = 255
+	pictureLoading = 255
 	EXIT
 
 ECL_11_9F66
@@ -10351,7 +10351,7 @@ ECL_11_9F8A
 	IF @4A09 > 0
 		EXIT
 	@4A09 = 2
-	@6DE1 = 16
+	pictureLoading = 16
 	PICTURE (blockId: 1)
 	@6E7C = 120
 	$str@982C = `FIGHTERS `
@@ -10361,7 +10361,7 @@ ECL_11_9FB8
 	IF @4A09 > 0
 		EXIT
 	@4A09 = 2
-	@6DE1 = 16
+	pictureLoading = 16
 	PICTURE (blockId: 8)
 	@6E7C = 116
 	$str@982C = `THIEVES `
@@ -10390,7 +10390,7 @@ ECL_11_A049
 
 ECL_11_A050
 	@4A03 = 0
-	@6DC6 = 50
+	moraleThreshold = 50
 	CLEAR_MONSTERS ()
 	LOAD_MONSTER (monsterId: 94, copies: 2, cpicId: 14)
 	LOAD_MONSTER (monsterId: 84, copies: 12, cpicId: 11)
@@ -10406,7 +10406,7 @@ ECL_11_A08B
 	NEW_ECL (eclId: 0)
 
 ECL_11_A08E
-	IF @6DC7 > 128
+	IF gbvmCombatResult > 128
 		GOTO ECL_11_A119
 	IF @4A03 > 0
 		RETURN
@@ -10416,7 +10416,7 @@ ECL_11_A0A1
 	@4A0F = 0
 	@4A11 = 0
 	PICTURE (blockId: 255)
-	@6DE1 = 255
+	pictureLoading = 255
 	EXIT
 
 ECL_11_A0BD
@@ -10424,17 +10424,17 @@ ECL_11_A0BD
 	RETURN
 
 ECL_11_A0CD
-	IF @6E3E < 8
+	IF partySize < 8
 		RETURN
 	PRINT_CLEAR (message: `'YOUR PARTY IS TOO LARGE TO JOIN AT THIS TIME.  RETURN WHEN IT IS SMALLER.'`)
 	ECL_11_A144()
 	GOTO ECL_11_A0A1
 
 ECL_11_A119
-	@C04D = RANDOM (max: 3)
+	partyPosFacing = RANDOM (max: 3)
 	@9802 = RANDOM (max: 4)
-	@C04B = db_$A168[@9802]
-	@C04C = db_$A16C[@9802]
+	partyPosMapX = db_$A168[@9802]
+	partyPosMapY = db_$A16C[@9802]
 	PRINT_CLEAR (message: ``)
 	CALL (opAddr: @2C90)
 	NEW_ECL (eclId: 0)
@@ -10481,21 +10481,21 @@ ECL_13_9914
 	EXIT
 
 ECL_13_992F
-	IF @C04D != 0 || @C04F != 152
+	IF partyPosFacing != 0 || partyPosEventAtCell != 152
 		EXIT
 
 	IF @4A8D == 0
-		@6DC9 = 255
+		moveLocked = 255
 	EXIT
 
 ECL_13_994A
-	IF @C04F != 153 || @C04D != 3
+	IF partyPosEventAtCell != 153 || partyPosFacing != 3
 		EXIT
 
 	GOTO ECL_13_993C
 
 ECL_13_995B
-	@6E79 = 127 & @C04F
+	@6E79 = 127 & partyPosEventAtCell
 	SWITCH @6E79
 		CASE 0
 			GOTO ECL_13_B388
@@ -10565,7 +10565,7 @@ ECL_13_99C1
 
 ECL_13_99F1
 	LOAD_CHARACTER (charId: @6E7A)
-	IF $str@6B00 == `PRINCESS FATIMA`
+	IF curCharName == `PRINCESS FATIMA`
 		GOTO ECL_13_9A23
 
 ECL_13_9A0C
@@ -10575,15 +10575,15 @@ ECL_13_9A0C
 	NEW_ECL (eclId: 27)
 
 ECL_13_9A23
-	IF @6BB8 < 128
+	IF curCharNpc < 128
 		GOTO ECL_13_9A0C
-	IF @6C00 > 127
+	IF curCharEnabled > 127
 		GOTO ECL_13_9A84
 	PRINT_CLEAR (message: `THE PRINCESS SAYS,'I SHALL GO MY OWN WAY NOW, BUT YOU WILL ALWAYS BE REMEMBERED. GOOD HUNTING.'`)
 
 ECL_13_9A84
-	@6B00 = 0
-	@6C00 = 0
+	curChar = null
+	curCharEnabled = 0
 	@6E7A = 128 + @6E7A
 	LOAD_CHARACTER (charId: @6E7A)
 	NEW_ECL (eclId: 27)
@@ -10594,11 +10594,11 @@ ECL_13_9AA0
 	ECL_13_ADB4()
 	IF @6E82 == 1
 		GOTO ECL_13_9B04
-	PRINT_CLEAR (message: $str@6B00)
+	PRINT_CLEAR (message: curCharName)
 	PRINT_APPEND (message: ` FALLS INTO A POOL OF WATER.`)
 	ECL_13_B4ED()
 	PRINT_CLEAR (message: `SOME ITEMS WERE LOST RECOVERING `)
-	PRINT_APPEND (message: $str@6B00)
+	PRINT_APPEND (message: curCharName)
 	ROB (allParty: 0, coinPct: 20, unused: 20)
 	@4A01 = 1
 	EXIT
@@ -10677,7 +10677,7 @@ ECL_13_9CE1
 	DAMAGE (attack: 192, dice: 2, sides: 6, bonus: 0, value: 1)
 	SETUP_MONSTER (spriteId: 0, maxDistance: 0, picId: 0)
 	PRINT_CLEAR (message: `BEFORE YOU RECOVER, KOBOLDS ARRIVE.`)
-	@6DC6 = 25
+	moraleThreshold = 25
 	@6DCB = 1
 	@6E70 = 2
 	@6E71 = 254
@@ -10686,7 +10686,7 @@ ECL_13_9CE1
 	LOAD_MONSTER (monsterId: 0, copies: 20, cpicId: 0)
 	COMBAT ()
 	@4A03 = 2
-	IF @6DC7 > 128
+	IF gbvmCombatResult > 128
 		GOTO ECL_13_B32C
 	EXIT
 
@@ -10700,7 +10700,7 @@ ECL_13_9D7B
 	RETURN
 
 ECL_13_9DAB
-	IF @C04D == 1
+	IF partyPosFacing == 1
 		ECL_13_9D7B()
 	IF 1 == @4A04
 		EXIT
@@ -10709,7 +10709,7 @@ ECL_13_9DAB
 		GOTO ECL_13_9E1F
 	SETUP_MONSTER (spriteId: 0, maxDistance: 0, picId: 0)
 	PRINT_CLEAR (message: `A NET ENTANGLES YOU.`)
-	@6DC6 = 50
+	moraleThreshold = 50
 	@6DCB = 1
 	@6E70 = 2
 	@6E71 = 254
@@ -10718,7 +10718,7 @@ ECL_13_9DAB
 	LOAD_MONSTER (monsterId: 0, copies: 20, cpicId: 0)
 	COMBAT ()
 	@4A04 = 1
-	IF @6DC7 > 128
+	IF gbvmCombatResult > 128
 		GOTO ECL_13_B32C
 	EXIT
 
@@ -10814,7 +10814,7 @@ ECL_13_9FFE
 			GOTO ECL_13_A45A
 
 ECL_13_A01B
-	@C04D = 0
+	partyPosFacing = 0
 	CALL (opAddr: @2C90)
 	SETUP_MONSTER (spriteId: 0, maxDistance: 2, picId: 0)
 	PRINT_CLEAR (message: `BEFORE YOU IS A HORDE OF KOBOLDS. BEHIND THEM ARE TWO MEN AND AN ANCIENT KOBOLD ON A WOODEN THRONE.`)
@@ -10824,23 +10824,23 @@ ECL_13_A01B
 
 ECL_13_A0F8
 	SETUP_MONSTER (spriteId: 0, maxDistance: 0, picId: 0)
-	@6DC6 = 70
+	moraleThreshold = 70
 	CLEAR_MONSTERS ()
 	LOAD_MONSTER (monsterId: 31, copies: 4, cpicId: 31)
 	LOAD_MONSTER (monsterId: 0, copies: 35, cpicId: 0)
 	LOAD_MONSTER (monsterId: 1, copies: 11, cpicId: 1)
-	@6E7A = @6E3E
-	@6E7B = 4 + @6E3E
+	@6E7A = partySize
+	@6E7B = 4 + partySize
 
 ECL_13_A12B
 	LOAD_CHARACTER (charId: @6E7A)
-	@6BB8 = 178
+	curCharNpc = 178
 	@6E7A = 1 + @6E7A
 	IF @6E7A < @6E7B
 		GOTO ECL_13_A12B
 	COMBAT ()
 	@4A8D = 1
-	IF @6DC7 > 128
+	IF gbvmCombatResult > 128
 		GOTO ECL_13_A2E2
 
 ECL_13_A15C
@@ -10848,14 +10848,14 @@ ECL_13_A15C
 	DAMAGE (attack: 7, dice: 2, sides: 6, bonus: 0, value: 57)
 	SETUP_MONSTER (spriteId: 0, maxDistance: 1, picId: 0)
 	APPROACH ()
-	@6DC6 = 60
+	moraleThreshold = 60
 	CLEAR_MONSTERS ()
 	LOAD_MONSTER (monsterId: 120, copies: 5, cpicId: 120)
 	LOAD_MONSTER (monsterId: 0, copies: 45, cpicId: 0)
 	LOAD_MONSTER (monsterId: 1, copies: 8, cpicId: 1)
 	COMBAT ()
 	@4A8D = 2
-	IF @6DC7 > 128
+	IF gbvmCombatResult > 128
 		GOTO ECL_13_A2E2
 
 ECL_13_A1E5
@@ -10868,19 +10868,19 @@ ECL_13_A230
 	PRINT_CLEAR (message: `THE TWO ENVOYS WAIT AT THE THRONE. THEY SMILE. 'A REMATCH THEN. PREPARE FOR DEATH.'`)
 
 ECL_13_A272
-	@6DE1 = 69
+	pictureLoading = 69
 	SETUP_MONSTER (spriteId: 16, maxDistance: 1, picId: 1)
 	APPROACH ()
-	@6DC6 = 100
+	moraleThreshold = 100
 	CLEAR_MONSTERS ()
 	LOAD_MONSTER (monsterId: 31, copies: 2, cpicId: 31)
 	LOAD_MONSTER (monsterId: 120, copies: 2, cpicId: 120)
 	LOAD_MONSTER (monsterId: 0, copies: 8, cpicId: 0)
 	LOAD_MONSTER (monsterId: 87, copies: 2, cpicId: 11)
 	COMBAT ()
-	@6DE1 = 255
+	pictureLoading = 255
 	@4A8D = 3
-	IF @6DC7 > 128
+	IF gbvmCombatResult > 128
 		GOTO ECL_13_B32C
 	PRINT_CLEAR (message: `THE KING HAS ESCAPED DURING THE FIGHT.`)
 	@4A8D = 4
@@ -10917,14 +10917,14 @@ ECL_13_A363
 			GOTO ECL_13_A15C
 
 ECL_13_A3C0
-	IF @C04D != 0
+	IF partyPosFacing != 0
 		EXIT
-	@6DC9 = 255
+	moveLocked = 255
 	@9802 = 0
 
 ECL_13_A3D4
 	LOAD_CHARACTER (charId: @9802)
-	IF @6C00 != 1
+	IF curCharEnabled != 1
 		GOTO ECL_13_A41C
 	@980D = @6DCA
 	IF @6B72 == 4
@@ -10954,7 +10954,7 @@ ECL_13_A45B
 		EXIT
 	PRINT_CLEAR (message: `YOU REACH THE KING'S QUARTERS AND CONFRONT HIS GUARDS.`)
 	SETUP_MONSTER (spriteId: 0, maxDistance: 0, picId: 0)
-	@6DC6 = 100
+	moraleThreshold = 100
 	CLEAR_MONSTERS ()
 	LOAD_MONSTER (monsterId: 31, copies: 3, cpicId: 31)
 	LOAD_MONSTER (monsterId: 120, copies: 3, cpicId: 120)
@@ -10976,7 +10976,7 @@ ECL_13_A509
 	IF @6DCA != 1 || @4AD3 != 0
 		EXIT
 
-	@C04D = 2
+	partyPosFacing = 2
 	CALL (opAddr: @2C90)
 	PRINT_CLEAR (message: `YOU SEE A BRASS BOTTLE JAMMED INTO A CRACK HERE.`)
 	ECL_13_B49E()
@@ -11016,7 +11016,7 @@ ECL_13_A69A
 	PRINT_CLEAR (message: `'DIE HAPPY FIENDS, YOUR DEATHS SHALL BE MY FREEDOM.'`)
 
 ECL_13_A6C4
-	@6DC6 = 100
+	moraleThreshold = 100
 	CLEAR_MONSTERS ()
 	LOAD_MONSTER (monsterId: 124, copies: 1, cpicId: 70)
 	COMBAT ()
@@ -11035,15 +11035,15 @@ ECL_13_A6DA
 ECL_13_A720
 	IF @4AD4 != 0
 		EXIT
-	IF @C04D == 0
+	IF partyPosFacing == 0
 		GOTO ECL_13_A768
 	PRINT_CLEAR (message: `YOU HEAR MUFFLED SOUNDS AND TURN TO INVESTIGATE.`)
 	ECL_13_B4ED()
-	@C04D = 0
+	partyPosFacing = 0
 	CALL (opAddr: @2C90)
 
 ECL_13_A768
-	@6DE1 = 67
+	pictureLoading = 67
 	SETUP_MONSTER (spriteId: 16, maxDistance: 0, picId: 37)
 	PRINT_CLEAR (message: `IN THIS ROOM IS A YOUNG WOMAN IN BARBARIAN FINERY. SHE DROPS A KOBOLD SHE WAS STRANGLING WHEN SHE SEES YOU.`)
 	ECL_13_B4ED()
@@ -11063,18 +11063,18 @@ ECL_13_A768
 			GOTO ECL_13_A847
 
 ECL_13_A847
-	@6DC6 = 100
+	moraleThreshold = 100
 	CLEAR_MONSTERS ()
 	LOAD_MONSTER (monsterId: 104, copies: 1, cpicId: 11)
 	COMBAT ()
 	@4AD4 = 1
-	@6DE1 = 255
-	IF @6DC7 > 128
+	pictureLoading = 255
+	IF gbvmCombatResult > 128
 		GOTO ECL_13_B32C
 	EXIT
 
 ECL_13_A86E
-	IF @6E3E != 8
+	IF partySize != 8
 		GOTO ECL_13_A8D8
 	PRINT_CLEAR (message: `'YOUR GROUP IS TOO LARGE.'`)
 	ECL_13_B4ED()
@@ -11082,13 +11082,13 @@ ECL_13_A86E
 ECL_13_A894
 	PRINT_CLEAR (message: `SHE SMILES.'SO I SHALL CUT MY OWN WAY OUT. GOOD HUNTING.' SHE LEAVES.`)
 	@4AD4 = 1
-	@6DE1 = 255
+	pictureLoading = 255
 	EXIT
 
 ECL_13_A8D8
 	ADD_NPC (npcId: 104, morale: 100)
 	@4AD4 = 1
-	@6DE1 = 255
+	pictureLoading = 255
 	PICTURE (blockId: 255)
 	EXIT
 
@@ -11100,7 +11100,7 @@ ECL_13_A8ED
 	EXIT
 
 ECL_13_A93F
-	IF @C04D != 1
+	IF partyPosFacing != 1
 		GOTO ECL_13_A990
 	IF 1 == @4A18
 		EXIT
@@ -11121,8 +11121,8 @@ ECL_13_A990
 			GOTO ECL_13_A9DA
 
 ECL_13_A9DA
-	@C04B = @49F0
-	@C04C = @49F1
+	partyPosMapX = @49F0
+	partyPosMapY = @49F1
 	CALL (opAddr: @2C90)
 	EXIT
 
@@ -11135,7 +11135,7 @@ ECL_13_AA0F
 	IF @4A8E != 0
 		EXIT
 	PRINT_CLEAR (message: `THE NOISE HAS DISTURBED SOMETHING. WITH A BEATING OF WINGS, A HUGE BEAST LANDS UPON YOU.`)
-	@C04D = 1
+	partyPosFacing = 1
 	CALL (opAddr: @2C90)
 	SETUP_MONSTER (spriteId: 121, maxDistance: 2, picId: 121)
 	DELAY ()
@@ -11144,7 +11144,7 @@ ECL_13_AA0F
 	APPROACH ()
 	ECL_13_B4ED()
 	@6DCB = 1
-	@6DC6 = 100
+	moraleThreshold = 100
 	CLEAR_MONSTERS ()
 	LOAD_MONSTER (monsterId: 121, copies: 1, cpicId: 121)
 	COMBAT ()
@@ -11160,7 +11160,7 @@ ECL_13_AA91
 	DELAY ()
 	APPROACH ()
 	ECL_13_B4ED()
-	@6DC6 = 100
+	moraleThreshold = 100
 	CLEAR_MONSTERS ()
 	LOAD_MONSTER (monsterId: 121, copies: 1, cpicId: 121)
 	COMBAT ()
@@ -11228,7 +11228,7 @@ ECL_13_ACA3
 	EXIT
 
 ECL_13_ACE3
-	IF @C04B == @49F0 && @C04C == @49F1
+	IF partyPosMapX == @49F0 && partyPosMapY == @49F1
 		EXIT
 
 	PRINT_CLEAR (message: `A RUINED BALLISTA LIES HERE.`)
@@ -11264,10 +11264,10 @@ ECL_13_ADB4
 
 ECL_13_ADE1
 	LOAD_CHARACTER (charId: @9802)
-	IF @6C00 != 1
+	IF curCharEnabled != 1
 		GOTO ECL_13_AE02
 	@9803 = RANDOM (max: 99)
-	IF @6BA7 > @9803
+	IF curCharThiefSkills[1] > @9803
 		GOTO ECL_13_AE1A
 
 ECL_13_AE02
@@ -11290,11 +11290,11 @@ ECL_13_AE1A
 
 ECL_13_AE77
 	WHO (prompt: `WHO WILL DISARM THE TRAP?`)
-	IF @6C00 != 1
+	IF curCharEnabled != 1
 		GOTO ECL_13_AEB7
 	@6E7C = 128
 	@9803 = RANDOM (max: 99)
-	IF @6BA7 < @9803
+	IF curCharThiefSkills[1] < @9803
 		GOTO ECL_13_AEB7
 	@6E82 = 1
 	RETURN
@@ -11304,8 +11304,8 @@ ECL_13_AEB7
 	RETURN
 
 ECL_13_AEBE
-	@C04B = @49F0
-	@C04C = @49F1
+	partyPosMapX = @49F0
+	partyPosMapY = @49F1
 	CALL (opAddr: @2C90)
 	EXIT
 
@@ -11315,7 +11315,7 @@ ECL_13_AED1
 
 ECL_13_AEDA
 	@6E79 = db_$B550[@6E7E]
-	@C04D = db_$B569[@6E7E]
+	partyPosFacing = db_$B569[@6E7E]
 	ECL_13_AF29()
 	@6E79 = db_$B537[@6E7E]
 	SWITCH @6E79
@@ -11346,7 +11346,7 @@ ECL_13_AF29
 ECL_13_AF3E
 	IF @6E7A > @6E79
 		RETURN
-	SWITCH @C04D
+	SWITCH partyPosFacing
 		CASE 0
 			ECL_13_AF6B()
 		CASE 1
@@ -11361,19 +11361,19 @@ ECL_13_AF3E
 	GOTO ECL_13_AF3E
 
 ECL_13_AF6B
-	@C04C = @C04C - 1
+	partyPosMapY = partyPosMapY - 1
 	RETURN
 
 ECL_13_AF75
-	@C04B = 1 + @C04B
+	partyPosMapX = 1 + partyPosMapX
 	RETURN
 
 ECL_13_AF7F
-	@C04C = 1 + @C04C
+	partyPosMapY = 1 + partyPosMapY
 	RETURN
 
 ECL_13_AF89
-	@C04B = @C04B - 1
+	partyPosMapX = partyPosMapX - 1
 
 ECL_13_AF92
 	RETURN
@@ -11421,7 +11421,7 @@ ECL_13_B119
 
 ECL_13_B11F
 	@6E79 = db_$B550[@6E7E]
-	@C04D = db_$B569[@6E7E]
+	partyPosFacing = db_$B569[@6E7E]
 	ECL_13_AF29()
 	@6E79 = db_$B537[@6E7E]
 	SWITCH @6E79
@@ -11443,9 +11443,9 @@ ECL_13_B16B
 	EXIT
 
 ECL_13_B1DC
-	@C04B = 4
-	@C04C = 3
-	@C04D = 3
+	partyPosMapX = 4
+	partyPosMapY = 3
+	partyPosFacing = 3
 	CALL (opAddr: @2C90)
 	PRINT_CLEAR (message: `THE KOBOLDS HERD YOU TOWARD YOUR PRISON. SOME NAB BITS OF YOUR EQUIPMENT AND LEAVE.`)
 	ROB (allParty: 1, coinPct: 25, unused: 10)
@@ -11453,7 +11453,7 @@ ECL_13_B1DC
 
 ECL_13_B241
 	@6E79 = db_$B550[@6E7E]
-	@C04D = db_$B569[@6E7E]
+	partyPosFacing = db_$B569[@6E7E]
 	ECL_13_AF29()
 	@6E79 = db_$B537[@6E7E]
 	SWITCH @6E79
@@ -11467,15 +11467,15 @@ ECL_13_B241
 ECL_13_B27C
 	IF 1 == @4AD4
 		GOTO ECL_13_B4AE
-	@6DE1 = 67
+	pictureLoading = 67
 	SETUP_MONSTER (spriteId: 0, maxDistance: 0, picId: 37)
 	PRINT_CLEAR (message: `A WOMAN APPEARS BEFORE YOU.'I AM THE PRINCESS FATIMA, AID ME IN THIS BATTLE.'`)
 	ADD_NPC (npcId: 104, morale: 100)
 	CLEAR_MONSTERS ()
 	LOAD_MONSTER (monsterId: 0, copies: 10, cpicId: 0)
 	COMBAT ()
-	@6DE1 = 255
-	IF @6E3E == 8
+	pictureLoading = 255
+	IF partySize == 8
 		GOTO ECL_13_B31E
 	PRINT_CLEAR (message: `WHEN YOU REST, FATIMA TELLS YOU OF HER TRIBE.`)
 	ECL_13_B512()
@@ -11483,21 +11483,21 @@ ECL_13_B27C
 
 ECL_13_B31E
 	@4AD4 = 1
-	IF @6DC7 < 128
+	IF gbvmCombatResult < 128
 		EXIT
 
 ECL_13_B32C
 	@6E79 = RANDOM (max: 5)
-	@C04B = db_$B582[@6E79]
-	@C04C = db_$B588[@6E79]
+	partyPosMapX = db_$B582[@6E79]
+	partyPosMapY = db_$B588[@6E79]
 	CALL (opAddr: @2C90)
 	PRINT_CLEAR (message: `THE KOBOLDS CHASE FOR A WHILE, BUT YOU ESCAPE.`)
 	EXIT
 
 ECL_13_B371
-	@C04B = 11
-	@C04C = 14
-	@C04D = 1
+	partyPosMapX = 11
+	partyPosMapY = 14
+	partyPosFacing = 1
 	CALL (opAddr: @2C90)
 	EXIT
 
@@ -11516,7 +11516,7 @@ ECL_13_B388
 	SETUP_MONSTER (spriteId: 0, maxDistance: 0, picId: 0)
 	PRINT_CLEAR (message: `KOBOLDS SEEM TO BOIL UP FROM NOWHERE.`)
 	ECL_13_B4ED()
-	@6DC6 = 30
+	moraleThreshold = 30
 	@6E70 = 2
 	@6E72 = 252
 	@6E71 = 254
@@ -11524,7 +11524,7 @@ ECL_13_B388
 	LOAD_MONSTER (monsterId: 0, copies: 15, cpicId: 0)
 	LOAD_MONSTER (monsterId: 1, copies: 3, cpicId: 1)
 	COMBAT ()
-	IF @6DC7 > 128
+	IF gbvmCombatResult > 128
 		GOTO ECL_13_B32C
 	EXIT
 
@@ -11560,8 +11560,8 @@ ECL_13_B49E
 ECL_13_B4AE
 	PRINT_CLEAR (message: `YOU ARE THROWN INTO A CELL BEREFT OF EQUIPMENT.`)
 	ROB (allParty: 1, coinPct: 100, unused: 255)
-	@C04B = 0
-	@C04C = 0
+	partyPosMapX = 0
+	partyPosMapY = 0
 	CALL (opAddr: @2C90)
 	EXIT
 
@@ -11687,9 +11687,9 @@ ECL_14_9914
 		@6E80 = 8
 	@49FD = @6E80
 	@49FE = 10
-	IF @6DD5 == 0
+	IF leaveMap == 0
 		EXIT
-	SWITCH @C04D
+	SWITCH partyPosFacing
 		CASE 0
 			GOTO ECL_14_994E
 		CASE 1
@@ -11702,19 +11702,19 @@ ECL_14_9914
 ECL_14_994E
 	@49C3 = 13
 	@49C4 = 26
-	@6E12 = 7
+	gbvmDiskNum = 7
 	NEW_ECL (eclId: 26)
 	EXIT
 
 ECL_14_9964
 	@49C3 = 13
 	@49C4 = 27
-	@6E12 = 7
+	gbvmDiskNum = 7
 	NEW_ECL (eclId: 26)
 
 ECL_14_9979
 	CALL (opAddr: @C01E)
-	@6E12 = 1
+	gbvmDiskNum = 1
 	NEW_ECL (eclId: 24)
 	EXIT
 
@@ -11722,7 +11722,7 @@ ECL_14_9987
 	EXIT
 
 ECL_14_9988
-	@6E7F = 127 & @C04F
+	@6E7F = 127 & partyPosEventAtCell
 	SWITCH @6E7F
 		CASE 0
 			GOTO ECL_14_B343
@@ -11837,7 +11837,7 @@ ECL_14_9B36
 		GOTO ECL_14_B343
 	IF @4A45 >= 21
 		GOTO ECL_14_B343
-	@6DE1 = 32
+	pictureLoading = 32
 	SETUP_MONSTER (spriteId: 11, maxDistance: 2, picId: 8)
 	DELAY ()
 	APPROACH ()
@@ -11869,13 +11869,13 @@ ECL_14_9C20
 
 ECL_14_9C74
 	CLEAR_MONSTERS ()
-	@6DC6 = 30
+	moraleThreshold = 30
 	IF @4A45 >= 18
 		LOAD_MONSTER (monsterId: 51, copies: 1, cpicId: 12)
 	IF @4A45 < 18
 		LOAD_MONSTER (monsterId: 45, copies: 1, cpicId: 12)
 	COMBAT ()
-	IF @6DC7 > 128
+	IF gbvmCombatResult > 128
 		GOTO ECL_14_B38C
 	@4A45 = 1 + @4A45
 	GOTO ECL_14_B343
@@ -11969,7 +11969,7 @@ ECL_14_9ECA
 ECL_14_9F19
 	LOAD_CHARACTER (charId: @6E7E)
 	@6B20[@6E7D] = 0
-	PRINT_CLEAR (message: $str@6B00)
+	PRINT_CLEAR (message: curCharName)
 	PRINT_APPEND (message: ` CASTS A KNOCK SPELL AND OPENS THE LOCK.`)
 	@6E7E = 128 + @6E7E
 	LOAD_CHARACTER (charId: @6E7E)
@@ -11981,7 +11981,7 @@ ECL_14_9F62
 	IF @6E7B == 2
 		GOTO ECL_14_9FC5
 	WHO (prompt: `WHO WILL TRY TO PICK THE LOCK?`)
-	@6E79 = @6BA5
+	@6E79 = curCharThiefSkills[1]
 	@6E7B = RANDOM (max: 99)
 	IF @6E7B >= @6E79
 		GOTO ECL_14_A016
@@ -12327,7 +12327,7 @@ ECL_14_AA0C
 		@4A15 = 1
 	IF @4A45 >= 18
 		GOTO ECL_14_ABC3
-	@6DE1 = 71
+	pictureLoading = 71
 	SETUP_MONSTER (spriteId: 11, maxDistance: 0, picId: 8)
 	PRINT_CLEAR (message: `AS YOU NEAR THE PILE OF WEAPONS AN AWFUL SMELLING CLOUD OF GAS FORMS.  THIS FOUL SMELLING GAS STUNS THE PARTY ALLOWING A GROUP OF THIEVES TO JUMP OUT OF THE SHADOWS AND ATTACK AT WILL!`)
 	DELAY ()
@@ -12362,7 +12362,7 @@ ECL_14_AB10
 	IF @6E7B != 0
 		LOAD_MONSTER (monsterId: 45, copies: @6E7B, cpicId: 12)
 	COMBAT ()
-	IF @6DC7 > 128
+	IF gbvmCombatResult > 128
 		GOTO ECL_14_B38C
 	@4A45 = @6E7A + @4A45
 	@4A45 = @6E7B + @4A45
@@ -12384,7 +12384,7 @@ ECL_14_AC2E
 	IF @4A16 != 0
 		GOTO ECL_14_B343
 	@4A16 = 255
-	@6DE1 = 44
+	pictureLoading = 44
 	SETUP_MONSTER (spriteId: 11, maxDistance: 0, picId: 8)
 	PRINT_CLEAR (message: `AS YOU ENTER THE ROOM TWO THIEVES COME OUT OF NOWHERE AND ATTACK THE PARTY.  THEY FAIL MISERABLY AND RUN OUT THE EAST DOOR.  WILL YOU CHASE THEM?`)
 	@6E79 = HORIZONTAL_MENU (opts: [`YES`, `NO`])
@@ -12399,7 +12399,7 @@ ECL_14_ACD7
 
 ECL_14_ACDD
 	@6E79 = db_$B4AC[@6E7E]
-	@C04D = db_$B4BC[@6E7E]
+	partyPosFacing = db_$B4BC[@6E7E]
 	ECL_14_B2D9()
 	IF @6E7E == 3
 		GOTO ECL_14_AD23
@@ -12428,7 +12428,7 @@ ECL_14_ADBA
 	GOTO ECL_14_AD16
 
 ECL_14_ADC7
-	@6DE1 = 44
+	pictureLoading = 44
 	SETUP_MONSTER (spriteId: 11, maxDistance: 0, picId: 8)
 	PRINT_CLEAR (message: `YOU HAVE CAUGHT ONE OF THE THIEVES.  THE THIEF BEGS FOR MERCY AND SAYS, 'I AM THE GUILD MASTER.  IF YOU RELEASE ME, MY THIEVES WILL NO LONGER ATTACK YOU!'  WHAT WILL YOU DO?`)
 	@6E79 = HORIZONTAL_MENU (opts: [`ATTACK`, `RELEASE`])
@@ -12449,16 +12449,16 @@ ECL_14_AEF6
 ECL_14_AF01
 	IF @4A19 != 0
 		GOTO ECL_14_B343
-	@6DE1 = 44
+	pictureLoading = 44
 	SETUP_MONSTER (spriteId: 11, maxDistance: 0, picId: 8)
 	PRINT_CLEAR (message: `AS YOU ENTER THE ROOM YOU ARE AMBUSHED BY SOME THIEVES.`)
 	@6DCB = 1
-	@6DC6 = 60
+	moraleThreshold = 60
 	CLEAR_MONSTERS ()
 	LOAD_MONSTER (monsterId: 45, copies: 15, cpicId: 12)
 	LOAD_MONSTER (monsterId: 51, copies: 3, cpicId: 12)
 	COMBAT ()
-	IF @6DC7 > 128
+	IF gbvmCombatResult > 128
 		GOTO ECL_14_B38C
 	@4A45 = 15 + @4A45
 	@4A19 = 1
@@ -12481,16 +12481,16 @@ ECL_14_AFF9
 	GOTO ECL_14_B343
 
 ECL_14_B044
-	@6DE1 = 32
+	pictureLoading = 32
 	SETUP_MONSTER (spriteId: 11, maxDistance: 0, picId: 8)
 	PRINT_CLEAR (message: `YOU ENTER A ROOM THAT HAS BEEN CONVERTED TO A JAIL.  THERE ARE TEN YOUNG THUGS BEATING AN OLDER THIEF TO DEATH.  ONCE YOU ENTER THEY STOP AND ATTACK YOU.`)
 	CLEAR_MONSTERS ()
 	LOAD_MONSTER (monsterId: 45, copies: 10, cpicId: 12)
 	COMBAT ()
 	@4A48 = 2 | @4A48
-	IF @6DC7 > 128
+	IF gbvmCombatResult > 128
 		GOTO ECL_14_B38C
-	@6DE1 = 16
+	pictureLoading = 16
 	PICTURE (blockId: 8)
 	PRINT_CLEAR (message: `YOU RUSH TO HELP THE OLD THIEF BUT IT'S TOO LATE.  BEFORE HE DIES HE SAYS, 'THE BOSS HAS ALLIES EVERYWHERE.  TAKE THESE PAPERS.  THEY MAY HELP.'  HE THEN DIES.`)
 	ECL_14_B368()
@@ -12528,7 +12528,7 @@ ECL_14_B2D9
 ECL_14_B2EE
 	IF @6E7A > @6E79
 		RETURN
-	SWITCH @C04D
+	SWITCH partyPosFacing
 		CASE 0
 			ECL_14_B31B()
 		CASE 1
@@ -12543,19 +12543,19 @@ ECL_14_B2EE
 	GOTO ECL_14_B2EE
 
 ECL_14_B31B
-	@C04C = @C04C - 1
+	partyPosMapY = partyPosMapY - 1
 	RETURN
 
 ECL_14_B325
-	@C04B = 1 + @C04B
+	partyPosMapX = 1 + partyPosMapX
 	RETURN
 
 ECL_14_B32F
-	@C04C = 1 + @C04C
+	partyPosMapY = 1 + partyPosMapY
 	RETURN
 
 ECL_14_B339
-	@C04B = @C04B - 1
+	partyPosMapX = partyPosMapX - 1
 	RETURN
 
 ECL_14_B343
@@ -12563,7 +12563,7 @@ ECL_14_B343
 		ECL_14_B359()
 	SPRITE_OFF ()
 	PICTURE (blockId: 255)
-	@6DE1 = 255
+	pictureLoading = 255
 	EXIT
 
 ECL_14_B359
@@ -12577,13 +12577,13 @@ ECL_14_B368
 	RETURN
 
 ECL_14_B38C
-	@C04B = @49F0
-	@C04C = @49F1
+	partyPosMapX = @49F0
+	partyPosMapY = @49F1
 	@49C5 = @4A1A
 	EXIT
 
 ECL_14_B3A2
-	[@6E79, @6E7A, @6E7B, @6E7C] = CHECK_PARTY (checkMove: @6BA7, effect: 0)
+	[@6E79, @6E7A, @6E7B, @6E7C] = CHECK_PARTY (checkMove: curCharThiefSkills[1], effect: 0)
 	[@6E79, @6E79, @6E79, @6E80] = CHECK_PARTY (checkMove: 0, effect: 19)
 	IF @6E80 != 0
 		GOTO ECL_14_B3E9
@@ -12703,10 +12703,10 @@ ECL_15_9910	GOTO ECL_15_9B8E
 
 /* MAIN SCRIPT */
 ECL_15_9914
-	@C04B = db_$993C[@6E82]
-	@C04C = db_$9940[@6E82]
-	@C04D = db_$9944[@6E82]
-	@6DC9 = 255
+	partyPosMapX = db_$993C[@6E82]
+	partyPosMapY = db_$9940[@6E82]
+	partyPosFacing = db_$9944[@6E82]
+	moveLocked = 255
 	GOTO ECL_15_9AE5
 
 CONST ECL_15_db_$993C = 7
@@ -12765,14 +12765,14 @@ ECL_15_99C8
 
 ECL_15_99E9
 	ECL_15_99C8()
-	IF @6DD5 != 0
+	IF leaveMap != 0
 		GOTO ECL_15_9AEB
-	@6E82 = 64 & @C04F
+	@6E82 = 64 & partyPosEventAtCell
 	IF 0 == @6E82
 		EXIT
-	@6E82 = @C04F & 1
+	@6E82 = partyPosEventAtCell & 1
 	@6E80 = db_$9B07[@6E82]
-	IF @6E80 != @C04D
+	IF @6E80 != partyPosFacing
 		EXIT
 	@6E82 = 32 & @4A31
 	IF 0 != @6E82
@@ -12783,7 +12783,7 @@ ECL_15_99E9
 	SETUP_MONSTER (spriteId: 17, maxDistance: 0, picId: 17)
 	PRINT_CLEAR (message: `A SPECTRE SUDDENLY APPEARS BEFORE YOU. 'THIEF! I DEFENDED THESE BOOKS IN LIFE AND I WILL DEFEND THEM IN DEATH!' IT ATTACKS YOU.`)
 	ECL_15_9948()
-	@6DC6 = 100
+	moraleThreshold = 100
 	[@6E7A, @6E7B] = PARTY_SURPRISE ()
 	SURPRISE (sub1: @6E7A, base2: @6E7B, sub2: 2, base1: 2)
 	IF @6DCB == 2
@@ -12791,7 +12791,7 @@ ECL_15_99E9
 	CLEAR_MONSTERS ()
 	LOAD_MONSTER (monsterId: 17, copies: 1, cpicId: 17)
 	COMBAT ()
-	IF @6DC7 == 129
+	IF gbvmCombatResult == 129
 		GOTO ECL_15_A579
 	@4A31 = 32 | @4A31
 
@@ -12802,8 +12802,8 @@ ECL_15_9AE5
 
 ECL_15_9AEB
 	CALL (opAddr: @C01E)
-	@6E7F = db_$9B09[@C04D]
-	@6E12 = db_$9B0D[@C04D]
+	@6E7F = db_$9B09[partyPosFacing]
+	gbvmDiskNum = db_$9B0D[partyPosFacing]
 	NEW_ECL (eclId: @6E7F)
 
 CONST ECL_15_db_$9B07 = 2
@@ -12819,7 +12819,7 @@ CONST ECL_15_db_$9B10 = 4
 
 
 ECL_15_9B11
-	@6E82 = 31 & @C04F
+	@6E82 = 31 & partyPosEventAtCell
 	@6E7A = db_$9B5B[@6E82]
 	@6E79 = db_$9B6E[@6E82]
 	SWITCH @6E7A
@@ -13203,12 +13203,12 @@ ECL_15_A579
 	GOTO ECL_15_9914
 
 ECL_15_A583
-	@6DC6 = 100
+	moraleThreshold = 100
 	CLEAR_MONSTERS ()
 	LOAD_MONSTER (monsterId: 26, copies: 1, cpicId: 26)
 	TREASURE (cp: 0, sp: 0, ep: 0, gp: 0, pp: 0, gems: 0, jewels: 0, itemId: 3)
 	COMBAT ()
-	IF @6DC7 == 129
+	IF gbvmCombatResult == 129
 		GOTO ECL_15_A579
 	@4A31 = 64 | @4A31
 	EXIT
@@ -13306,7 +13306,7 @@ ECL_15_A8F0
 
 ECL_15_A917
 	ECL_15_A9FD()
-	IF @6E3E == 8
+	IF partySize == 8
 		GOTO ECL_15_A836
 	PRINT_CLEAR (message: `YOU SEE THE MAN IS QUITE MAD. DO YOU TAKE PITY AND INVITE HIM TO GO WITH YOU?`)
 	ECL_15_9978()
@@ -13352,12 +13352,12 @@ ECL_15_AAC3
 	RETURN
 
 ECL_15_AAE6
-	@6DC6 = 0
+	moraleThreshold = 0
 	@6DCB = 0
 	CLEAR_MONSTERS ()
 	LOAD_MONSTER (monsterId: 25, copies: 1, cpicId: 11)
 	COMBAT ()
-	IF @6DC7 == 129
+	IF gbvmCombatResult == 129
 		GOTO ECL_15_A8E6
 	@4A31 = 1 | @4A31
 	EXIT
@@ -13451,12 +13451,12 @@ ECL_15_AD9B
 	GOTO ECL_15_9AE5
 
 ECL_15_AE7F
-	@6DC6 = 10
+	moraleThreshold = 10
 	@6DCB = 0
 	CLEAR_MONSTERS ()
 	LOAD_MONSTER (monsterId: 0, copies: 5, cpicId: 0)
 	COMBAT ()
-	IF @6DC7 == 129
+	IF gbvmCombatResult == 129
 		GOTO ECL_15_AD91
 	@4A31 = 128 | @4A31
 	EXIT
@@ -13482,7 +13482,7 @@ ECL_16_9914
 
 ECL_16_9935
 	@6E82 = 0
-	@6E7F = 127 & @C04F
+	@6E7F = 127 & partyPosEventAtCell
 
 ECL_16_9944
 	@6E81 = db_$AC1A[@6E82]
@@ -13559,12 +13559,12 @@ ECL_16_9A64
 ECL_16_9A8C
 	ECL_16_9914()
 	@6E82 = 0
-	@6E7F = 127 & @C04F
+	@6E7F = 127 & partyPosEventAtCell
 
 ECL_16_9A9F
 	@6E81 = db_$9B00[@6E82]
 	@6E80 = db_$9B0C[@6E82]
-	IF @6E81 == @6E7F && @6E80 == @C04D
+	IF @6E81 == @6E7F && @6E80 == partyPosFacing
 		GOTO ECL_16_9ADA
 
 	@6E82 = @6E82 + 1
@@ -13641,7 +13641,7 @@ CONST ECL_16_db_$9B2F = 6
 
 ECL_16_9B30
 	@6E82 = 0
-	@6E7F = 127 & @C04F
+	@6E7F = 127 & partyPosEventAtCell
 
 ECL_16_9B3F
 	@6E81 = db_$9B96[@6E82]
@@ -13762,9 +13762,9 @@ ECL_16_9BEA
 	@49FB = 1
 	IF @49F2 == 16
 		EXIT
-	@C04B = 8
-	@C04C = 14
-	@C04D = 0
+	partyPosMapX = 8
+	partyPosMapY = 14
+	partyPosFacing = 0
 	LOAD_FILES (fileId: 16, unused: 2, loadTiles: 255)
 	LOAD_PIECES (wallSetId1: 9, wallSetId2: 20, wallSetId3: 23)
 	PRINT_CLEAR (message: `YOU SENSE AN ANTI-MAGIC SHELL AROUND YOU.`)
@@ -13773,7 +13773,7 @@ ECL_16_9BEA
 	EXIT
 
 ECL_16_9C4D
-	@6DC9 = 255
+	moveLocked = 255
 	PRINT_CLEAR (message: `AHEAD OF YOU IS A MOAT FILLED WITH SLUDGE AND THORNS. YOU CANNOT PROCEED BECAUSE THE MUD WOULD SURELY DRAG YOU DOWN TO YOUR DEATH.`)
 	EXIT
 
@@ -13811,15 +13811,15 @@ ECL_16_9D41
 	ECL_16_9A4A()
 	IF compareResult == '!='
 		EXIT
-	@C04B = db_$9E9D[@6E79]
-	@C04C = db_$9EA4[@6E79]
-	@C04D = db_$9EAB[@6E79]
+	partyPosMapX = db_$9E9D[@6E79]
+	partyPosMapY = db_$9EA4[@6E79]
+	partyPosFacing = db_$9EAB[@6E79]
 	LOAD_FILES (fileId: 30, unused: 2, loadTiles: 255)
 	LOAD_PIECES (wallSetId1: 9, wallSetId2: 17, wallSetId3: 23)
 	@4A60 = @4A60 | 254
 	@4A61 = @4A61 | 254
 	SPRITE_OFF ()
-	@6DC9 = 255
+	moveLocked = 255
 	CALL (opAddr: @2C90)
 	@6E7F = 4
 	ECL_16_9971()
@@ -13828,7 +13828,7 @@ ECL_16_9D41
 	SETUP_MONSTER (spriteId: 59, maxDistance: 1, picId: 59)
 	PRINT_CLEAR (message: `YOU ARE NO LONGER GOING DOWN. SUDDENLY YOU HEAR A NOISE. THERE ARE GIANT LIZARDS CHARGING! THERE IS NO TIME TO REACT. COMBAT IS UPON YOU!`)
 	@6DCB = 0
-	@6DC6 = 100
+	moraleThreshold = 100
 	APPROACH ()
 	DELAY ()
 	@6E71 = 254
@@ -13929,12 +13929,12 @@ ECL_16_A01E
 			GOTO ECL_16_A795
 
 ECL_16_A02D
-	@C04B = 8
-	@C04C = 12
-	@C04D = 2
+	partyPosMapX = 8
+	partyPosMapY = 12
+	partyPosFacing = 2
 
 ECL_16_A03F
-	@6DC9 = 255
+	moveLocked = 255
 	GOTO ECL_16_9BE4
 
 ECL_16_A049
@@ -13967,12 +13967,12 @@ ECL_16_A184
 	ECL_16_9A4A()
 	IF compareResult == '!='
 		GOTO ECL_16_A493
-	@6E79 = @6DB4
+	@6E79 = curCharIdx
 	@6E7A = 0
 
 ECL_16_A300
 	WHO (prompt: `WHO WILL BE MY CHAMPION?`)
-	IF @6C00 == 1
+	IF curCharEnabled == 1
 		GOTO ECL_16_A337
 	PRINT_CLEAR (message: `PLEASE, BE SERIOUS.`)
 	DELAY ()
@@ -13980,12 +13980,12 @@ ECL_16_A300
 
 ECL_16_A337
 	@6DCB = 0
-	@6DC6 = 100
+	moraleThreshold = 100
 	CLEAR_MONSTERS ()
 	CALL (opAddr: @8001)
 	LOAD_MONSTER (monsterId: 95, copies: 1, cpicId: 57)
 	COMBAT ()
-	IF @6DC7 == 129
+	IF gbvmCombatResult == 129
 		GOTO ECL_16_A464
 	IF @4AB5 != 255
 		@4AB5 = 254
@@ -14019,12 +14019,12 @@ ECL_16_A4FE
 
 ECL_16_A544
 	@6DCB = 0
-	@6DC6 = 100
+	moraleThreshold = 100
 	CLEAR_MONSTERS ()
 	LOAD_MONSTER (monsterId: 95, copies: 1, cpicId: 57)
 	LOAD_MONSTER (monsterId: 57, copies: 12, cpicId: 57)
 	COMBAT ()
-	IF @6DC7 == 129
+	IF gbvmCombatResult == 129
 		GOTO ECL_16_A02D
 	EXIT
 
@@ -14069,7 +14069,7 @@ ECL_16_A66C
 
 ECL_16_A6AE
 	@6E7F = 0
-	@6DC6 = 100
+	moraleThreshold = 100
 	SPRITE_OFF ()
 	PICTURE (blockId: 255)
 	CLEAR_MONSTERS ()
@@ -14079,7 +14079,7 @@ ECL_16_A6AE
 ECL_16_A6CD
 	COMBAT ()
 	ECL_16_99D0()
-	IF @6DC7 == 129
+	IF gbvmCombatResult == 129
 		GOTO ECL_16_A02D
 
 ECL_16_A6DD
@@ -14111,7 +14111,7 @@ ECL_16_A775
 
 ECL_16_A795
 	@6DCB = 0
-	@6DC6 = 50
+	moraleThreshold = 50
 	@6E7F = 2
 	ECL_16_9971()
 	IF @6E7D < 2
@@ -14171,7 +14171,7 @@ ECL_16_A959
 
 ECL_16_A9B8
 	@6E7F = 1
-	@6DC6 = 100
+	moraleThreshold = 100
 	CLEAR_MONSTERS ()
 	LOAD_MONSTER (monsterId: 59, copies: 3, cpicId: 59)
 	GOTO ECL_16_A6CD
@@ -14185,12 +14185,12 @@ ECL_16_A9F2
 
 ECL_16_AA0C
 	PRINT_APPEND (message: ` DO YOU GO UP?`)
-	@6DC9 = 255
+	moveLocked = 255
 	ECL_16_9A4A()
 	IF compareResult == '!='
 		EXIT
-	@C04B = db_$AA4C[@6E79]
-	@C04C = db_$AA53[@6E79]
+	partyPosMapX = db_$AA4C[@6E79]
+	partyPosMapY = db_$AA53[@6E79]
 	LOAD_FILES (fileId: 16, unused: 2, loadTiles: 255)
 	LOAD_PIECES (wallSetId1: 9, wallSetId2: 20, wallSetId3: 23)
 	GOTO ECL_16_A03F
@@ -14245,7 +14245,7 @@ ECL_16_AB3A
 
 ECL_16_AB7E
 	PRINT_CLEAR (message: `BEFORE THEY CAN RETURN TO THE WATER YOU ENGAGE THEM. THEY TURN AND FIGHT FANATICALLY.`)
-	@6DC6 = 100
+	moraleThreshold = 100
 	@6E71 = 254
 	@6E72 = 252
 	CLEAR_MONSTERS ()
@@ -14253,14 +14253,14 @@ ECL_16_AB7E
 	COMBAT ()
 	ECL_16_99D0()
 	@6E80 = 1
-	IF @6DC7 != 129
+	IF gbvmCombatResult != 129
 		GOTO ECL_16_AC5C
 	ECL_16_9935()
 	IF compareResult == '!='
 		EXIT
-	@C04B = db_$AC25[@6E82]
-	@C04C = db_$AC30[@6E82]
-	@C04D = db_$AC3B[@6E82]
+	partyPosMapX = db_$AC25[@6E82]
+	partyPosMapY = db_$AC30[@6E82]
+	partyPosFacing = db_$AC3B[@6E82]
 	GOTO ECL_16_A03F
 
 CONST ECL_16_db_$AC1A = 24
@@ -14399,9 +14399,9 @@ ECL_17_9914
 	RETURN
 
 ECL_17_9934
-	@6DE1 = 61
+	pictureLoading = 61
 	@6E82 = ENCOUNTER (displayMonsterId: 11, distanceRequirement: @6DC0, displayPicId: 30, combatResp: 0, waitResp: 0, fleeResp: 0, parlayResp: 0, failFleeResp: 0, message1: ``, message2: ``, message3: ``, partyFlee: 12, monsterFlee: 12)
-	@6DE1 = 255
+	pictureLoading = 255
 	RETURN
 
 ECL_17_9960
@@ -14449,7 +14449,7 @@ ECL_17_99CE
 
 ECL_17_99E0
 	@6E79 = 4
-	IF @C04F != 1
+	IF partyPosEventAtCell != 1
 		@6E79 = 0
 	RETURN
 
@@ -14469,7 +14469,7 @@ ECL_17_9A12
 	ECL_17_9960()
 	@6DD2 = 0
 	@6DD3 = 10
-	IF @6E79 == 1 && @C04F == 4
+	IF @6E79 == 1 && partyPosEventAtCell == 4
 		@6E79 = 0
 
 	@6E82 = db_$AC7D[@6E79]
@@ -14485,14 +14485,14 @@ ECL_17_9A12
 	RETURN
 
 ECL_17_9A74
-	@6E79 = @6E3E
-	@6E7C = @4A00 + @6E3E
+	@6E79 = partySize
+	@6E7C = @4A00 + partySize
 	IF @4A00 == 0
 		RETURN
 
 ECL_17_9A8D
 	LOAD_CHARACTER (charId: @6E79)
-	@6C0C = 128
+	curCharCombatRole = 128
 	@6E7A = @6E79 + 128
 	LOAD_CHARACTER (charId: @6E7A)
 	@6E79 = @6E79 + 1
@@ -14513,7 +14513,7 @@ ECL_17_9AD5
 	@6E82 = 4 & @4A7C
 	IF 0 != @6E82
 		GOTO ECL_17_9B20
-	IF @C04F == 4
+	IF partyPosEventAtCell == 4
 		GOTO ECL_17_9B20
 	@6E82 = RANDOM (max: 6)
 	@4A00 = 1 + @6E82
@@ -14531,7 +14531,7 @@ ECL_17_9B20
 	RETURN
 
 ECL_17_9B4A
-	IF @C04B < 11
+	IF partyPosMapX < 11
 		GOTO ECL_17_9B87
 	PRINT_CLEAR (message: `THERE IS NOWHERE LEFT TO RETREAT. YOU MUST FIGHT.`)
 	ECL_17_9D7F()
@@ -14546,13 +14546,13 @@ ECL_17_9B8D
 	@6E80 = db_$AC91[@6E82]
 	@6E7F = db_$AC9D[@6E82]
 	@6E7E = db_$ACA9[@6E82]
-	IF @C04B < @6E81
+	IF partyPosMapX < @6E81
 		GOTO ECL_17_9BE5
-	IF @C04C < @6E80
+	IF partyPosMapY < @6E80
 		GOTO ECL_17_9BE5
-	IF @C04B > @6E7F
+	IF partyPosMapX > @6E7F
 		GOTO ECL_17_9BE5
-	IF @C04C <= @6E7E
+	IF partyPosMapY <= @6E7E
 		GOTO ECL_17_9BFD
 
 ECL_17_9BE5
@@ -14562,9 +14562,9 @@ ECL_17_9BE5
 	GOTO ECL_17_A1C2
 
 ECL_17_9BFD
-	@C04B = db_$ACB5[@6E82]
-	@C04C = db_$ACC1[@6E82]
-	@C04D = 1
+	partyPosMapX = db_$ACB5[@6E82]
+	partyPosMapY = db_$ACC1[@6E82]
+	partyPosFacing = 1
 	SPRITE_OFF ()
 	CALL (opAddr: @2C90)
 	ECL_17_9C26()
@@ -14573,7 +14573,7 @@ ECL_17_9BFD
 
 ECL_17_9C26
 	PRINT_CLEAR (message: `YOU HEAR WAR CRIES AND THE CLANG OF METAL `)
-	SWITCH @C04D
+	SWITCH partyPosFacing
 		CASE 0
 			ECL_17_9C8D()
 		CASE 1
@@ -14584,11 +14584,11 @@ ECL_17_9C26
 			ECL_17_9CB7()
 
 ECL_17_9C5B
-	IF @C04D == 3
+	IF partyPosFacing == 3
 		GOTO ECL_17_9D7F
 	PRINT_APPEND (message: ` YOU SPIN TO FACE THE SOUND.`)
 	ECL_17_9D7F()
-	@C04D = 3
+	partyPosFacing = 3
 	CALL (opAddr: @2C90)
 	RETURN
 
@@ -14610,10 +14610,10 @@ ECL_17_9CB7
 
 ECL_17_9CC7
 	@6E82 = 1
-	IF @C04B < 4
+	IF partyPosMapX < 4
 		GOTO ECL_17_9CF5
-	@6E79 = @C04C * 12
-	@6E79 = @C04B + @6E79
+	@6E79 = partyPosMapY * 12
+	@6E79 = partyPosMapX + @6E79
 	@6E82 = db_$ACC9[@6E79]
 
 ECL_17_9CF5
@@ -14624,10 +14624,10 @@ ECL_17_9CF5
 
 ECL_17_9CFF
 	@6E82 = 1
-	IF @C04B < 4
+	IF partyPosMapX < 4
 		GOTO ECL_17_9D2D
-	@6E79 = @C04C * 12
-	@6E79 = @C04B + @6E79
+	@6E79 = partyPosMapY * 12
+	@6E79 = partyPosMapX + @6E79
 	@6E82 = db_$AD89[@6E79]
 
 ECL_17_9D2D
@@ -14641,9 +14641,9 @@ ECL_17_9D37
 	ECL_17_9DA7()
 	IF @6E82 == 255
 		RETURN
-	IF @6E82 == @C04D
+	IF @6E82 == partyPosFacing
 		CALL (opAddr: @C01E)
-	@C04D = @6E82
+	partyPosFacing = @6E82
 	CALL (opAddr: @2C90)
 	DELAY ()
 	DELAY ()
@@ -14670,7 +14670,7 @@ ECL_17_9DA7
 	RETURN
 
 ECL_17_9DC8
-	@6DE1 = 61
+	pictureLoading = 61
 	SETUP_MONSTER (spriteId: 11, maxDistance: 2, picId: 30)
 
 ECL_17_9DD5
@@ -14683,17 +14683,17 @@ ECL_17_9DD8
 
 ECL_17_9DDC
 	ECL_17_9DD5()
-	@6DE1 = 255
+	pictureLoading = 255
 	RETURN
 
 ECL_17_9DE7
-	IF @6DD5 == 0
+	IF leaveMap == 0
 		GOTO ECL_17_9E46
 	PRINT_CLEAR (message: `THIS DIRECTION WILL TAKE YOU BACK INTO THE WILDERNESS. DO YOU STILL WANT TO GO THIS WAY?`)
 	ECL_17_9D65()
 	IF compareResult == '=='
 		GOTO ECL_17_A1C2
-	@6DC9 = 255
+	moveLocked = 255
 
 ECL_17_9E46
 	ECL_17_9DA7()
@@ -14701,12 +14701,12 @@ ECL_17_9E46
 	@6E82 = 4 & @4A7C
 	IF 0 != @6E82
 		EXIT
-	@6E79 = 127 & @C04F
+	@6E79 = 127 & partyPosEventAtCell
 	IF @6E79 > 1
 		EXIT
 	IF @4A7D != 1
 		EXIT
-	IF @C04E != 2
+	IF partyPosWallAhead != 2
 		EXIT
 	GOTO ECL_17_A98A
 
@@ -14759,9 +14759,9 @@ ECL_17_9ED7
 		EXIT
 	LOAD_FILES (fileId: 17, unused: 2, loadTiles: 255)
 	LOAD_PIECES (wallSetId1: 7, wallSetId2: 8, wallSetId3: 23)
-	@C04B = 1
-	@C04C = 14
-	@C04D = 1
+	partyPosMapX = 1
+	partyPosMapY = 14
+	partyPosFacing = 1
 	EXIT
 
 ECL_17_9F0A
@@ -14787,7 +14787,7 @@ ECL_17_9FE0
 	@6DCB = 0
 
 ECL_17_9FE6
-	@6DC6 = 100
+	moraleThreshold = 100
 	@4A7C = 2 | @4A7C
 	@4A00 = 0
 	ECL_17_9B20()
@@ -14800,9 +14800,9 @@ ECL_17_9FE6
 	EXIT
 
 ECL_17_A020
-	@6DE1 = 61
+	pictureLoading = 61
 	SETUP_MONSTER (spriteId: 11, maxDistance: 2, picId: 30)
-	@6DE1 = 255
+	pictureLoading = 255
 	SWITCH @4A7F
 		CASE 0
 			GOTO ECL_17_A045
@@ -14828,9 +14828,9 @@ ECL_17_A045
 ECL_17_A0AE
 	PRINT_CLEAR (message: `THE HEROIC DEATHS OF THOSE YOU HAVE JUST BATTLED HAS BOUGHT TIME FOR THE HEADMAN TO RALLY HIS PEOPLE. WITH A TREMENDOUS CRY HE LEADS HIS TRIBE INTO BATTLE.`)
 	ECL_17_9D7F()
-	@6DE1 = 74
+	pictureLoading = 74
 	@6E82 = ENCOUNTER (displayMonsterId: 11, distanceRequirement: @6DC0, displayPicId: 30, combatResp: 0, waitResp: 0, fleeResp: 0, parlayResp: 0, failFleeResp: 0, message1: ``, message2: ``, message3: ``, partyFlee: 12, monsterFlee: 12)
-	@6DE1 = 255
+	pictureLoading = 255
 	SWITCH @6E82
 		CASE 0
 			GOTO ECL_17_9ED1
@@ -14841,7 +14841,7 @@ ECL_17_A0AE
 
 ECL_17_A164
 	@6DCB = 0
-	@6DC6 = 100
+	moraleThreshold = 100
 	@6E70 = 254
 	CLEAR_MONSTERS ()
 	LOAD_MONSTER (monsterId: 41, copies: 5, cpicId: 13)
@@ -14857,7 +14857,7 @@ ECL_17_A1A5
 	EXIT
 
 ECL_17_A1B4
-	IF @6DC7 != 129
+	IF gbvmCombatResult != 129
 		RETURN
 
 ECL_17_A1BC
@@ -14866,7 +14866,7 @@ ECL_17_A1BC
 ECL_17_A1C2
 	SPRITE_OFF ()
 	CALL (opAddr: @2C90)
-	@6DE1 = 255
+	pictureLoading = 255
 	@6E82 = 4 & @4A7C
 	IF 0 != @6E82
 		GOTO ECL_17_A1EF
@@ -14885,7 +14885,7 @@ ECL_17_A1FF
 	@6E82 = 2 & @4A7C
 	IF 0 != @6E82
 		GOTO ECL_17_A020
-	@6DE1 = 61
+	pictureLoading = 61
 	SETUP_MONSTER (spriteId: 11, maxDistance: 2, picId: 30)
 	PRINT_CLEAR (message: `A CROWD OF SCRUFFY LOOKING NOMADS GATHERS AS HIDDEN SENTRIES GIVE WORD OF YOUR APPROACH. THERE ARE ABOUT AN EQUAL NUMBER OF MEN AND WOMEN.`)
 	ECL_17_9DD5()
@@ -14894,7 +14894,7 @@ ECL_17_A1FF
 	PRINT_CLEAR (message: `YOU CAN SEE CHILDREN PEERING OUT OF THE TENT OPENINGS, ONLY TO BE PUSHED BACK INSIDE BY THEIR MOTHERS.`)
 	ECL_17_9D7F()
 	@6E82 = ENCOUNTER (displayMonsterId: 11, distanceRequirement: 0, displayPicId: 30, combatResp: 0, waitResp: 1, fleeResp: 1, parlayResp: 1, failFleeResp: 4, message1: `THE NOMADS WAIT FOR YOU TO MAKE THE FIRST MOVE.`, message2: ``, message3: ``, partyFlee: 12, monsterFlee: 12)
-	@6DE1 = 255
+	pictureLoading = 255
 	SWITCH @6E82
 		CASE 0
 			GOTO ECL_17_9ED1
@@ -14902,10 +14902,10 @@ ECL_17_A1FF
 			GOTO ECL_17_9FE0
 		CASE 2
 			GOTO ECL_17_A1C2
-	@6DE1 = 74
+	pictureLoading = 74
 	PICTURE (blockId: 30)
 	SETUP_MONSTER (spriteId: 11, maxDistance: 0, picId: 30)
-	@6DE1 = 255
+	pictureLoading = 255
 	PRINT_CLEAR (message: `THE BIGGEST, MEANEST, DIRTIEST NOMAD PUSHES HIS WAY TO THE FRONT OF THE CROWD. FIVE OTHER NOMADS STAND AROUND HIM AS IF TO PROTECT HIM.`)
 	ECL_17_9D7F()
 	$str@9800 = `TOMORROW`
@@ -14939,15 +14939,15 @@ ECL_17_A5BB
 	PRINT_CLEAR (message: `'HERE YOU MAY REST.'`)
 	ECL_17_9D7F()
 	ECL_17_9A12()
-	@49C0 = @C04B
-	@49C1 = @C04C
-	@49C2 = @C04D
+	@49C0 = partyPosMapX
+	@49C1 = partyPosMapY
+	@49C2 = partyPosFacing
 	PROGRAM (progId: 9)
 
 ECL_17_A5F2
-	@6DE1 = 74
+	pictureLoading = 74
 	SETUP_MONSTER (spriteId: 11, maxDistance: 2, picId: 30)
-	@6DE1 = 255
+	pictureLoading = 255
 	ECL_17_9DDC()
 	PRINT_CLEAR (message: `THE HEADMAN WALKS UP TO YOU WITH HIS GUARDS. 'GOOD MORNING. THERE ARE CELEBRATIONS PLANNED TODAY.'`)
 	ECL_17_9DDC()
@@ -14957,7 +14957,7 @@ ECL_17_A65A
 	PRINT_CLEAR (message: `'COME, LET THERE BE GAMES FOR OUR GUESTS.' HE LEADS YOU TO THE CAMP'S CENTRAL CLEARING.`)
 	SPRITE_OFF ()
 	ECL_17_9CFF()
-	@C04D = 1
+	partyPosFacing = 1
 	CALL (opAddr: @2C90)
 	PRINT_CLEAR (message: `YOU ARE TREATED AS HONORED GUESTS FOR THE REST OF THE DAY. THERE ARE CONTESTS OF STRENGTH AND SKILL IN YOUR HONOR.`)
 	ECL_17_9D7F()
@@ -14965,9 +14965,9 @@ ECL_17_A65A
 	CALL (opAddr: @2C90)
 	PRINT_CLEAR (message: `AS NIGHT FALLS, THE NOMADS BUILD A HUGE CAMPFIRE IN THE CENTER OF THE CAMP. THE WHOLE TRIBE GATHERS FOR THE FEAST. AFTER THE FEAST THERE IS DANCING AND WILD CELEBRATIONS.`)
 	ECL_17_9D7F()
-	@6DE1 = 74
+	pictureLoading = 74
 	PICTURE (blockId: 30)
-	@6DE1 = 255
+	pictureLoading = 255
 	PRINT_CLEAR (message: `DURING THE FESTIVITIES THE CHIEF (HIS TONGUE LOOSENED BY DRINK) TELLS YOU OF THE DANGERS OF THE REGION. YOU MAKE HASSAD AHWAL'S TALK ENTRY 55 IN YOUR JOURNAL.`)
 	ECL_17_9D7F()
 	PRINT_CLEAR (message: `THE HEADMAN SEEMS VERY UNEASY AS HE CONTINUES TO SPEAK. HE PRACTICALLY BEGS YOU TO STAY FOR A FEW MORE DAYS, RATHER THAN LEAVE IN THE MORNING AS YOU PLANNED.`)
@@ -15004,7 +15004,7 @@ ECL_17_A98A
 			GOTO ECL_17_A1C2
 
 ECL_17_AB04
-	@6DE1 = 74
+	pictureLoading = 74
 	SETUP_MONSTER (spriteId: 11, maxDistance: 2, picId: 30)
 	@49FD = 11
 	ECL_17_9DD8()
@@ -15546,11 +15546,11 @@ CONST ECL_17_db_$AE4C = 0
 
 
 ECL_17_AE4D
-	@6E82 = 128 & @C04F
+	@6E82 = 128 & partyPosEventAtCell
 	IF 0 == @6E82
 		GOTO ECL_17_AE9A
-	@C04C = @C04C - 1
-	@C04D = 1
+	partyPosMapY = partyPosMapY - 1
+	partyPosFacing = 1
 	PRINT_CLEAR (message: `THE SOUND OF WAR CRIES DRAWS YOU OUT OF THE HUT. `)
 	ECL_17_9C5B()
 	GOTO ECL_17_AE9E
@@ -15562,7 +15562,7 @@ ECL_17_AE9E
 	@6E82 = 4 & @4A7C
 	IF 0 != @6E82
 		GOTO ECL_17_B47D
-	IF @C04F == 4
+	IF partyPosEventAtCell == 4
 		GOTO ECL_17_B47D
 	SWITCH @4A7E
 		CASE 0
@@ -15596,7 +15596,7 @@ ECL_17_AF60
 
 ECL_17_AF64
 	@6DCB = 0
-	@6DC6 = 80
+	moraleThreshold = 80
 	CLEAR_MONSTERS ()
 	IF @4A00 == 0
 		GOTO ECL_17_AF84
@@ -15610,7 +15610,7 @@ ECL_17_AF84
 		ECL_17_9A74()
 	COMBAT ()
 	ECL_17_9ABA()
-	IF @6DC7 != 129
+	IF gbvmCombatResult != 129
 		GOTO ECL_17_AFBA
 	ECL_17_9B4A()
 	GOTO ECL_17_AE4D
@@ -15646,9 +15646,9 @@ ECL_17_B075
 	PRINT_CLEAR (message: `AS THEY REACH THE PACK A FLURRY OF ARROWS STRIKE THEM. UNDAUNTED THEY STRIKE. KOBOLDS DIE LIKE FLIES AROUND THESE HEROES. A GUARD FALLS WITH A SCORE OF WOUNDS.`)
 	ECL_17_9D7F()
 	SPRITE_OFF ()
-	@6DE1 = 74
+	pictureLoading = 74
 	PICTURE (blockId: 30)
-	@6DE1 = 255
+	pictureLoading = 255
 	PRINT_CLEAR (message: `WITHIN TEN MINUTES THE KOBOLDS BREAK, HALF THEIR NUMBER DEAD. THE CHIEF COMES BACK, 'I PROMISED YOU REWARD FOR YOUR AID. SO IT SHALL BE... EQUAL TO YOUR HONOR.'`)
 	ECL_17_9D7F()
 	@4A7C = 8 | @4A7C
@@ -15665,7 +15665,7 @@ ECL_17_B30F
 
 ECL_17_B327
 	@6DCB = 0
-	@6DC6 = 50
+	moraleThreshold = 50
 	DELAY ()
 	CLEAR_MONSTERS ()
 	@6E82 = 4 & @4A7C
@@ -15684,7 +15684,7 @@ ECL_17_B355
 	@6E82 = 2 & @4A7C
 	IF 0 != @6E82
 		GOTO ECL_17_B393
-	IF @6DC7 != 129
+	IF gbvmCombatResult != 129
 		GOTO ECL_17_B3A0
 
 ECL_17_B393
@@ -15700,9 +15700,9 @@ ECL_17_B3A0
 	@6E82 = 2 & @4A7C
 	IF 0 != @6E82
 		EXIT
-	@6DE1 = 62
+	pictureLoading = 62
 	PICTURE (blockId: 30)
-	@6DE1 = 255
+	pictureLoading = 255
 	PRINT_CLEAR (message: `THE SHAMAN WALKS UP TO YOU. 'YOU FOUGHT AS THE HEROES OF LEGEND. A REWARD WAS PROMISED AND SO SHALL IT BE.'`)
 	CLEAR_MONSTERS ()
 	TREASURE (cp: 0, sp: 0, ep: 0, gp: 5000, pp: 0, gems: 0, jewels: 0, itemId: 37)
@@ -15761,12 +15761,12 @@ ECL_17_B52A
 	GOTO ECL_17_AE4D
 
 ECL_17_B5A4
-	@6DE1 = 74
+	pictureLoading = 74
 	SETUP_MONSTER (spriteId: 11, maxDistance: 2, picId: 30)
 	PRINT_CLEAR (message: `JUST AS YOU THINK YOURSELVES FREE OF DANGER, THE HEADMAN, HIS SHAMAN AND GUARDS ATTACK WITH CRIES OF 'FOUL TRAITORS!' AT THE SAME TIME KOBOLDS ATTACK.`)
 	ECL_17_9D7F()
 	@6E82 = ENCOUNTER (displayMonsterId: 11, distanceRequirement: @6DC0, displayPicId: 30, combatResp: 0, waitResp: 0, fleeResp: 0, parlayResp: 0, failFleeResp: 0, message1: ``, message2: ``, message3: ``, partyFlee: 12, monsterFlee: 12)
-	@6DE1 = 255
+	pictureLoading = 255
 	SWITCH @6E82
 		CASE 0
 			GOTO ECL_17_9ED1
@@ -15777,7 +15777,7 @@ ECL_17_B5A4
 
 ECL_17_B662
 	@6DCB = 0
-	@6DC6 = 100
+	moraleThreshold = 100
 	CLEAR_MONSTERS ()
 	LOAD_MONSTER (monsterId: 41, copies: 5, cpicId: 13)
 	LOAD_MONSTER (monsterId: 42, copies: 1, cpicId: 11)
@@ -15804,9 +15804,9 @@ ECL_18_9914
 		ECL_18_9953()
 	@6DD2 = 2
 	@6DD3 = 16
-	IF @C04F == 132
+	IF partyPosEventAtCell == 132
 		@6DD2 = 0
-	IF @C04F == 138
+	IF partyPosEventAtCell == 138
 		@6DD2 = 0
 	IF @4AE7 > 253
 		@6DD2 = 0
@@ -15841,12 +15841,12 @@ ECL_18_99A5
 	EXIT
 
 ECL_18_99B9
-	IF @6DD5 == 0
+	IF leaveMap == 0
 		GOTO ECL_18_9A1A
 	CALL (opAddr: @C01E)
-	@6DC9 = 255
+	moveLocked = 255
 	@49FB = 0
-	SWITCH @C04D
+	SWITCH partyPosFacing
 		CASE 0
 			GOTO ECL_18_99E6
 		CASE 1
@@ -15857,24 +15857,24 @@ ECL_18_99B9
 			GOTO ECL_18_9A04
 
 ECL_18_99E6
-	@6E12 = 2
+	gbvmDiskNum = 2
 	NEW_ECL (eclId: 9)
 	EXIT
 
 ECL_18_99F0
-	@6E12 = 8
+	gbvmDiskNum = 8
 	NEW_ECL (eclId: 29)
 	EXIT
 
 ECL_18_99FA
-	@6E12 = 4
+	gbvmDiskNum = 4
 	NEW_ECL (eclId: 2)
 	EXIT
 
 ECL_18_9A04
 	@49C3 = 11
 	@49C4 = 28
-	@6E12 = 7
+	gbvmDiskNum = 7
 	NEW_ECL (eclId: 26)
 	EXIT
 
@@ -15890,7 +15890,7 @@ ECL_18_9A1A
 	EXIT
 
 ECL_18_9AB7
-	@6E79 = 127 & @C04F
+	@6E79 = 127 & partyPosEventAtCell
 	SWITCH @6E79
 		CASE 0
 			GOTO ECL_18_9AEA
@@ -16011,7 +16011,7 @@ ECL_18_9C54
 
 ECL_18_9C73
 	@6E79 = RANDOM (max: 30)
-	IF @6DCF < @6E79
+	IF curCharLoyaltyBase < @6E79
 		GOTO ECL_18_9C54
 	PRINT_CLEAR (message: `'OH, YOU'RE HERE FOR THE BOSS.'`)
 	GOTO ECL_18_9E1E
@@ -16071,7 +16071,7 @@ ECL_18_9D6F
 		@4A05 = 0
 	ECL_18_A105()
 	@6E79 = ENCOUNTER (displayMonsterId: @4A02, distanceRequirement: @4A05, displayPicId: @4A02, combatResp: 2, waitResp: 3, fleeResp: 0, parlayResp: 1, failFleeResp: 4, message1: `THE MONSTERS STAND READY`, message2: `THE MONSTERS PREPARE`, message3: ``, partyFlee: @4A08, monsterFlee: @4A08)
-	@6DC6 = 100
+	moraleThreshold = 100
 	SWITCH @6E79
 		CASE 0
 			GOTO ECL_18_9E1E
@@ -16084,12 +16084,12 @@ ECL_18_9D6F
 
 ECL_18_9DE2
 	ECL_18_A0A0()
-	@6DC6 = @4A0A
+	moraleThreshold = @4A0A
 	COMBAT ()
 	ECL_18_9E0C()
-	IF @C04F < 127
+	IF partyPosEventAtCell < 127
 		GOTO ECL_18_9E68
-	IF @6DC7 > 128
+	IF gbvmCombatResult > 128
 		GOTO ECL_18_9E23
 	GOTO ECL_18_9E1E
 
@@ -16106,11 +16106,11 @@ ECL_18_9E1E
 
 ECL_18_9E23
 	PRINT_CLEAR (message: `THE PARTY RUNS AND ESCAPES.`)
-	@C04D = RANDOM (max: 3)
+	partyPosFacing = RANDOM (max: 3)
 	@6E79 = RANDOM (max: 7)
-	@6DE1 = 255
-	@C04B = db_$B258[@6E79]
-	@C04C = @6E79
+	pictureLoading = 255
+	partyPosMapX = db_$B258[@6E79]
+	partyPosMapY = @6E79
 	CALL (opAddr: @2C90)
 	@49FB = 1
 
@@ -16131,7 +16131,7 @@ ECL_18_9E98
 	@6E79 = PARLAY (haughtyVal: 10, slyVal: 20, niceVal: 20, meekVal: 20, abusiveVal: 30)
 	@6E7A = RANDOM (max: 50)
 	@6E79 = @6E79 + @6E7A
-	@6E7A = @6DCF * 2
+	@6E7A = curCharLoyaltyBase * 2
 	@6E79 = @6E79 + @6E7A
 	@6E7A = db_$B27B[@4A04]
 	@6E79 = @6E79 + @6E7A
@@ -16425,7 +16425,7 @@ ECL_18_A8B0
 	IF @4A37 != 0
 		GOTO ECL_18_AB1A
 	PRINT_CLEAR (message: `YOU HAVE ENTERED A CROWDED TAVERN.`)
-	@6DE1 = 6
+	pictureLoading = 6
 	SETUP_MONSTER (spriteId: 19, maxDistance: 0, picId: 3)
 	PRINT_APPEND (message: `YOU OPENED THE DOOR INTO A DRUNK BUCCANEER.`)
 	ECL_18_B21D()
@@ -16445,7 +16445,7 @@ ECL_18_A952
 
 ECL_18_A985
 	WHO (prompt: `WHO WILL CHALLENGE THE BUCCANEER?`)
-	IF @6C00 > 0
+	IF curCharEnabled > 0
 		GOTO ECL_18_A9D2
 	PRINT_CLEAR (message: `THAT ONE IS UNACCEPTABLE. CHOOSE ANOTHER.`)
 	GOTO ECL_18_A985
@@ -16456,31 +16456,31 @@ ECL_18_A9D2
 	LOAD_MONSTER (monsterId: 41, copies: 1, cpicId: 16)
 	COMBAT ()
 	@4A37 = 1
-	IF @6DC7 > 128
+	IF gbvmCombatResult > 128
 		GOTO ECL_18_AA28
 	PRINT_CLEAR (message: `THE BATTLE IS OVER, THE PATRONS RETURN TO DRINKING.`)
 	ECL_18_B21D()
-	@6DE1 = 255
+	pictureLoading = 255
 	GOTO ECL_18_AB1A
 
 ECL_18_AA28
 	PRINT_CLEAR (message: `THE BUCCANEER SMILES.'THAT IS SUFFICIENT PAYMENT.' HE LEAVES.`)
 	ECL_18_B21D()
 	PICTURE (blockId: 255)
-	@6DE1 = 255
+	pictureLoading = 255
 	GOTO ECL_18_AB1A
 
 ECL_18_AA6A
 	PRINT_CLEAR (message: `YOUR ACTIONS ANGER THE PATRONS AND THEY ATTACK.`)
-	@6DC6 = 30
+	moraleThreshold = 30
 	CLEAR_MONSTERS ()
 	LOAD_MONSTER (monsterId: 6, copies: 4, cpicId: 6)
 	LOAD_MONSTER (monsterId: 2, copies: 12, cpicId: 2)
 	LOAD_MONSTER (monsterId: 41, copies: 1, cpicId: 16)
 	LOAD_MONSTER (monsterId: 4, copies: 8, cpicId: 4)
 	COMBAT ()
-	@6DE1 = 255
-	IF @6DC7 > 128
+	pictureLoading = 255
+	IF gbvmCombatResult > 128
 		GOTO ECL_18_9E23
 	@4A37 = 2
 	GOTO ECL_18_AD45
@@ -16534,9 +16534,9 @@ ECL_18_AB9F
 			GOTO ECL_18_AC34
 
 ECL_18_AC34
-	@C04B = 2
-	@C04C = 10
-	@C04D = 2
+	partyPosMapX = 2
+	partyPosMapY = 10
+	partyPosFacing = 2
 	CALL (opAddr: @2C90)
 	ROB (allParty: 1, coinPct: 100, unused: 50)
 	@49FB = 1
@@ -16546,15 +16546,15 @@ ECL_18_AC34
 	EXIT
 
 ECL_18_AC9C
-	@C04B = @49F0
-	@C04C = @49F1
+	partyPosMapX = @49F0
+	partyPosMapY = @49F1
 	CALL (opAddr: @2C90)
 	EXIT
 
 ECL_18_ACAF
 	PRINT_CLEAR (message: `YOUR ACTIONS TRIGGER A FREE FOR ALL.`)
 	ECL_18_B21D()
-	@6DC6 = 50
+	moraleThreshold = 50
 	CLEAR_MONSTERS ()
 	LOAD_MONSTER (monsterId: 2, copies: 25, cpicId: 2)
 	LOAD_MONSTER (monsterId: 6, copies: 20, cpicId: 6)
@@ -16566,14 +16566,14 @@ ECL_18_ACF3
 	@6E79 = 8 + @6E79
 	@6E7A = 1 + @6E7A
 	LOAD_CHARACTER (charId: @6E79)
-	@6C0C = 128
-	@6BB8 = 178
+	curCharCombatRole = 128
+	curCharNpc = 178
 	@6E79 = @6E79 | 128
 	LOAD_CHARACTER (charId: @6E79)
 	IF @6E7A < 21
 		GOTO ECL_18_ACF3
 	COMBAT ()
-	IF @6DC7 > 128
+	IF gbvmCombatResult > 128
 		GOTO ECL_18_9E23
 	@4A37 = 2
 
@@ -16595,7 +16595,7 @@ ECL_18_ADAB
 	PRINT_CLEAR (message: `THIS IS A HIDDEN TEMPLE OF ILMATER. YOU FEEL SAFE HERE.`)
 
 ECL_18_ADE3
-	@6DE1 = 48
+	pictureLoading = 48
 	PICTURE (blockId: 25)
 	PRINT_CLEAR (message: `A YOUNG WOMAN COMES FORWARD 'WE PROVIDE HELP FOR THOSE WHO CAN REACH US. ARE YOU IN NEED OF HEALING?`)
 	@6E79 = HORIZONTAL_MENU (opts: [`YES`, `NO`])
@@ -16606,14 +16606,14 @@ ECL_18_ADE3
 			GOTO ECL_18_AE5D
 
 ECL_18_AE55
-	@6DE2 = 1
+	gbvmEnterTemple = 1
 	CLEAR_MONSTERS ()
 	COMBAT ()
 
 ECL_18_AE5D
 	PRINT_CLEAR (message: `'YOU CAN REST HERE AS LONG AS YOU WISH.' SHE THEN LEAVES.`)
 	PICTURE (blockId: 255)
-	@6DE1 = 255
+	pictureLoading = 255
 	@4A1A = 4
 	EXIT
 
@@ -16681,7 +16681,7 @@ ECL_18_B0B6
 	SETUP_MONSTER (spriteId: 4, maxDistance: 1, picId: 4)
 	PRINT_CLEAR (message: `MANY CREATURES HAVE GATHERED. THE ROBED ORC STANDS AND CALLS OUT,'FIRST, TO SHOW YOUR LOYALTIES, KILL THE UNBELIEVERS.' HE POINTS AT YOUR GROUP.`)
 	ECL_18_B21D()
-	@6DC6 = 50
+	moraleThreshold = 50
 	CLEAR_MONSTERS ()
 	LOAD_MONSTER (monsterId: 4, copies: 8, cpicId: 4)
 	LOAD_MONSTER (monsterId: 5, copies: 1, cpicId: 5)
@@ -16689,23 +16689,23 @@ ECL_18_B0B6
 	TREASURE (cp: 0, sp: 0, ep: 0, gp: 0, pp: 0, gems: 0, jewels: 0, itemId: 22)
 	COMBAT ()
 	@4A38 = 2
-	IF @6DC7 > 128
+	IF gbvmCombatResult > 128
 		GOTO ECL_18_9E23
 	EXIT
 
 ECL_18_B181
-	@6DC6 = 90
+	moraleThreshold = 90
 	CLEAR_MONSTERS ()
 	LOAD_MONSTER (monsterId: 5, copies: 1, cpicId: 5)
 	TREASURE (cp: 0, sp: 0, ep: 0, gp: 0, pp: 0, gems: 0, jewels: 0, itemId: 22)
 	COMBAT ()
 	@4A38 = 2
-	IF @6DC7 > 128
+	IF gbvmCombatResult > 128
 		GOTO ECL_18_9E23
 	EXIT
 
 ECL_18_B1B3
-	@4A1A = @C04F
+	@4A1A = partyPosEventAtCell
 	EXIT
 
 ECL_18_B1BB
@@ -16974,30 +16974,30 @@ ECL_20_9914
 		@6E7D = 8
 	@49FD = @6E7D
 	@49FE = 9
-	IF @6DD5 == 0
+	IF leaveMap == 0
 		GOTO ECL_20_996B
 	@49FB = 0
 	CALL (opAddr: @C01E)
-	@6DC9 = 255
-	IF @C04D == 1
-		@6E12 = 3
-	IF @C04D == 1
+	moveLocked = 255
+	IF partyPosFacing == 1
+		gbvmDiskNum = 3
+	IF partyPosFacing == 1
 		NEW_ECL (eclId: 0)
-	IF @C04D != 1
-		@6E12 = 8
-	IF @C04D != 1
+	IF partyPosFacing != 1
+		gbvmDiskNum = 8
+	IF partyPosFacing != 1
 		NEW_ECL (eclId: 29)
 
 ECL_20_996B
-	@6E82 = @C04F & 127
+	@6E82 = partyPosEventAtCell & 127
 	EXIT
 
 ECL_20_9975
-	@6DE1 = 255
+	pictureLoading = 255
 	PICTURE (blockId: 255)
 	@4A1F = 0
 	PRINT_CLEAR (message: ``)
-	@6E82 = @C04F & 127
+	@6E82 = partyPosEventAtCell & 127
 	@6E79 = 0
 	@6E7A = 0
 	@6E7B = 0
@@ -17241,7 +17241,7 @@ ECL_20_9E1A
 	PRINT_CLEAR (message: `SEVERAL ORCS ARE ARGUING OVER SOME PAPERS.`)
 	ECL_20_B6BC()
 	@6DCB = 0
-	@6DC6 = 99
+	moraleThreshold = 99
 	CLEAR_MONSTERS ()
 	LOAD_MONSTER (monsterId: 13, copies: 1, cpicId: 4)
 	LOAD_MONSTER (monsterId: 4, copies: 3, cpicId: 4)
@@ -17258,7 +17258,7 @@ ECL_20_9E78
 	PRINT_CLEAR (message: `A HEALTHY-LOOKING GOBLIN IS INSTRUCTING A GROUP OF YOUNG WARRIORS.  HE SMILES AND SAYS, 'I SEE OUR OPPONENTS HAVE ARRIVED.'`)
 	ECL_20_B6BC()
 	@6DCB = 0
-	@6DC6 = 60
+	moraleThreshold = 60
 	CLEAR_MONSTERS ()
 	LOAD_MONSTER (monsterId: 2, copies: 8, cpicId: 2)
 	LOAD_MONSTER (monsterId: 12, copies: 1, cpicId: 3)
@@ -17272,7 +17272,7 @@ ECL_20_9F13
 		EXIT
 	IF @4A81 == 255
 		EXIT
-	@6DE1 = 8
+	pictureLoading = 8
 	SETUP_MONSTER (spriteId: 24, maxDistance: 1, picId: 2)
 	IF @4A81 == 250
 		GOTO ECL_20_A25B
@@ -17291,10 +17291,10 @@ ECL_20_9F13
 ECL_20_9FFC
 	PRINT_CLEAR (message: `YOU GO BACK OUT THE DOOR.`)
 	PICTURE (blockId: 255)
-	@6DE1 = 255
-	@C04B = 14
-	@C04C = 10
-	@C04D = 1
+	pictureLoading = 255
+	partyPosMapX = 14
+	partyPosMapY = 10
+	partyPosFacing = 1
 	GOTO ECL_20_B248
 
 ECL_20_A031
@@ -17315,7 +17315,7 @@ ECL_20_A054
 	PRINT_CLEAR (message: `'YOU PRESUME TOO MUCH,' THE MAN SAYS QUIETLY.  HE GESTURES.`)
 	@4A04 = 255
 	@6DCB = 0
-	@6DC6 = 99
+	moraleThreshold = 99
 	CLEAR_MONSTERS ()
 	LOAD_MONSTER (monsterId: 6, copies: 25, cpicId: 6)
 	LOAD_MONSTER (monsterId: 5, copies: 2, cpicId: 5)
@@ -17420,7 +17420,7 @@ ECL_20_A4C5
 	APPROACH ()
 	PRINT_CLEAR (message: `YOU INTERRUPT SOME FEEDING KOBOLDS.`)
 	ECL_20_B6BC()
-	@6DC6 = 60
+	moraleThreshold = 60
 	@6DCB = 0
 	CLEAR_MONSTERS ()
 	LOAD_MONSTER (monsterId: 11, copies: 1, cpicId: 1)
@@ -17464,7 +17464,7 @@ ECL_20_A63A
 	IF @4A0B > 250
 		EXIT
 	@4A0B = 251
-	@6DE1 = 25
+	pictureLoading = 25
 	PICTURE (blockId: 13)
 	PRINT_CLEAR (message: `SEATED AT A TABLE IS A RAGGED OLD WOMAN. SHE GREETS YOU. 'WELCOME. FOR THE PRICE OF A FEW COPPERS, I WILL TELL YOUR FORTUNE.' (WHAT DO YOU DO?)`)
 	@9801 = HORIZONTAL_MENU (opts: [`ATTACK`, `LEAVE`, `PAY`])
@@ -17488,9 +17488,9 @@ ECL_20_A6E7
 	EXIT
 
 ECL_20_A771
-	@C04B = 3
-	@C04C = 4
-	@C04D = 0
+	partyPosMapX = 3
+	partyPosMapY = 4
+	partyPosFacing = 0
 	PRINT_CLEAR (message: `YOU LEAVE THE SHOP.`)
 	ECL_20_B695()
 	GOTO ECL_20_B248
@@ -17533,7 +17533,7 @@ ECL_20_A995
 	APPROACH ()
 	PRINT_CLEAR (message: `A LARGE ORC RAISES HIS HEAD AND SNARLS, 'HOW DARE YOU BREAK INTO OUR HOME?'`)
 	ECL_20_B6BC()
-	@6DC6 = 70
+	moraleThreshold = 70
 	CLEAR_MONSTERS ()
 	LOAD_MONSTER (monsterId: 15, copies: 1, cpicId: 5)
 	LOAD_MONSTER (monsterId: 14, copies: 3, cpicId: 5)
@@ -17551,7 +17551,7 @@ ECL_20_AA0D
 	PRINT_CLEAR (message: `SOME HOBGOBLINS ARE ARGUING OVER A PILE OF GOLD.  'THIEVES!' THEY SCREAM WHEN THEY SEE YOU.`)
 	ECL_20_B6BC()
 	@6DCB = 0
-	@6DC6 = 75
+	moraleThreshold = 75
 	CLEAR_MONSTERS ()
 	LOAD_MONSTER (monsterId: 6, copies: 5, cpicId: 6)
 	COMBAT ()
@@ -17596,7 +17596,7 @@ ECL_20_AB49
 	PRINT_CLEAR (message: `GUARDS RUN TO INTERCEPT YOU.`)
 	ECL_20_B6BC()
 	@6DCB = 0
-	@6DC6 = 60
+	moraleThreshold = 60
 	CLEAR_MONSTERS ()
 	LOAD_MONSTER (monsterId: 4, copies: 30, cpicId: 4)
 	LOAD_MONSTER (monsterId: 5, copies: 4, cpicId: 5)
@@ -17612,7 +17612,7 @@ ECL_20_AB9C
 	PRINT_CLEAR (message: `YOU INTRUDE ON A GATHERING OF MONSTER LEADERS.`)
 	ECL_20_B6BC()
 	@6DCB = 0
-	@6DC6 = 80
+	moraleThreshold = 80
 	CLEAR_MONSTERS ()
 	LOAD_MONSTER (monsterId: 8, copies: 1, cpicId: 8)
 	LOAD_MONSTER (monsterId: 73, copies: 2, cpicId: 73)
@@ -17630,7 +17630,7 @@ ECL_20_AC03
 	PRINT_CLEAR (message: `YOU HAVE ALERTED THE GUARDS.`)
 	ECL_20_B6BC()
 	@6DCB = 0
-	@6DC6 = 60
+	moraleThreshold = 60
 	CLEAR_MONSTERS ()
 	LOAD_MONSTER (monsterId: 2, copies: 12, cpicId: 2)
 	LOAD_MONSTER (monsterId: 3, copies: 21, cpicId: 3)
@@ -17700,7 +17700,7 @@ ECL_20_AE1E
 	IF @4A1D != 0
 		EXIT
 	compareResult = COMPARE (@4A19, 255)
-	@6DE1 = 5
+	pictureLoading = 5
 	PICTURE (blockId: 9)
 	IF compareResult == '=='
 		PRINT_CLEAR (message: `I AM SORRY, BUT I HAVE NOTHING TO SELL NOW.  COME BACK SOME OTHER TIME. `)
@@ -17723,9 +17723,9 @@ ECL_20_AEF0
 	PICTURE (blockId: 255)
 	ECL_20_B695()
 	@4A19 = 255
-	@C04B = 14
-	@C04C = 12
-	@C04D = 3
+	partyPosMapX = 14
+	partyPosMapY = 12
+	partyPosFacing = 3
 	GOTO ECL_20_B248
 
 ECL_20_AF13
@@ -17737,7 +17737,7 @@ ECL_20_AF13
 	APPROACH ()
 	DELAY ()
 	APPROACH ()
-	@6DC6 = 99
+	moraleThreshold = 99
 	@6DCB = 0
 	CLEAR_MONSTERS ()
 	LOAD_MONSTER (monsterId: 6, copies: 15, cpicId: 6)
@@ -17765,7 +17765,7 @@ ECL_20_AF7F
 	@4A19 = 255
 	@4A81 = 250
 	PICTURE (blockId: 255)
-	@6DE1 = 255
+	pictureLoading = 255
 	ECL_20_B695()
 	EXIT
 
@@ -17773,7 +17773,7 @@ ECL_20_B05C
 	IF @4AD9 == 255
 		EXIT
 	@6DCB = 0
-	@6DC6 = 75
+	moraleThreshold = 75
 	SETUP_MONSTER (spriteId: 31, maxDistance: 0, picId: 31)
 	PRINT_CLEAR (message: `SOME MONSTERS ARE TOSSING A SACK OF GRAIN. WHEN THE SACK BREAKS THEY WAIL, 'OH, NO! WHAT CAN WE THROW NOW?' ONE LOOKS YOUR WAY. 'I KNOW,' HE SAYS.`)
 	ECL_20_B6BC()
@@ -17787,19 +17787,19 @@ ECL_20_B05C
 	EXIT
 
 ECL_20_B118
-	IF @6DC7 > 128
+	IF gbvmCombatResult > 128
 		GOTO ECL_20_B225
-	IF @6DC7 < 1
+	IF gbvmCombatResult < 1
 		@4A80 = 1 + @4A80
-	IF @6DC7 < 1
+	IF gbvmCombatResult < 1
 		ECL_20_B69C()
-	IF @6DC7 > 1
+	IF gbvmCombatResult > 1
 		GOTO ECL_20_B250
-	IF @6DC7 == 1
+	IF gbvmCombatResult == 1
 	COMPARE @6DC8, 0
-	IF @6DC7 > 1
+	IF gbvmCombatResult > 1
 		@4A80 = 1 + @4A80
-	IF @6DC7 > 1
+	IF gbvmCombatResult > 1
 		ECL_20_B69C()
 	GOTO ECL_20_B250
 
@@ -17825,7 +17825,7 @@ ECL_20_B17C
 	GOTO ECL_20_B1BF
 
 ECL_20_B1A8
-	@6DC6 = @4A16
+	moraleThreshold = @4A16
 	CLEAR_MONSTERS ()
 	LOAD_MONSTER (monsterId: @6E80, copies: @9808, cpicId: @6E80)
 	COMBAT ()
@@ -17833,7 +17833,7 @@ ECL_20_B1A8
 
 ECL_20_B1BF
 	@4A16 = 5 + @4A16
-	@6DC6 = @4A16
+	moraleThreshold = @4A16
 	CLEAR_MONSTERS ()
 	LOAD_MONSTER (monsterId: @6E7B, copies: @6E7A, cpicId: @6E7B)
 	LOAD_MONSTER (monsterId: @6E80, copies: @9808, cpicId: @6E80)
@@ -17842,7 +17842,7 @@ ECL_20_B1BF
 
 ECL_20_B1E9
 	@4A16 = 15 + @4A16
-	@6DC6 = @4A16
+	moraleThreshold = @4A16
 	CLEAR_MONSTERS ()
 	LOAD_MONSTER (monsterId: @6E7B, copies: @6E7A, cpicId: @6E7B)
 	LOAD_MONSTER (monsterId: 63, copies: 1, cpicId: 63)
@@ -17855,10 +17855,10 @@ ECL_20_B21A
 	EXIT
 
 ECL_20_B225
-	@C04D = RANDOM (max: 3)
+	partyPosFacing = RANDOM (max: 3)
 	@9809 = RANDOM (max: 4)
-	@C04B = db_$B6F2[@9809]
-	@C04C = db_$B6F7[@9809]
+	partyPosMapX = db_$B6F2[@9809]
+	partyPosMapY = db_$B6F7[@9809]
 	PRINT_CLEAR (message: ``)
 
 ECL_20_B248
@@ -17893,7 +17893,7 @@ ECL_20_B2D0
 ECL_20_B2DE
 	@980B = RANDOM (max: 30)
 	@980A = @980A + @980B
-	@980A = @980A + @6DCF
+	@980A = @980A + curCharLoyaltyBase
 	IF @980A < 75
 		GOTO ECL_20_B65B
 	IF @980A > 85
@@ -17931,7 +17931,7 @@ ECL_20_B43A
 	GOTO ECL_20_B225
 
 ECL_20_B488
-	[@6E81, @6E79, @6E79, @6E79] = CHECK_PARTY (checkMove: @6C1B, effect: 0)
+	[@6E81, @6E79, @6E79, @6E79] = CHECK_PARTY (checkMove: curCharMovementCur, effect: 0)
 	IF @9805 < @6E79
 		GOTO ECL_20_B225
 	IF @9805 > @6E79
@@ -17981,7 +17981,7 @@ ECL_20_B65B
 	GOTO ECL_20_B157
 
 ECL_20_B695
-	@6DE1 = 255
+	pictureLoading = 255
 	RETURN
 
 ECL_20_B69C
@@ -18038,7 +18038,7 @@ ECL_21_9910	GOTO ECL_21_9A6B
 /* MAIN SCRIPT */
 ECL_21_9914
 	ECL_21_AE42()
-	IF @6DD5 == 0
+	IF leaveMap == 0
 		GOTO ECL_21_9998
 	PRINT_CLEAR (message: `DO YOU WANT TO TAKE A BOAT BACK TO PHLAN?`)
 	ECL_21_AE32()
@@ -18056,22 +18056,22 @@ ECL_21_9955
 ECL_21_9963
 	PRINT_CLEAR (message: `YOU BOARD A BOAT.`)
 	ECL_21_AE0E()
-	@C04B = 15
-	@C04C = 1
-	@C04D = 3
-	@6E12 = 3
+	partyPosMapX = 15
+	partyPosMapY = 1
+	partyPosFacing = 3
+	gbvmDiskNum = 3
 	NEW_ECL (eclId: 0)
 
 ECL_21_9992
-	@6DC9 = 255
+	moveLocked = 255
 
 ECL_21_9998
-	@6E82 = @C04F & 127
+	@6E82 = partyPosEventAtCell & 127
 	EXIT
 
 ECL_21_99A2
 	@49FD = @4A18
-	@6E82 = @C04F & 127
+	@6E82 = partyPosEventAtCell & 127
 	SPRITE_OFF ()
 	PRINT_CLEAR (message: ``)
 	PICTURE (blockId: 255)
@@ -18161,9 +18161,9 @@ ECL_21_9A6B
 	IF @4A02 != 0
 		EXIT
 	@4A02 = 1
-	@C04D = 0
-	@C04B = 8
-	@C04C = 14
+	partyPosFacing = 0
+	partyPosMapX = 8
+	partyPosMapY = 14
 	CALL (opAddr: @2C90)
 	PRINT_CLEAR (message: `THE BOAT DISEMBARKS YOU AT SOKAL KEEP.`)
 	ECL_21_AE0E()
@@ -18667,15 +18667,15 @@ ECL_21_ADCA
 	EXIT
 
 ECL_21_ADD7
-	IF @6DC7 > 128
+	IF gbvmCombatResult > 128
 		GOTO ECL_21_ADE3
 	RETURN
 
 ECL_21_ADE3
-	@C04D = RANDOM (max: 3)
+	partyPosFacing = RANDOM (max: 3)
 	@9809 = RANDOM (max: 3)
-	@C04B = db_$AF43[@9809]
-	@C04C = db_$AF47[@9809]
+	partyPosMapX = db_$AF43[@9809]
+	partyPosMapY = db_$AF47[@9809]
 	PRINT_CLEAR (message: ``)
 	CALL (opAddr: @2C90)
 
@@ -18718,7 +18718,7 @@ ECL_21_AEA1
 	GOTO ECL_21_AE5D
 
 ECL_21_AECC
-	@6DC6 = @9804
+	moraleThreshold = @9804
 	COMBAT ()
 	ECL_21_ADD7()
 	SWITCH @6E79
@@ -18854,10 +18854,10 @@ ECL_22_9927
 	@6E79 = RANDOM (max: 3)
 
 ECL_22_992D
-	@C04B = db_$9955[@6E79]
-	@C04C = db_$995F[@6E79]
-	@C04D = db_$9969[@6E79]
-	@6DC9 = 255
+	partyPosMapX = db_$9955[@6E79]
+	partyPosMapY = db_$995F[@6E79]
+	partyPosFacing = db_$9969[@6E79]
+	moveLocked = 255
 	GOTO ECL_22_9BFD
 
 CONST ECL_22_db_$9955 = 5
@@ -18933,7 +18933,7 @@ ECL_22_9A0B
 
 ECL_22_9A20
 	LOAD_CHARACTER (charId: @6E82)
-	IF @6C00 == 0
+	IF curCharEnabled == 0
 		GOTO ECL_22_9AC9
 	@6E81 = 1
 	IF @6DCA == 0
@@ -18949,7 +18949,7 @@ ECL_22_9A20
 ECL_22_9A77
 	@4A4B = @4A4B | @6E79
 	PRINT_CLEAR (message: `A SECRET DOOR IS FOUND`)
-	@6E82 = db_$9B22[@C04D]
+	@6E82 = db_$9B22[partyPosFacing]
 	@6E7A = @6E82 + @6E7A
 	@6E7A = db_$9B1B[@6E7A]
 	SWITCH @6E7A
@@ -18999,19 +18999,19 @@ CONST ECL_22_db_$9B25 = 1
 
 
 ECL_22_9B26
-	@6E79 = 31 & @C04F
+	@6E79 = 31 & partyPosEventAtCell
 	IF 0 == @6E79
 		EXIT
 	IF @6E79 > 11
 		EXIT
 	@6E79 = @6E79 - 1
 	@6E82 = db_$9C95[@6E79]
-	IF @6E82 != @C04D
+	IF @6E82 != partyPosFacing
 		EXIT
 	GOTO ECL_22_9C60
 
 ECL_22_9B59
-	@6E82 = 31 & @C04F
+	@6E82 = 31 & partyPosEventAtCell
 	@6E7A = db_$9B91[@6E82]
 	@6E79 = db_$9BA4[@6E82]
 	SWITCH @6E7A
@@ -19077,10 +19077,10 @@ CONST ECL_22_db_$9BB6 = 0
 ECL_22_9BB7
 	@6DD2 = 0
 	@6DD3 = 10
-	IF @C04B == 15
+	IF partyPosMapX == 15
 		EXIT
 	@6E82 = @4A4C
-	IF @C04C < 8
+	IF partyPosMapY < 8
 		@6E82 = @4A4E
 	@6E82 = 63 & @6E82
 	IF @6E82 == 63
@@ -19104,9 +19104,9 @@ ECL_22_9C07
 	LOAD_FILES (fileId: 22, unused: 2, loadTiles: 255)
 	IF @49F2 == 23
 		EXIT
-	@C04C = 0
-	@C04D = 2
-	@C04B = 15
+	partyPosMapY = 0
+	partyPosFacing = 2
+	partyPosMapX = 15
 	LOAD_PIECES (wallSetId1: 1, wallSetId2: 3, wallSetId3: 255)
 	EXIT
 
@@ -19121,11 +19121,11 @@ ECL_22_9C60
 	@6E82 = @6E79 & @4A4B
 	IF 0 != @6E82
 		GOTO ECL_22_9C80
-	@6DC9 = 255
+	moveLocked = 255
 	EXIT
 
 ECL_22_9C80
-	@6E82 = 31 & @C04F
+	@6E82 = 31 & partyPosEventAtCell
 	IF @6E82 < 3
 		GOTO ECL_22_A60F
 	EXIT
@@ -19172,7 +19172,7 @@ ECL_22_9CE9
 	@6E7F = 6
 	ECL_22_A3DD()
 	@6E82 = ENCOUNTER (displayMonsterId: @9808, distanceRequirement: @6DC0, displayPicId: @9800, combatResp: 0, waitResp: 4, fleeResp: 1, parlayResp: 4, failFleeResp: 4, message1: `HE SMILES AT YOU AND RAISES HIS HAND IN BENEDICTION.`, message2: ``, message3: ``, partyFlee: 9, monsterFlee: 9)
-	@6DE1 = 255
+	pictureLoading = 255
 	@6E7E = 6
 	SWITCH @6E82
 		CASE 0
@@ -19286,16 +19286,16 @@ ECL_22_A143
 
 ECL_22_A14D
 	ECL_22_999C()
-	@6E82 = 31 & @C04F
+	@6E82 = 31 & partyPosEventAtCell
 	IF @6E82 == 17
 		GOTO ECL_22_A630
 	GOTO ECL_22_992D
 
 ECL_22_A169
-	IF @C04B == 15
+	IF partyPosMapX == 15
 		EXIT
 	@6E7B = @4A4C
-	IF @C04C < 8
+	IF partyPosMapY < 8
 		@6E7B = @4A4E
 	@6E82 = 2
 	IF @6DCA == 0
@@ -19311,7 +19311,7 @@ ECL_22_A169
 
 ECL_22_A1C4
 	@6E7E = @6E7F
-	IF @C04C < 8
+	IF partyPosMapY < 8
 		@6E7F = 7 + @6E7F
 	ECL_22_A3DD()
 	[@6E7C, @6E7D] = PARTY_SURPRISE ()
@@ -19363,7 +19363,7 @@ ECL_22_A2FD
 	@6E7B = ENCOUNTER (displayMonsterId: @9808, distanceRequirement: @6E7B, displayPicId: @9800, combatResp: 0, waitResp: 3, fleeResp: 0, parlayResp: 3, failFleeResp: 0, message1: `THEY FLY TOWARD YOU.`, message2: ``, message3: ``, partyFlee: @9801, monsterFlee: @9801)
 
 ECL_22_A32F
-	@6DE1 = 255
+	pictureLoading = 255
 	IF @6E7B == 3
 		@6DCB = 1
 	SWITCH @6E7B
@@ -19377,7 +19377,7 @@ ECL_22_A32F
 			GOTO ECL_22_A363
 
 ECL_22_A354
-	IF @C04C < 8
+	IF partyPosMapY < 8
 		GOTO ECL_22_9914
 	GOTO ECL_22_9927
 
@@ -19385,10 +19385,10 @@ ECL_22_A363
 	CLEAR_MONSTERS ()
 	LOAD_MONSTER (monsterId: @9807, copies: @9802, cpicId: @9803)
 	COMBAT ()
-	IF @6DC7 == 129
+	IF gbvmCombatResult == 129
 		GOTO ECL_22_A354
 	@6E7F = db_$9CA0[@6E7E]
-	IF @C04C < 8
+	IF partyPosMapY < 8
 		GOTO ECL_22_A39A
 	@4A4C = @6E7F | @4A4C
 	EXIT
@@ -19399,7 +19399,7 @@ ECL_22_A39A
 
 ECL_22_A3A5
 	@6E7B = @4A4C
-	IF @C04C < 8
+	IF partyPosMapY < 8
 		@6E7B = @4A4E
 
 ECL_22_A3BA
@@ -19420,8 +19420,8 @@ ECL_22_A3DD
 	@9806 = db_$A5F5[@6E7F]
 	@9807 = db_$A5A7[@6E7F]
 	@9808 = db_$A58D[@6E7F]
-	@6DE1 = db_$A602[@6E7F]
-	@6DC6 = 100
+	pictureLoading = db_$A602[@6E7F]
+	moraleThreshold = 100
 	SWITCH @6E7F
 		CASE 0
 			GOTO ECL_22_A474
@@ -19645,15 +19645,15 @@ ECL_22_A60F
 
 ECL_22_A612
 	@4A4D = 1 | @4A4D
-	@C04B = 4
-	@C04C = 15
-	@C04D = 0
+	partyPosMapX = 4
+	partyPosMapY = 15
+	partyPosFacing = 0
 	NEW_ECL (eclId: 23)
 
 ECL_22_A630
-	@C04B = 0
-	@C04C = 12
-	@C04D = 0
+	partyPosMapX = 0
+	partyPosMapY = 12
+	partyPosFacing = 0
 	NEW_ECL (eclId: 23)
 
 CONST ECL_22_db_$A645 = 255
@@ -19668,10 +19668,10 @@ ECL_23_9910	GOTO ECL_23_9BEF
 
 /* MAIN SCRIPT */
 ECL_23_9914
-	@C04B = db_$9949[@6E79]
-	@C04C = db_$9957[@6E79]
-	@C04D = db_$9965[@6E79]
-	@6DC9 = 255
+	partyPosMapX = db_$9949[@6E79]
+	partyPosMapY = db_$9957[@6E79]
+	partyPosFacing = db_$9965[@6E79]
+	moveLocked = 255
 	SPRITE_OFF ()
 	CALL (opAddr: @2C90)
 	IF @6E79 == 3
@@ -19765,7 +19765,7 @@ ECL_23_9A09
 
 ECL_23_9A1E
 	LOAD_CHARACTER (charId: @6E82)
-	IF @6C00 == 0
+	IF curCharEnabled == 0
 		GOTO ECL_23_9AB9
 	@6E81 = @6DCA
 	IF @6B72 == 2
@@ -19779,7 +19779,7 @@ ECL_23_9A1E
 ECL_23_9A66
 	@4A4F = @4A4F | @6E79
 	PRINT_CLEAR (message: `A SECRET DOOR IS FOUND `)
-	@6E82 = db_$9B0F[@C04D]
+	@6E82 = db_$9B0F[partyPosFacing]
 	@6E7A = @6E82 + @6E7A
 	@6E7A = db_$9B08[@6E7A]
 	SWITCH @6E7A
@@ -19829,19 +19829,19 @@ CONST ECL_23_db_$9B12 = 1
 
 
 ECL_23_9B13
-	@6E79 = 31 & @C04F
+	@6E79 = 31 & partyPosEventAtCell
 	IF 0 == @6E79
 		EXIT
 	IF @6E79 > 10
 		EXIT
 	@6E79 = @6E79 - 1
 	@6E82 = db_$9C40[@6E79]
-	IF @6E82 != @C04D
+	IF @6E82 != partyPosFacing
 		EXIT
 	GOTO ECL_23_9C24
 
 ECL_23_9B46
-	@6E82 = 31 & @C04F
+	@6E82 = 31 & partyPosEventAtCell
 	@6E7A = db_$9B9F[@6E82]
 	@6E79 = db_$9BBB[@6E82]
 	SWITCH @6E7A
@@ -19955,7 +19955,7 @@ ECL_23_9BE3
 	CALL (opAddr: @2C90)
 
 ECL_23_9BE8
-	@6DE1 = 255
+	pictureLoading = 255
 	EXIT
 
 ECL_23_9BEF
@@ -19976,7 +19976,7 @@ ECL_23_9C24
 	@6E79 = db_$9C4A[@6E79]
 	@6E82 = @6E79 & @4A4F
 	IF 0 == @6E82
-		@6DC9 = 255
+		moveLocked = 255
 	EXIT
 
 CONST ECL_23_db_$9C40 = 3
@@ -20055,7 +20055,7 @@ ECL_23_9D35
 			GOTO ECL_23_9D76
 
 ECL_23_9D69
-	@6E79 = 63 & @C04F
+	@6E79 = 63 & partyPosEventAtCell
 	GOTO ECL_23_9914
 
 ECL_23_9D76
@@ -20093,15 +20093,15 @@ CONST ECL_23_db_$9DFD = 9
 
 
 ECL_23_9DFE
-	@C04C = 8
+	partyPosMapY = 8
 	GOTO ECL_23_9E0E
 
 ECL_23_9E08
-	@C04C = 7
+	partyPosMapY = 7
 
 ECL_23_9E0E
-	@C04B = 15
-	@C04D = 1
+	partyPosMapX = 15
+	partyPosFacing = 1
 	NEW_ECL (eclId: 22)
 
 ECL_23_9E1D
@@ -20125,7 +20125,7 @@ ECL_23_9E1D
 		CASE 2
 			GOTO ECL_23_A006
 	@6E82 = PARLAY (haughtyVal: 15, slyVal: 15, niceVal: 30, meekVal: 50, abusiveVal: 0)
-	@6E82 = @6E82 + @6DCF
+	@6E82 = @6E82 + curCharLoyaltyBase
 	IF @6E82 < 75
 		GOTO ECL_23_9F94
 	PRINT_CLEAR (message: `'SINCE YOU ARE NOT THE SERVANTS OF YARASH, WE WILL NOT KILL YOU. THE ENEMY OF MY ENEMY IS NOT MY ENEMY!'`)
@@ -20134,11 +20134,11 @@ ECL_23_9E1D
 ECL_23_9F94
 	PRINT_CLEAR (message: `'MUTILATING SCUM! WE WILL DIE BEFORE WE LET YOU TWIST US AS YOU HAVE OUR OTHER PEOPLE! BUT YOU WILL DIE FIRST!'`)
 	ECL_23_99E1()
-	@6DC6 = 60
+	moraleThreshold = 60
 	CLEAR_MONSTERS ()
 	LOAD_MONSTER (monsterId: 57, copies: 5, cpicId: 57)
 	COMBAT ()
-	IF @6DC7 != 129
+	IF gbvmCombatResult != 129
 		EXIT
 
 ECL_23_A006
@@ -20176,7 +20176,7 @@ ECL_23_A19C
 	CLEAR_MONSTERS ()
 	LOAD_MONSTER (monsterId: 58, copies: 3, cpicId: 57)
 	COMBAT ()
-	IF @6DC7 == 129
+	IF gbvmCombatResult == 129
 		GOTO ECL_23_A006
 	@4A51 = 8 | @4A51
 	EXIT
@@ -20214,7 +20214,7 @@ ECL_23_A344
 
 ECL_23_A3E4
 	@6E82 = 64 & @4A51
-	IF @6E82 != 0 || @C04D != 1
+	IF @6E82 != 0 || partyPosFacing != 1
 		EXIT
 
 
@@ -20257,7 +20257,7 @@ CONST ECL_23_db_$A575 = 0
 
 ECL_23_A576
 	@6E82 = 128 & @4A51
-	IF @6E82 != 0 || @C04D != 1
+	IF @6E82 != 0 || partyPosFacing != 1
 		EXIT
 
 	PICTURE (blockId: 45)
@@ -20316,7 +20316,7 @@ ECL_23_A859
 ECL_23_A887
 	ECL_23_AC43()
 	PRINT_CLEAR (message: `THERE IS AN ENORMOUS EXPLOSION! BITS OF PIPE AND OTHER PLUMBING FIXTURES FLY IN ALL DIRECTIONS.`)
-	@C04D = 3
+	partyPosFacing = 3
 	ECL_23_99E1()
 	DAMAGE (attack: 224, dice: 3, sides: 10, bonus: 0, value: 0)
 
@@ -20354,12 +20354,12 @@ ECL_23_AABB
 	DAMAGE (attack: 128, dice: 1, sides: 1, bonus: 200, value: 0)
 	DAMAGE (attack: 128, dice: 1, sides: 1, bonus: 200, value: 0)
 	@6DCB = 0
-	@6DC6 = 100
+	moraleThreshold = 100
 	CLEAR_MONSTERS ()
 	LOAD_MONSTER (monsterId: 57, copies: 3, cpicId: 57)
 	COMBAT ()
 	@6E79 = 0
-	IF @6DC7 == 129
+	IF gbvmCombatResult == 129
 		GOTO ECL_23_9914
 	@4A52 = 2 | @4A52
 	EXIT
@@ -20368,12 +20368,12 @@ ECL_23_AB50
 	@6E82 = 4 & @4A52
 	IF 0 != @6E82
 		EXIT
-	@6DE1 = 56
+	pictureLoading = 56
 	SETUP_MONSTER (spriteId: 24, maxDistance: 2, picId: 30)
 	PRINT_CLEAR (message: `AN ANCIENT MAGE LOOKS UP FROM HIS STUDIES, 'AH, GOOD, I NEED MORE SPECIMENS AS CONTROLS.' HE TURNS TO HIS MUTATED GUARDS, 'SUBDUE THEM!'`)
 	ECL_23_99E1()
 	@6E82 = ENCOUNTER (displayMonsterId: 24, distanceRequirement: 2, displayPicId: 30, combatResp: 0, waitResp: 3, fleeResp: 0, parlayResp: 3, failFleeResp: 0, message1: ``, message2: ``, message3: ``, partyFlee: 12, monsterFlee: 12)
-	@6DE1 = 255
+	pictureLoading = 255
 	SWITCH @6E82
 		CASE 0
 			GOTO ECL_23_9BE3
@@ -20384,13 +20384,13 @@ ECL_23_AB50
 
 ECL_23_AC08
 	@6DCB = 0
-	@6DC6 = 100
+	moraleThreshold = 100
 	CLEAR_MONSTERS ()
 	LOAD_MONSTER (monsterId: 81, copies: 1, cpicId: 14)
 	LOAD_MONSTER (monsterId: 58, copies: 6, cpicId: 57)
 	COMBAT ()
 	@6E79 = 0
-	IF @6DC7 == 129
+	IF gbvmCombatResult == 129
 		GOTO ECL_23_9914
 	@4A52 = 4 | @4A52
 	ECL_23_AC4C()
@@ -20484,18 +20484,18 @@ ECL_24_9914
 	IF @49C9 >= 14
 		@6E7E = 8
 	@49FD = @6E7E
-	IF @6DD5 == 0
+	IF leaveMap == 0
 		EXIT
-	@6E82 = @C04D
+	@6E82 = partyPosFacing
 	IF 31 == @49C5
 		@6E82 = 4 + @6E82
 	CALL (opAddr: @C01E)
-	@6DC9 = 255
+	moveLocked = 255
 	@6E79 = db_$99A8[@6E82]
 	IF @6E79 == 26
-		@6E12 = 7
+		gbvmDiskNum = 7
 	IF @6E79 == 14
-		@6E12 = 3
+		gbvmDiskNum = 3
 	LOAD_FILES (fileId: @6E79, unused: 2, loadTiles: 255)
 	IF @6E82 == 1
 		GOTO ECL_24_99A7
@@ -20526,7 +20526,7 @@ CONST ECL_24_db_$99B7 = 255
 
 
 ECL_24_99B8
-	@6E7F = 127 & @C04F
+	@6E7F = 127 & partyPosEventAtCell
 	@6E79 = 0
 	IF @49C5 != 31
 		GOTO ECL_24_A3D4
@@ -20588,10 +20588,10 @@ ECL_24_9A7D
 ECL_24_9B1D
 	CLEAR_MONSTERS ()
 	LOAD_MONSTER (monsterId: 4, copies: @9822, cpicId: 4)
-	@6DC6 = 99
+	moraleThreshold = 99
 	COMBAT ()
 	@6E82 = 0
-	IF @6DC7 > 128
+	IF gbvmCombatResult > 128
 		GOTO ECL_24_B0B5
 	@4AA8 = 254
 	@6E79 = @6E7F - 3
@@ -20725,9 +20725,9 @@ ECL_24_9F03
 	CLEAR_MONSTERS ()
 	LOAD_MONSTER (monsterId: 4, copies: 6, cpicId: 4)
 	LOAD_MONSTER (monsterId: 8, copies: 1, cpicId: 8)
-	@6DC6 = 80
+	moraleThreshold = 80
 	COMBAT ()
-	IF @6DC7 > 128
+	IF gbvmCombatResult > 128
 		GOTO ECL_24_B0B5
 	@4A2E = 16 | @4A2E
 	PRINT_CLEAR (message: `YOU FIND A PIECE OF PAPER ON THE FLOOR IN THE ROOM.  YOU PLACE IT IN YOUR JOURNAL UNDER ENTRY 53`)
@@ -20767,11 +20767,11 @@ ECL_24_A15E
 	SETUP_MONSTER (spriteId: 4, maxDistance: 0, picId: 4)
 	PRINT_CLEAR (message: `YOU ENTER INTO A FILTHY ROOM.  EIGHT ORC GUARDS ATTACK YOU IMMEDIATELY.`)
 	CLEAR_MONSTERS ()
-	@6DC6 = 80
+	moraleThreshold = 80
 	LOAD_MONSTER (monsterId: 4, copies: 6, cpicId: 4)
 	LOAD_MONSTER (monsterId: 5, copies: 2, cpicId: 5)
 	COMBAT ()
-	IF @6DC7 > 128
+	IF gbvmCombatResult > 128
 		GOTO ECL_24_B0B5
 	@4A44 = 1 | @4A44
 	GOTO ECL_24_B0A3
@@ -20796,9 +20796,9 @@ ECL_24_A24E
 	PRINT_CLEAR (message: `AS YOU SEARCH THE BEDS A GROUP OF ORCS COMES INTO THE ROOM.  THEY ATTACK IMMEDIATELY.`)
 	CLEAR_MONSTERS ()
 	LOAD_MONSTER (monsterId: 4, copies: 8, cpicId: 4)
-	@6DC6 = 80
+	moraleThreshold = 80
 	COMBAT ()
-	IF @6DC7 > 128
+	IF gbvmCombatResult > 128
 		GOTO ECL_24_B0B5
 	@4A44 = 2 | @4A44
 	PRINT_CLEAR (message: `YOU FINISH SEARCHING THE BEDS BUT YOU FIND NOTHING BUT LICE AND HAIR.`)
@@ -20894,9 +20894,9 @@ ECL_24_A65B
 ECL_24_A6B0
 	CLEAR_MONSTERS ()
 	LOAD_MONSTER (monsterId: 4, copies: 8, cpicId: 4)
-	@6DC6 = 99
+	moraleThreshold = 99
 	COMBAT ()
-	IF @6DC7 > 128
+	IF gbvmCombatResult > 128
 		GOTO ECL_24_B0B5
 	@4A0F = 1
 	GOTO ECL_24_B0A3
@@ -20989,7 +20989,7 @@ ECL_24_A93B
 	IF @4ABD >= 254
 		GOTO ECL_24_A9D0
 	PRINT_CLEAR (message: `AS YOU DESTROY THE ALTAR, THE TEMPLE DOORS FLY OPEN AND A SCREAMING HORDE OF ORCS LED BY A HALF-ORC CLERIC ATTACK.  YOU TURN TO FACE THEM.`)
-	@C04D = 3
+	partyPosFacing = 3
 	CALL (opAddr: @2C90)
 	SETUP_MONSTER (spriteId: 4, maxDistance: 2, picId: 4)
 	ECL_24_B602()
@@ -21032,14 +21032,14 @@ ECL_24_AAFF
 	PRINT_CLEAR (message: `THE MINUTE YOU FIND THE TREASURE A LARGE GROUP OF ORCS CHARGE THROUGH THE TEMPLE DOORS.  LEADING THEM IS A HALF-ORC WHO IS SCREAMING 'KILL!  KILL, THESE SCUM WHO WOULD STEAL FROM OUR TEMPLE.'`)
 
 ECL_24_AB99
-	@6DC6 = 99
+	moraleThreshold = 99
 	CLEAR_MONSTERS ()
 	LOAD_MONSTER (monsterId: 5, copies: 5, cpicId: 5)
 	LOAD_MONSTER (monsterId: 33, copies: 1, cpicId: 33)
 	LOAD_MONSTER (monsterId: 44, copies: 20, cpicId: 5)
 	LOAD_MONSTER (monsterId: 4, copies: 30, cpicId: 4)
 	COMBAT ()
-	IF @6DC7 > 128
+	IF gbvmCombatResult > 128
 		GOTO ECL_24_B0B5
 	@4ABD = 254
 	PRINT_CLEAR (message: `ON THE DEAD BODY OF THE HALF-ORC CLERIC YOU FIND A PIECE OF PAPER.  YOU PUT THE PAPER IN YOUR JOURNAL UNDER ENTRY 25.`)
@@ -21049,7 +21049,7 @@ ECL_24_AB99
 
 ECL_24_AC31
 	LOAD_CHARACTER (charId: @6E7A)
-	IF $str@6B00 == `DIRTEN`
+	IF curCharName == `DIRTEN`
 		GOTO ECL_24_AC5D
 
 ECL_24_AC45
@@ -21059,15 +21059,15 @@ ECL_24_AC45
 	GOTO ECL_24_B0A3
 
 ECL_24_AC5D
-	IF @6BB8 < 128
+	IF curCharNpc < 128
 		GOTO ECL_24_AC45
-	IF @6C00 > 127
+	IF curCharEnabled > 127
 		GOTO ECL_24_ACC3
 	PRINT_CLEAR (message: `DIRTEN SAYS, 'THANK YOU FOR HELPING US REGAIN OUR TEMPLE.  I MUST STAY HERE NOW.  I BID YOU FAREWELL.'`)
 
 ECL_24_ACC3
-	@6B00 = 0
-	@6C00 = 0
+	curChar = null
+	curCharEnabled = 0
 	@6E7A = 128 + @6E7A
 	LOAD_CHARACTER (charId: @6E7A)
 	GOTO ECL_24_B0A3
@@ -21077,7 +21077,7 @@ ECL_24_ACE0
 
 ECL_24_ACE6
 	LOAD_CHARACTER (charId: @9890)
-	IF @6C00 != 1
+	IF curCharEnabled != 1
 		GOTO ECL_24_AD2E
 	@9891 = @6DCA
 	IF @6B72 == 2
@@ -21230,7 +21230,7 @@ ECL_24_B037
 	@6DCB = 2
 
 ECL_24_B03D
-	@6DC6 = @9825
+	moraleThreshold = @9825
 	@6E7C = 1 + @980F
 	CLEAR_MONSTERS ()
 	LOAD_MONSTER (monsterId: @980F, copies: @4A18, cpicId: @9824)
@@ -21242,10 +21242,10 @@ ECL_24_B06D
 	IF @4A0E == 1
 		TREASURE (cp: 0, sp: 0, ep: 0, gp: 0, pp: 0, gems: 0, jewels: 0, itemId: 22)
 	COMBAT ()
-	IF @4A0E == 1 && @6DC7 == 1
+	IF @4A0E == 1 && gbvmCombatResult == 1
 		@4A2A = 1
 
-	IF @6DC7 > 128
+	IF gbvmCombatResult > 128
 		GOTO ECL_24_B0B5
 
 ECL_24_B0A3
@@ -21256,8 +21256,8 @@ ECL_24_B0A3
 	EXIT
 
 ECL_24_B0B5
-	@C04B = @49F0
-	@C04C = @49F1
+	partyPosMapX = @49F0
+	partyPosMapY = @49F1
 	@49C5 = @4A03
 	CALL (opAddr: @2C90)
 	GOTO ECL_24_B0A3
@@ -21266,7 +21266,7 @@ ECL_24_B0D2
 	@6E79 = PARLAY (haughtyVal: 30, slyVal: 30, niceVal: 30, meekVal: 5, abusiveVal: 60)
 	@6E7A = RANDOM (max: 30)
 	@6E79 = @6E79 + @6E7A
-	@6E79 = @6E79 + @6DCF
+	@6E79 = @6E79 + curCharLoyaltyBase
 	@6E79 = @6E79 + @981E
 	IF @6E79 < 140
 		GOTO ECL_24_B13C
@@ -21594,7 +21594,7 @@ ECL_25_9960
 			GOTO ECL_25_997E
 
 ECL_25_997E
-	@6DC9 = 255
+	moveLocked = 255
 	RETURN
 
 ECL_25_9985
@@ -21621,14 +21621,14 @@ ECL_25_99A3
 
 ECL_25_99A4
 	@49C3 = 3
-	@6E12 = 7
+	gbvmDiskNum = 7
 	NEW_ECL (eclId: 26)
 	EXIT
 
 ECL_25_99B4
 	IF @49C4 != 31
 		GOTO ECL_25_99A4
-	@6DC9 = 255
+	moveLocked = 255
 	RETURN
 
 ECL_25_99C6
@@ -21659,7 +21659,7 @@ ECL_25_99FC
 		RETURN
 	@6E7A = db_$ADCE[@6E79]
 	IF @035F == @6E7A
-		@6DC9 = 255
+		moveLocked = 255
 	IF @035F == @6E7A
 		RETURN
 	@6E79 = 1 + @6E79
@@ -21785,12 +21785,12 @@ ECL_25_9CBD
 		GOTO ECL_25_ADC9
 	SETUP_MONSTER (spriteId: 65, maxDistance: 1, picId: 65)
 	PRINT_CLEAR (message: `AS YOU WALK THROUGH THIS AREA TWO ANHKHEGS ERUPT FROM THE GROUND BENEATH YOU.`)
-	@6DC6 = 90
+	moraleThreshold = 90
 	CLEAR_MONSTERS ()
 	LOAD_MONSTER (monsterId: 65, copies: 2, cpicId: 65)
 	CLEAR_BOX ()
 	COMBAT ()
-	IF @6DC7 > 128
+	IF gbvmCombatResult > 128
 		GOTO ECL_25_AB3E
 	@4A0F = 1
 	EXIT
@@ -21885,7 +21885,7 @@ ECL_25_A05A
 	CLEAR_MONSTERS ()
 	LOAD_MONSTER (monsterId: 54, copies: 12, cpicId: 11)
 	COMBAT ()
-	IF @6DC7 > 128
+	IF gbvmCombatResult > 128
 		GOTO ECL_25_AB44
 	@4A1A = 255
 	EXIT
@@ -21990,7 +21990,7 @@ ECL_25_A216
 			GOTO ECL_25_A2AB
 
 ECL_25_A276
-	@6DC6 = @9806
+	moraleThreshold = @9806
 	CLEAR_MONSTERS ()
 	LOAD_MONSTER (monsterId: @9804, copies: @4A02, cpicId: @9809)
 	IF @4A01 == 0
@@ -22000,7 +22000,7 @@ ECL_25_A276
 ECL_25_A29D
 	CLEAR_BOX ()
 	COMBAT ()
-	IF @6DC7 > 128
+	IF gbvmCombatResult > 128
 		GOTO ECL_25_AB3E
 	EXIT
 
@@ -22012,7 +22012,7 @@ ECL_25_A2AB
 	@6E79 = PARLAY (haughtyVal: 20, slyVal: 10, niceVal: 50, meekVal: 0, abusiveVal: 30)
 	@6E7A = RANDOM (max: 30)
 	@6E79 = @6E79 + @6E7A
-	@6E79 = @6E79 + @6DCF
+	@6E79 = @6E79 + curCharLoyaltyBase
 	@6E79 = @6E79 + @981E
 	IF @6E79 < 140
 		GOTO ECL_25_A343
@@ -22097,15 +22097,15 @@ ECL_25_A4CA
 	@6E26 = 145
 	@6E27 = 145
 	LOAD_FILES (fileId: 25, unused: 2, loadTiles: 255)
-	@C04B = @4A18
-	@C04C = @4A19
+	partyPosMapX = @4A18
+	partyPosMapY = @4A19
 	@49FE = 8
 	CLEAR_BOX ()
 	CALL (opAddr: @2C90)
 	NEW_ECL (eclId: 25)
 
 ECL_25_A517
-	@6E82 = 127 & @C04F
+	@6E82 = 127 & partyPosEventAtCell
 	SWITCH @6E82
 		CASE 0
 			GOTO ECL_25_ADC9
@@ -22165,13 +22165,13 @@ ECL_25_A59F
 
 ECL_25_A62E
 	PRINT_CLEAR (message: `AS YOU APPROACH HER HAIR BRISTLES AND SHE ATTACKS!`)
-	@6DC6 = 100
+	moraleThreshold = 100
 	@6E70 = 252
 	CLEAR_MONSTERS ()
 	LOAD_MONSTER (monsterId: 120, copies: 1, cpicId: 120)
 	COMBAT ()
 	@6E70 = 0
-	IF @6DC7 > 128
+	IF gbvmCombatResult > 128
 		GOTO ECL_25_AB44
 	@6E79 = 4 | @4A13
 	EXIT
@@ -22216,7 +22216,7 @@ ECL_25_A7C9
 	CLEAR_MONSTERS ()
 	LOAD_MONSTER (monsterId: 65, copies: 1, cpicId: 65)
 	COMBAT ()
-	IF @6DC7 > 128
+	IF gbvmCombatResult > 128
 		GOTO ECL_25_AB44
 	@4A13 = 16 | @4A13
 	EXIT
@@ -22234,7 +22234,7 @@ ECL_25_A857
 	CLEAR_MONSTERS ()
 	LOAD_MONSTER (monsterId: 60, copies: 1, cpicId: 60)
 	COMBAT ()
-	IF @6DC7 > 128
+	IF gbvmCombatResult > 128
 		GOTO ECL_25_AB44
 	@4A13 = 32 | @4A13
 	EXIT
@@ -22249,7 +22249,7 @@ ECL_25_A8B8
 	CLEAR_MONSTERS ()
 	LOAD_MONSTER (monsterId: 60, copies: 1, cpicId: 60)
 	COMBAT ()
-	IF @6DC7 > 128
+	IF gbvmCombatResult > 128
 		GOTO ECL_25_AB44
 	@4A13 = 64 | @4A13
 	EXIT
@@ -22271,7 +22271,7 @@ ECL_25_A99D
 	CLEAR_MONSTERS ()
 	LOAD_MONSTER (monsterId: 118, copies: 2, cpicId: 118)
 	COMBAT ()
-	IF @6DC7 > 128
+	IF gbvmCombatResult > 128
 		GOTO ECL_25_AB44
 	@4A13 = 128 | @4A13
 	EXIT
@@ -22285,7 +22285,7 @@ ECL_25_A9BB
 	CLEAR_MONSTERS ()
 	LOAD_MONSTER (monsterId: 118, copies: 3, cpicId: 118)
 	COMBAT ()
-	IF @6DC7 > 128
+	IF gbvmCombatResult > 128
 		GOTO ECL_25_AB44
 	@4A14 = 1 | @4A14
 	EXIT
@@ -22300,7 +22300,7 @@ ECL_25_AA24
 	LOAD_MONSTER (monsterId: 118, copies: 4, cpicId: 118)
 	TREASURE (cp: 0, sp: 2000, ep: 0, gp: 1000, pp: 0, gems: 3, jewels: 1, itemId: 129)
 	COMBAT ()
-	IF @6DC7 > 128
+	IF gbvmCombatResult > 128
 		GOTO ECL_25_AB44
 	@4A14 = 2 | @4A14
 	EXIT
@@ -22329,8 +22329,8 @@ ECL_25_AB3F
 	EXIT
 
 ECL_25_AB44
-	@C04B = @49F0
-	@C04C = @49F1
+	partyPosMapX = @49F0
+	partyPosMapY = @49F1
 	CALL (opAddr: @2C90)
 	EXIT
 
@@ -22854,7 +22854,7 @@ ECL_26_9964
 			GOTO ECL_26_9982
 
 ECL_26_9982
-	@6DC9 = 255
+	moveLocked = 255
 	RETURN
 
 ECL_26_9989
@@ -22881,7 +22881,7 @@ ECL_26_99A7
 
 ECL_26_99A8
 	@49C3 = 3
-	@6E12 = 8
+	gbvmDiskNum = 8
 	NEW_ECL (eclId: 27)
 	EXIT
 
@@ -22906,20 +22906,20 @@ ECL_26_99B8
 
 ECL_26_99D6
 	@49C3 = 14
-	@6E12 = 6
+	gbvmDiskNum = 6
 	NEW_ECL (eclId: 25)
 	EXIT
 
 ECL_26_99E6
 	IF @49C4 != 25
 		GOTO ECL_26_99A8
-	@6DC9 = 255
+	moveLocked = 255
 	RETURN
 
 ECL_26_99F8
 	IF @49C4 != 31
 		GOTO ECL_26_99D6
-	@6DC9 = 255
+	moveLocked = 255
 	RETURN
 
 ECL_26_9A0A
@@ -22955,7 +22955,7 @@ ECL_26_9A53
 	IF @6E7B == 19
 		@6E7A = db_$B036[@6E79]
 	IF @035F == @6E7A
-		@6DC9 = 255
+		moveLocked = 255
 	IF @035F == @6E7A
 		RETURN
 	@6E79 = 1 + @6E79
@@ -23090,19 +23090,19 @@ ECL_26_9C5D
 
 ECL_26_9CDE
 	ECL_26_A0A4()
-	@C04B = 4
-	@C04C = 0
-	@C04D = 2
-	@6E12 = 3
+	partyPosMapX = 4
+	partyPosMapY = 0
+	partyPosFacing = 2
+	gbvmDiskNum = 3
 	NEW_ECL (eclId: 14)
 	EXIT
 
 ECL_26_9CFE
 	ECL_26_A0A4()
-	@C04B = 0
-	@C04C = 4
-	@C04D = 3
-	@6E12 = 4
+	partyPosMapX = 0
+	partyPosMapY = 4
+	partyPosFacing = 3
+	gbvmDiskNum = 4
 	NEW_ECL (eclId: 10)
 	EXIT
 
@@ -23124,28 +23124,28 @@ ECL_26_9D1E
 
 ECL_26_9DDE
 	ECL_26_A0A4()
-	@C04B = 15
-	@C04C = 4
-	@C04D = 3
-	@6E12 = 3
+	partyPosMapX = 15
+	partyPosMapY = 4
+	partyPosFacing = 3
+	gbvmDiskNum = 3
 	NEW_ECL (eclId: 14)
 	EXIT
 
 ECL_26_9DFE
 	ECL_26_A0A4()
-	@C04B = 15
-	@C04C = 4
-	@C04D = 3
-	@6E12 = 1
+	partyPosMapX = 15
+	partyPosMapY = 4
+	partyPosFacing = 3
+	gbvmDiskNum = 1
 	NEW_ECL (eclId: 24)
 	EXIT
 
 ECL_26_9E1E
 	ECL_26_A0A4()
-	@C04B = 15
-	@C04C = 1
-	@C04D = 3
-	@6E12 = 3
+	partyPosMapX = 15
+	partyPosMapY = 1
+	partyPosFacing = 3
+	gbvmDiskNum = 3
 	NEW_ECL (eclId: 0)
 	EXIT
 
@@ -23165,19 +23165,19 @@ ECL_26_9E3E
 
 ECL_26_9EE2
 	ECL_26_A0A4()
-	@C04B = 0
-	@C04C = 4
-	@C04D = 3
-	@6E12 = 1
+	partyPosMapX = 0
+	partyPosMapY = 4
+	partyPosFacing = 3
+	gbvmDiskNum = 1
 	NEW_ECL (eclId: 18)
 	EXIT
 
 ECL_26_9F02
 	ECL_26_A0A4()
-	@C04B = 0
-	@C04C = 4
-	@C04D = 3
-	@6E12 = 4
+	partyPosMapX = 0
+	partyPosMapY = 4
+	partyPosFacing = 3
+	gbvmDiskNum = 4
 	NEW_ECL (eclId: 2)
 	EXIT
 
@@ -23329,7 +23329,7 @@ ECL_26_A242
 			GOTO ECL_26_A2D3
 
 ECL_26_A29E
-	@6DC6 = @9806
+	moraleThreshold = @9806
 	CLEAR_MONSTERS ()
 	LOAD_MONSTER (monsterId: @9804, copies: @4A02, cpicId: @9809)
 	IF @4A01 == 0
@@ -23339,7 +23339,7 @@ ECL_26_A29E
 ECL_26_A2C5
 	CLEAR_BOX ()
 	COMBAT ()
-	IF @6DC7 > 128
+	IF gbvmCombatResult > 128
 		GOTO ECL_26_AB01
 	EXIT
 
@@ -23351,7 +23351,7 @@ ECL_26_A2D3
 	@6E79 = PARLAY (haughtyVal: 30, slyVal: 30, niceVal: 30, meekVal: 5, abusiveVal: 60)
 	@6E7A = RANDOM (max: 30)
 	@6E79 = @6E79 + @6E7A
-	@6E79 = @6E79 + @6DCF
+	@6E79 = @6E79 + curCharLoyaltyBase
 	@6E79 = @6E79 + @981E
 	IF @6E79 < 140
 		GOTO ECL_26_A36B
@@ -23442,14 +23442,14 @@ ECL_26_A537
 	@6E27 = 151
 	LOAD_FILES (fileId: 26, unused: 2, loadTiles: 255)
 	@49FE = 11
-	@C04B = @4A18
-	@C04C = @4A19
+	partyPosMapX = @4A18
+	partyPosMapY = @4A19
 	CLEAR_BOX ()
 	CALL (opAddr: @2C90)
 	NEW_ECL (eclId: 26)
 
 ECL_26_A592
-	@6E82 = 127 & @C04F
+	@6E82 = 127 & partyPosEventAtCell
 	SWITCH @6E82
 		CASE 0
 			GOTO ECL_26_AD47
@@ -23551,7 +23551,7 @@ ECL_26_A88E
 	CLEAR_MONSTERS ()
 	LOAD_MONSTER (monsterId: 58, copies: 2, cpicId: 57)
 	COMBAT ()
-	IF @6DC7 > 128
+	IF gbvmCombatResult > 128
 		GOTO ECL_26_AB02
 	@4A13 = 8 | @4A13
 	EXIT
@@ -23565,7 +23565,7 @@ ECL_26_A932
 	CLEAR_MONSTERS ()
 	LOAD_MONSTER (monsterId: 57, copies: 4, cpicId: 57)
 	COMBAT ()
-	IF @6DC7 > 128
+	IF gbvmCombatResult > 128
 		GOTO ECL_26_AB02
 	@4A13 = 16 | @4A13
 	EXIT
@@ -23581,7 +23581,7 @@ ECL_26_A997
 	LOAD_MONSTER (monsterId: 57, copies: 4, cpicId: 57)
 	COMBAT ()
 	@6E70 = 0
-	IF @6DC7 > 128
+	IF gbvmCombatResult > 128
 		GOTO ECL_26_AB02
 	@4A13 = 32 | @4A13
 	EXIT
@@ -23627,8 +23627,8 @@ ECL_26_AB01
 	EXIT
 
 ECL_26_AB02
-	@C04B = @49F0
-	@C04C = @49F1
+	partyPosMapX = @49F0
+	partyPosMapY = @49F1
 
 ECL_26_AB10
 	CALL (opAddr: @2C90)
@@ -24620,7 +24620,7 @@ ECL_27_9950
 			GOTO ECL_27_996E
 
 ECL_27_996E
-	@6DC9 = 255
+	moveLocked = 255
 	RETURN
 
 ECL_27_9975
@@ -24673,7 +24673,7 @@ ECL_27_99C1
 	RETURN
 
 ECL_27_99C2
-	@6E12 = 7
+	gbvmDiskNum = 7
 	@49C3 = 14
 	NEW_ECL (eclId: 26)
 	EXIT
@@ -24681,7 +24681,7 @@ ECL_27_99C2
 ECL_27_99D2
 	IF @49C4 != 31
 		GOTO ECL_27_99C2
-	@6DC9 = 255
+	moveLocked = 255
 	RETURN
 
 ECL_27_99E4
@@ -24713,7 +24713,7 @@ ECL_27_9A20
 		RETURN
 	@6E7A = db_$AB9E[@6E79]
 	IF @035F == @6E7A
-		@6DC9 = 255
+		moveLocked = 255
 	IF @035F == @6E7A
 		RETURN
 	@6E79 = 1 + @6E79
@@ -24816,14 +24816,14 @@ ECL_27_9C0C
 	IF @4A11 != 0
 		EXIT
 	SETUP_MONSTER (spriteId: 0, maxDistance: 0, picId: 0)
-	@6DC6 = 50
+	moraleThreshold = 50
 	PRINT_CLEAR (message: `A SCREAMING HORDE OF KOBOLDS ATTACKS THE PARTY.`)
 	CLEAR_MONSTERS ()
 	CLEAR_BOX ()
 	LOAD_MONSTER (monsterId: 0, copies: 25, cpicId: 0)
 	LOAD_MONSTER (monsterId: 1, copies: 5, cpicId: 1)
 	COMBAT ()
-	IF @6DC7 > 128
+	IF gbvmCombatResult > 128
 		GOTO ECL_27_A84E
 	@4A11 = 255
 	EXIT
@@ -24860,18 +24860,18 @@ ECL_27_9D85
 
 ECL_27_9DAB
 	ECL_27_9E71()
-	@C04B = 10
+	partyPosMapX = 10
 	@4AC7 = 255
 	GOTO ECL_27_9DCF
 
 ECL_27_9DBF
 	ECL_27_9E71()
-	@C04B = 6
+	partyPosMapX = 6
 	@4AC7 = 0
 
 ECL_27_9DCF
-	@C04C = 15
-	@C04D = 0
+	partyPosMapY = 15
+	partyPosFacing = 0
 	NEW_ECL (eclId: 13)
 	EXIT
 
@@ -24889,9 +24889,9 @@ ECL_27_9DDF
 
 ECL_27_9E57
 	ECL_27_9E71()
-	@C04B = 15
-	@C04C = 1
-	@6E12 = 3
+	partyPosMapX = 15
+	partyPosMapY = 1
+	gbvmDiskNum = 3
 	NEW_ECL (eclId: 0)
 	EXIT
 
@@ -24992,7 +24992,7 @@ ECL_27_A002
 			GOTO ECL_27_A093
 
 ECL_27_A05E
-	@6DC6 = @9806
+	moraleThreshold = @9806
 	CLEAR_MONSTERS ()
 	LOAD_MONSTER (monsterId: @9804, copies: @4A02, cpicId: @9804)
 	IF @4A01 == 0
@@ -25002,7 +25002,7 @@ ECL_27_A05E
 ECL_27_A085
 	CLEAR_BOX ()
 	COMBAT ()
-	IF @6DC7 > 128
+	IF gbvmCombatResult > 128
 		GOTO ECL_27_A84E
 	EXIT
 
@@ -25014,7 +25014,7 @@ ECL_27_A093
 	@6E79 = PARLAY (haughtyVal: 20, slyVal: 20, niceVal: 5, meekVal: 5, abusiveVal: 30)
 	@6E7A = RANDOM (max: 30)
 	@6E79 = @6E79 + @6E7A
-	@6E79 = @6E79 + @6DCF
+	@6E79 = @6E79 + curCharLoyaltyBase
 	@6E79 = @6E79 + @981E
 	IF @6E79 < 120
 		GOTO ECL_27_A12B
@@ -25098,15 +25098,15 @@ ECL_27_A2AF
 	@6E26 = 145
 	@6E27 = 145
 	LOAD_FILES (fileId: 27, unused: 2, loadTiles: 255)
-	@C04B = @4A18
-	@C04C = @4A19
+	partyPosMapX = @4A18
+	partyPosMapY = @4A19
 	CLEAR_BOX ()
 	@49FE = 8
 	CALL (opAddr: @2C90)
 	NEW_ECL (eclId: 27)
 
 ECL_27_A2FC
-	@6E82 = 127 & @C04F
+	@6E82 = 127 & partyPosEventAtCell
 	SWITCH @6E82
 		CASE 0
 			GOTO ECL_27_AAA2
@@ -25169,14 +25169,14 @@ ECL_27_A3BE
 	APPROACH ()
 	APPROACH ()
 	PRINT_CLEAR (message: `YOU HAVE STUMBLED ACROSS A FEROCIOUS WYVERN.  IT CHARGES AND ATTACKS!`)
-	@6DC6 = 100
+	moraleThreshold = 100
 	@6E79 = 4 & @4A13
 	IF 0 == @6E79
 		@6E70 = 254
 	CLEAR_MONSTERS ()
 	LOAD_MONSTER (monsterId: 121, copies: 1, cpicId: 121)
 	COMBAT ()
-	IF @6DC7 > 128
+	IF gbvmCombatResult > 128
 		GOTO ECL_27_A854
 	@4A13 = 2 | @4A13
 	@6E70 = 0
@@ -25190,14 +25190,14 @@ ECL_27_A443
 	APPROACH ()
 	APPROACH ()
 	PRINT_CLEAR (message: `A TERRIBLE WYVERN CHARGES TO ATTACK THE PARTY!`)
-	@6DC6 = 100
+	moraleThreshold = 100
 	@6E79 = 2 & @4A13
 	IF 0 == @6E79
 		@6E70 = 254
 	CLEAR_MONSTERS ()
 	LOAD_MONSTER (monsterId: 121, copies: 1, cpicId: 121)
 	COMBAT ()
-	IF @6DC7 > 128
+	IF gbvmCombatResult > 128
 		GOTO ECL_27_A854
 	@4A13 = 4 | @4A13
 	@6E70 = 0
@@ -25211,11 +25211,11 @@ ECL_27_A4B7
 	APPROACH ()
 	APPROACH ()
 	PRINT_CLEAR (message: `FOUR GIANT LIZARDS RUN UP AND ATTACK THE PARTY!`)
-	@6DC6 = 60
+	moraleThreshold = 60
 	CLEAR_MONSTERS ()
 	LOAD_MONSTER (monsterId: 59, copies: 4, cpicId: 59)
 	COMBAT ()
-	IF @6DC7 > 128
+	IF gbvmCombatResult > 128
 		GOTO ECL_27_A854
 	@4A13 = 8 | @4A13
 	EXIT
@@ -25231,12 +25231,12 @@ ECL_27_A537
 		EXIT
 	SETUP_MONSTER (spriteId: 59, maxDistance: 0, picId: 59)
 	PRINT_CLEAR (message: `YOU ENTER A CHAMBER WITH FOUR GIANT LIZARDS AND TWO MINOTAURS.  THE MINOTAURS ORDER THE LIZARDS TO ATTACK.`)
-	@6DC6 = 70
+	moraleThreshold = 70
 	CLEAR_MONSTERS ()
 	LOAD_MONSTER (monsterId: 59, copies: 4, cpicId: 59)
 	LOAD_MONSTER (monsterId: 62, copies: 2, cpicId: 62)
 	COMBAT ()
-	IF @6DC7 > 128
+	IF gbvmCombatResult > 128
 		GOTO ECL_27_A854
 	@4A13 = 16 | @4A13
 	EXIT
@@ -25258,11 +25258,11 @@ ECL_27_A60B
 		EXIT
 	SETUP_MONSTER (spriteId: 59, maxDistance: 0, picId: 59)
 	PRINT_CLEAR (message: `GUARDING THIS CHAMBER ARE TWO GIANT LIZARDS.  AS YOU APPROACH, THEY ATTACK.`)
-	@6DC6 = 100
+	moraleThreshold = 100
 	CLEAR_MONSTERS ()
 	LOAD_MONSTER (monsterId: 59, copies: 2, cpicId: 59)
 	COMBAT ()
-	IF @6DC7 > 128
+	IF gbvmCombatResult > 128
 		GOTO ECL_27_A854
 	@4A13 = 64 | @4A13
 	EXIT
@@ -25277,11 +25277,11 @@ ECL_27_A67D
 	PRINT_CLEAR (message: `YOU ARE ATTACKED BY SOME GNOLLS.`)
 	@6E79 = RANDOM (max: 30)
 	@6E79 = 4 + @6E79
-	@6DC6 = 60
+	moraleThreshold = 60
 	CLEAR_MONSTERS ()
 	LOAD_MONSTER (monsterId: 73, copies: @6E79, cpicId: 73)
 	COMBAT ()
-	IF @6DC7 > 128
+	IF gbvmCombatResult > 128
 		GOTO ECL_27_A854
 	EXIT
 
@@ -25296,12 +25296,12 @@ ECL_27_A705
 		EXIT
 	SETUP_MONSTER (spriteId: 73, maxDistance: 0, picId: 73)
 	PRINT_CLEAR (message: `IN THIS ROOM ARE SOME GNOLLS AND TROLLS.  THEY ATTACK YOU IMMEDIATELY.`)
-	@6DC6 = 75
+	moraleThreshold = 75
 	CLEAR_MONSTERS ()
 	LOAD_MONSTER (monsterId: 73, copies: 12, cpicId: 73)
 	LOAD_MONSTER (monsterId: 31, copies: 4, cpicId: 31)
 	COMBAT ()
-	IF @6DC7 > 128
+	IF gbvmCombatResult > 128
 		GOTO ECL_27_A854
 	@4A13 = 128 | @4A13
 	EXIT
@@ -25313,7 +25313,7 @@ ECL_27_A77A
 	SETUP_MONSTER (spriteId: 0, maxDistance: 2, picId: 0)
 	APPROACH ()
 	APPROACH ()
-	@6DC6 = 50
+	moraleThreshold = 50
 	@6E7A = 0
 	PRINT_CLEAR (message: `YOU ARE ATTACKED BY A GROUP OF MAD KOBOLDS.`)
 	@6E79 = RANDOM (max: 40)
@@ -25350,8 +25350,8 @@ ECL_27_A84F
 	EXIT
 
 ECL_27_A854
-	@C04B = @49F0
-	@C04C = @49F1
+	partyPosMapX = @49F0
+	partyPosMapY = @49F1
 	CALL (opAddr: @2C90)
 	EXIT
 
@@ -25835,10 +25835,10 @@ ECL_28_9914
 		@6E7E = 8
 	@49FD = @6E7E
 	@49FE = 10
-	IF @6DD5 == 0
+	IF leaveMap == 0
 		EXIT
 	@4AB4 = 253
-	@6DE1 = 255
+	pictureLoading = 255
 	NEW_ECL (eclId: 25)
 	EXIT
 
@@ -25932,7 +25932,7 @@ ECL_28_9997
 		GOTO ECL_28_99C3
 
 ECL_28_99A2
-	@6E7F = 127 & @C04F
+	@6E7F = 127 & partyPosEventAtCell
 	SWITCH @6E7F
 		CASE 0
 			GOTO ECL_28_B5E7
@@ -25955,7 +25955,7 @@ ECL_28_99C3
 		GOTO ECL_28_99A2
 	@6E79 = 5 * @4A17
 	@4A17 = 1 + @4A17
-	@6DE1 = 57
+	pictureLoading = 57
 	IF @6E79 > 30
 		GOTO ECL_28_A1CD
 	IF @6E79 == 10
@@ -25983,7 +25983,7 @@ ECL_28_9A7A
 
 ECL_28_9AB9
 	@6E79 = db_$9965[@6E7E]
-	@C04D = db_$997E[@6E7E]
+	partyPosFacing = db_$997E[@6E7E]
 	ECL_28_9B0E()
 	@6E79 = db_$994C[@6E7E]
 	SWITCH @6E79
@@ -26018,7 +26018,7 @@ ECL_28_9B0E
 ECL_28_9B23
 	IF @6E7A > @6E79
 		RETURN
-	SWITCH @C04D
+	SWITCH partyPosFacing
 		CASE 0
 			ECL_28_9B50()
 		CASE 1
@@ -26033,19 +26033,19 @@ ECL_28_9B23
 	GOTO ECL_28_9B23
 
 ECL_28_9B50
-	@C04C = @C04C - 1
+	partyPosMapY = partyPosMapY - 1
 	RETURN
 
 ECL_28_9B5A
-	@C04B = 1 + @C04B
+	partyPosMapX = 1 + partyPosMapX
 	RETURN
 
 ECL_28_9B64
-	@C04C = 1 + @C04C
+	partyPosMapY = 1 + partyPosMapY
 	RETURN
 
 ECL_28_9B6E
-	@C04B = @C04B - 1
+	partyPosMapX = partyPosMapX - 1
 
 ECL_28_9B77
 	RETURN
@@ -26070,7 +26070,7 @@ ECL_28_9BFD
 	RETURN
 
 ECL_28_9CD3
-	@6DE1 = 57
+	pictureLoading = 57
 	SETUP_MONSTER (spriteId: 16, maxDistance: 1, picId: 6)
 	PRINT_CLEAR (message: `THE GUARD GIVING THE TOUR SAYS 'HERE YOU SEE ONE OF OUR FINE BARRACKS.  THERE ARE SIX OF THESE HERE AND EACH CAN HOLD OVER A 100 MEN.'`)
 	SPRITE_OFF ()
@@ -26092,7 +26092,7 @@ ECL_28_9E50
 	SETUP_MONSTER (spriteId: 16, maxDistance: 1, picId: 6)
 	PRINT_CLEAR (message: `THE GUARD SAYS 'HERE ARE YOUR QUARTERS.  DO NOT LEAVE THIS AREA.'  HE THEN LEAVES.`)
 	SPRITE_OFF ()
-	@6DE1 = 255
+	pictureLoading = 255
 	RETURN
 
 ECL_28_9EA0
@@ -26101,7 +26101,7 @@ ECL_28_9EA0
 
 	IF @4A10 == 1
 		GOTO ECL_28_B5E7
-	@6DE1 = 57
+	pictureLoading = 57
 	SETUP_MONSTER (spriteId: 16, maxDistance: 0, picId: 6)
 	PRINT_CLEAR (message: `THERE ARE FOUR GUARDS HERE.  THEIR LEADER SAYS, 'YOU ARE RESTRICTED TO YOUR QUARTERS.   RETURN TO THEM NOW.'  WHAT WILL YOU DO?`)
 	@6E79 = HORIZONTAL_MENU (opts: [`RETURN`, `ATTACK`, `BRIBE`])
@@ -26115,9 +26115,9 @@ ECL_28_9EA0
 
 ECL_28_9F54
 	PRINT_CLEAR (message: `YOU GO BACK TO YOUR QUARTERS.`)
-	@C04B = 5
-	@C04C = 0
-	@C04D = 1
+	partyPosMapX = 5
+	partyPosMapY = 0
+	partyPosFacing = 1
 	CALL (opAddr: @2C90)
 	GOTO ECL_28_B5E7
 
@@ -26134,14 +26134,14 @@ ECL_28_9FFC
 	@4A14 = 0
 	PRINT_CLEAR (message: `YOU ATTACK THE GUARDS.  THE GUARDS SOUND AN ALARM AND ATTACK.`)
 	@4A0E = 1
-	@6DC6 = 75
-	@6DE1 = 57
+	moraleThreshold = 75
+	pictureLoading = 57
 	SETUP_MONSTER (spriteId: 16, maxDistance: 2, picId: 6)
 	ECL_28_B5EC()
 	CLEAR_MONSTERS ()
 	LOAD_MONSTER (monsterId: 96, copies: 4, cpicId: 11)
 	COMBAT ()
-	IF @6DC7 > 128
+	IF gbvmCombatResult > 128
 		GOTO ECL_28_A068
 	GOTO ECL_28_A093
 
@@ -26164,19 +26164,19 @@ ECL_28_A109
 
 ECL_28_A14E
 	ROB (allParty: 1, coinPct: 100, unused: 255)
-	@6DE1 = 255
+	pictureLoading = 255
 	NEW_ECL (eclId: 25)
 	EXIT
 
 ECL_28_A15F
-	@6DE1 = 57
+	pictureLoading = 57
 	SETUP_MONSTER (spriteId: 16, maxDistance: 2, picId: 6)
 	ECL_28_B5EC()
 	CLEAR_MONSTERS ()
 	LOAD_MONSTER (monsterId: 96, copies: 16, cpicId: 11)
 	LOAD_MONSTER (monsterId: 54, copies: 4, cpicId: 11)
 	COMBAT ()
-	IF @6DC7 > 128
+	IF gbvmCombatResult > 128
 		GOTO ECL_28_A304
 	@4A14 = 20 + @4A14
 	IF @4A14 >= 40
@@ -26193,7 +26193,7 @@ ECL_28_A1CD
 	IF @4A5A != 0
 		EXIT
 	PRINT_CLEAR (message: `A LARGE GROUP OF MEN LED BY A DWARF RUNS FOWARD TO ATTACK`)
-	@6DE1 = 13
+	pictureLoading = 13
 	SETUP_MONSTER (spriteId: 13, maxDistance: 2, picId: 6)
 	ECL_28_B5EC()
 	CLEAR_MONSTERS ()
@@ -26203,10 +26203,10 @@ ECL_28_A1CD
 	LOAD_MONSTER (monsterId: 96, copies: 25, cpicId: 11)
 	COMBAT ()
 	@4A0F = 1
-	IF @6DC7 > 128
+	IF gbvmCombatResult > 128
 		GOTO ECL_28_A304
 	PRINT_CLEAR (message: `A LARGE GROUP OF MEN LED BY THE COMMANDANT RUSH FOWARD AND ATTACK.`)
-	@6DE1 = 255
+	pictureLoading = 255
 	SETUP_MONSTER (spriteId: 16, maxDistance: 2, picId: 50)
 	ECL_28_B5EC()
 	CLEAR_MONSTERS ()
@@ -26215,7 +26215,7 @@ ECL_28_A1CD
 	LOAD_MONSTER (monsterId: 54, copies: 24, cpicId: 11)
 	LOAD_MONSTER (monsterId: 53, copies: 20, cpicId: 11)
 	COMBAT ()
-	IF @6DC7 > 128
+	IF gbvmCombatResult > 128
 		GOTO ECL_28_A304
 	PRINT_CLEAR (message: `AFTER KILLING THE COMMANDANT THE REST OF THE OUTPOST EITHER SURRENDERS OR RUNS AWAY.`)
 	@4AB4 = 1
@@ -26223,17 +26223,17 @@ ECL_28_A1CD
 	GOTO ECL_28_B5E7
 
 ECL_28_A304
-	@C04B = 7
-	@C04C = 0
-	@C04D = 0
+	partyPosMapX = 7
+	partyPosMapY = 0
+	partyPosFacing = 0
 	CALL (opAddr: @2C90)
-	@6DE1 = 57
+	pictureLoading = 57
 	SETUP_MONSTER (spriteId: 16, maxDistance: 2, picId: 11)
 	PRINT_CLEAR (message: `YOU RUN FOR YOUR LIVES AS THE GARRISON CHASES BEHIND YOU.  YOU RUN FOR THE FRONT GATE BUT ARE STOPPED BY SOME GUARDS.`)
 	CLEAR_MONSTERS ()
 	LOAD_MONSTER (monsterId: 96, copies: 6, cpicId: 11)
 	COMBAT ()
-	IF @6DC7 > 128
+	IF gbvmCombatResult > 128
 		GOTO ECL_28_A3B2
 	PRINT_CLEAR (message: `YOU ESCAPE FROM THE OUTPOST.`)
 	NEW_ECL (eclId: 25)
@@ -26263,7 +26263,7 @@ ECL_28_A482
 	@49C9 = 2 + @49C9
 	PRINT_CLEAR (message: `YOU ARE ATTACKED BY FOUR GUARDS IN YOUR SLEEP`)
 	DAMAGE (attack: 1, dice: 8, sides: 4, bonus: 8, value: 53)
-	@6DC6 = 80
+	moraleThreshold = 80
 	GOTO ECL_28_A527
 
 ECL_28_A4C6
@@ -26271,20 +26271,20 @@ ECL_28_A4C6
 	@49C9 = 2 + @49C9
 	PRINT_CLEAR (message: `YOU WAIT IN YOUR ROOM FOR ABOUT TWO HOURS WHEN SUDDENLY FOUR ARMED GUARDS BURST IN AND ATTACK YOU.`)
 	ECL_28_B601()
-	@6DC6 = 70
+	moraleThreshold = 70
 
 ECL_28_A527
-	@6DE1 = 57
+	pictureLoading = 57
 	SETUP_MONSTER (spriteId: 16, maxDistance: 0, picId: 6)
 	CLEAR_MONSTERS ()
 	LOAD_MONSTER (monsterId: 53, copies: 4, cpicId: 11)
 	COMBAT ()
-	IF @6DC7 > 128
+	IF gbvmCombatResult > 128
 		GOTO ECL_28_A54C
 	GOTO ECL_28_A57A
 
 ECL_28_A54C
-	@C04D = 3
+	partyPosFacing = 3
 	@6E79 = 1
 	ECL_28_9B0E()
 	PRINT_CLEAR (message: `YOU RUN INTO SOME MORE GUARDS.`)
@@ -26292,7 +26292,7 @@ ECL_28_A54C
 
 ECL_28_A57A
 	PRINT_CLEAR (message: `AS YOU DEFEAT THE GUARDS SOME MORE MEN RUN IN AND ATTACK.`)
-	@6DE1 = 57
+	pictureLoading = 57
 	SETUP_MONSTER (spriteId: 16, maxDistance: 0, picId: 6)
 	CLEAR_MONSTERS ()
 
@@ -26300,7 +26300,7 @@ ECL_28_A5B6
 	LOAD_MONSTER (monsterId: 54, copies: 5, cpicId: 11)
 	LOAD_MONSTER (monsterId: 53, copies: 6, cpicId: 11)
 	COMBAT ()
-	IF @6DC7 > 128
+	IF gbvmCombatResult > 128
 		GOTO ECL_28_A5F7
 	PRINT_CLEAR (message: `AN ALARM GOES OFF IN THE DISTANCE.`)
 	@4A17 = 1
@@ -26308,8 +26308,8 @@ ECL_28_A5B6
 
 ECL_28_A5F7
 	PRINT_CLEAR (message: `YOU MANAGE TO RUN AWAY AND HIDE.  YOU HEAR AN ALARM IN THE DISTANCE AS GUARDS ARE ISSUING OUT OF BARRACKS.`)
-	@C04B = 3
-	@C04C = 12
+	partyPosMapX = 3
+	partyPosMapY = 12
 	CALL (opAddr: @2C90)
 	@4A17 = 1
 	GOTO ECL_28_B5E7
@@ -26357,12 +26357,12 @@ ECL_28_A6DF
 
 ECL_28_A719
 	@6E79 = db_$A6C9[@6E7E]
-	@C04D = db_$A6D4[@6E7E]
+	partyPosFacing = db_$A6D4[@6E7E]
 	ECL_28_9B0E()
 	@6E7E = 1 + @6E7E
 	IF @6E7E <= 10
 		GOTO ECL_28_A719
-	@6DE1 = 255
+	pictureLoading = 255
 	PICTURE (blockId: 50)
 	PRINT_CLEAR (message: `YOU ARRIVE AT THE OFFICERS MESS AND ARE SEATED WITH THE COMMANDANT AND HIS ADVISORS.  A FINE MEAL OF ROAST BOAR IS SERVED WITH A HEARTY RED WINE.`)
 	ECL_28_B601()
@@ -26580,7 +26580,7 @@ ECL_28_B453
 
 ECL_28_B45F
 	@6E79 = db_$B43D[@6E7E]
-	@C04D = db_$B448[@6E7E]
+	partyPosFacing = db_$B448[@6E7E]
 	ECL_28_9B0E()
 	@6E7E = 1 + @6E7E
 	IF @6E7E <= 10
@@ -26614,7 +26614,7 @@ ECL_28_B526
 	IF @6E79 >= 75
 		GOTO ECL_28_B5CB
 	PRINT_CLEAR (message: `OUT OF THE COMMOTION A GROUP OF GUARDS ATTACK THE PARTY.`)
-	@6DE1 = 57
+	pictureLoading = 57
 	SETUP_MONSTER (spriteId: 16, maxDistance: 2, picId: 6)
 	ECL_28_B5EC()
 	CLEAR_MONSTERS ()
@@ -26640,7 +26640,7 @@ ECL_28_B5EC
 
 ECL_28_B5F1
 	@4AB4 = 253
-	@6DE1 = 255
+	pictureLoading = 255
 	NEW_ECL (eclId: 25)
 	EXIT
 
@@ -26677,7 +26677,7 @@ ECL_28_B678
 	@6DD3 = 0
 	IF @4A10 == 0
 		GOTO ECL_28_A6DF
-	@6DE1 = 57
+	pictureLoading = 57
 	GOTO ECL_28_9A3E
 
 ECL_28_B693
@@ -26691,9 +26691,9 @@ ECL_28_B693
 	@49FB = 0
 	IF @49F2 == 28
 		EXIT
-	@C04B = 7
-	@C04C = 0
-	@C04D = 2
+	partyPosMapX = 7
+	partyPosMapY = 0
+	partyPosFacing = 2
 	@4A00 = 2
 	CALL (opAddr: @2C90)
 	@49C9 = 0
@@ -26712,17 +26712,17 @@ ECL_29_9910	GOTO ECL_29_9C46
 /* MAIN SCRIPT */
 ECL_29_9914
 	ECL_29_AF30()
-	IF @6DD5 == 0
+	IF leaveMap == 0
 		GOTO ECL_29_994B
 	CALL (opAddr: @C01E)
-	@6DC9 = 255
-	@6E12 = db_$AFC7[@C04D]
-	@6E82 = db_$AFCA[@C04D]
+	moveLocked = 255
+	gbvmDiskNum = db_$AFC7[partyPosFacing]
+	@6E82 = db_$AFCA[partyPosFacing]
 	@49FB = 0
 	NEW_ECL (eclId: @6E82)
 
 ECL_29_994B
-	@6E82 = @C04F & 127
+	@6E82 = partyPosEventAtCell & 127
 	IF @6E82 != 1
 		GOTO ECL_29_9969
 	@4ADB = 0
@@ -26731,18 +26731,18 @@ ECL_29_994B
 ECL_29_9969
 	IF @4A1F == 255
 		GOTO ECL_29_9998
-	IF @6E82 == 6 && @C04D == 0
-		@6DC9 = 255
+	IF @6E82 == 6 && partyPosFacing == 0
+		moveLocked = 255
 
-	IF @6E82 == 7 && @C04D == 2
-		@6DC9 = 255
+	IF @6E82 == 7 && partyPosFacing == 2
+		moveLocked = 255
 
 
 ECL_29_9998
-	IF @6E82 == 21 && @C04D == 2
+	IF @6E82 == 21 && partyPosFacing == 2
 		GOTO ECL_29_AA8B
 
-	@6E81 = db_$AFC4[@C04D]
+	@6E81 = db_$AFC4[partyPosFacing]
 	IF @6E81 != @6E82
 		GOTO ECL_29_99D6
 	@9802 = 1 & @4A23
@@ -26753,13 +26753,13 @@ ECL_29_9998
 
 ECL_29_99D6
 	ECL_29_AF96()
-	@6E7A = @C04B
-	@6E7C = @C04C
+	@6E7A = partyPosMapX
+	@6E7C = partyPosMapY
 	CALL (opAddr: @C01E)
 	CALL (opAddr: @C018)
-	@6E79 = 127 & @C04F
-	@C04B = @6E7A
-	@C04C = @6E7C
+	@6E79 = 127 & partyPosEventAtCell
+	partyPosMapX = @6E7A
+	partyPosMapY = @6E7C
 	CALL (opAddr: @C018)
 	IF @6E79 != 3
 		EXIT
@@ -26770,7 +26770,7 @@ ECL_29_99D6
 ECL_29_9A23
 	@4A1A = 0
 	PRINT_CLEAR (message: ``)
-	@6E82 = @C04F & 127
+	@6E82 = partyPosEventAtCell & 127
 	@6E79 = 0
 	@6E7A = 2
 	@9800 = db_$AFCE[@6E82]
@@ -26819,7 +26819,7 @@ ECL_29_9A81
 		@9810 = 3
 	IF @6E82 == 17
 		@9810 = 1
-	IF @9810 != @C04D
+	IF @9810 != partyPosFacing
 		GOTO ECL_29_9B25
 	PRINT_CLEAR (message: `BEFORE YOU LIES KUTO'S WELL.  IT IS A SOURCE OF WATER IN ALL SEASONS.`)
 	GOTO ECL_29_9B53
@@ -26885,7 +26885,7 @@ ECL_29_9BDD
 	@6DD3 = 100
 	IF @4A10 != 1
 		GOTO ECL_29_9C0E
-	IF @C04F == 16
+	IF partyPosEventAtCell == 16
 		EXIT
 	IF @4A24 != 255
 		@6DD2 = 1
@@ -26894,7 +26894,7 @@ ECL_29_9BDD
 ECL_29_9C0E
 	IF @4A22 >= 10
 		EXIT
-	IF @C04F == 1
+	IF partyPosEventAtCell == 1
 		EXIT
 	@6DD2 = 12
 	@6DD3 = 12
@@ -26935,7 +26935,7 @@ ECL_29_9C9B
 
 ECL_29_9CAC
 	LOAD_CHARACTER (charId: @9802)
-	IF @6C00 != 1
+	IF curCharEnabled != 1
 		GOTO ECL_29_9CE1
 	@980D = db_$AFE5[@6B72]
 	@980D = @6DCA + @980D
@@ -26958,7 +26958,7 @@ ECL_29_9CF6
 ECL_29_9D1B
 	IF @4A24 == 255
 		EXIT
-	@6DE1 = 10
+	pictureLoading = 10
 	SETUP_MONSTER (spriteId: 16, maxDistance: 2, picId: 6)
 	DELAY ()
 	APPROACH ()
@@ -26968,17 +26968,17 @@ ECL_29_9D1B
 	ECL_29_AF0C()
 	PRINT_CLEAR (message: `WHAT DO YOU DO?`)
 	@9802 = HORIZONTAL_MENU (opts: [`SURRENDER`, `FIGHT`])
-	@6DE1 = 255
+	pictureLoading = 255
 	SWITCH @9802
 		CASE 0
 			GOTO ECL_29_9F1A
-	@6DC6 = 70
+	moraleThreshold = 70
 	CLEAR_MONSTERS ()
 	LOAD_MONSTER (monsterId: 32, copies: 1, cpicId: 7)
 	LOAD_MONSTER (monsterId: 57, copies: 5, cpicId: 57)
 	LOAD_MONSTER (monsterId: 1, copies: 9, cpicId: 1)
 	COMBAT ()
-	IF @6DC7 > 128
+	IF gbvmCombatResult > 128
 		GOTO ECL_29_9F7C
 	@4A24 = 255
 	@4AA6 = 254
@@ -27029,7 +27029,7 @@ ECL_29_A002
 	ECL_29_AF0C()
 	IF @4A24 == 255
 		EXIT
-	IF @C04D == 0
+	IF partyPosFacing == 0
 		GOTO ECL_29_A0AE
 	SETUP_MONSTER (spriteId: 0, maxDistance: 2, picId: 0)
 	@9802 = 25
@@ -27048,9 +27048,9 @@ ECL_29_A113
 		EXIT
 	IF @4A13 == 255
 		EXIT
-	IF @C04D == 0
+	IF partyPosFacing == 0
 		ECL_29_A168()
-	IF @C04D != 0
+	IF partyPosFacing != 0
 		ECL_29_A161()
 	@4A13 = 255
 	EXIT
@@ -27060,9 +27060,9 @@ ECL_29_A13A
 		EXIT
 	IF @4A14 == 255
 		EXIT
-	IF @C04D == 2
+	IF partyPosFacing == 2
 		ECL_29_A168()
-	IF @C04D != 2
+	IF partyPosFacing != 2
 		ECL_29_A161()
 	@4A14 = 255
 	EXIT
@@ -27120,12 +27120,12 @@ ECL_29_A313
 	ECL_29_AF96()
 	ECL_29_AF0C()
 	@6DC0 = @6E7A
-	@6DC6 = 67
+	moraleThreshold = 67
 	CLEAR_MONSTERS ()
 	LOAD_MONSTER (monsterId: 0, copies: 6, cpicId: 0)
 	LOAD_MONSTER (monsterId: 1, copies: 3, cpicId: 1)
 	COMBAT ()
-	IF @6DC7 >= 128
+	IF gbvmCombatResult >= 128
 		GOTO ECL_29_AC78
 	IF @6E79 == 250
 		GOTO ECL_29_A3D1
@@ -27295,7 +27295,7 @@ ECL_29_A666
 
 ECL_29_A742
 	@6DCB = 0
-	@6DC6 = 25
+	moraleThreshold = 25
 	CLEAR_MONSTERS ()
 	LOAD_MONSTER (monsterId: 0, copies: 2, cpicId: 0)
 	LOAD_MONSTER (monsterId: 1, copies: 4, cpicId: 1)
@@ -27335,12 +27335,12 @@ ECL_29_A9E5
 	PRINT_CLEAR (message: `A LIZARDMAN LEADS A PACK OF GIANT LIZARDS ON PATROL BEFORE A DOOR THAT HAS BEEN NAILED CLOSED.  SEEING YOU, THE MONSTERS ATTACK!`)
 	ECL_29_AF0C()
 	@6DCB = 0
-	@6DC6 = 75
+	moraleThreshold = 75
 	CLEAR_MONSTERS ()
 	LOAD_MONSTER (monsterId: 57, copies: 1, cpicId: 57)
 	LOAD_MONSTER (monsterId: 59, copies: 4, cpicId: 59)
 	COMBAT ()
-	IF @6DC7 < 128
+	IF gbvmCombatResult < 128
 		@4A23 = 8 | @4A23
 	EXIT
 
@@ -27348,12 +27348,12 @@ ECL_29_AA8B
 	@9802 = 16 & @4A23
 	IF 0 != @9802
 		EXIT
-	@6DC9 = 255
+	moveLocked = 255
 	PRINT_CLEAR (message: `THE DOOR HAS BEEN NAILED SHUT.  WILL YOU FORCE IT OPEN?`)
 	ECL_29_AF71()
 	PRINT_CLEAR (message: `THE DOOR IS FREED.`)
 	@4A23 = 16 | @4A23
-	@6DC9 = 0
+	moveLocked = 0
 	EXIT
 
 ECL_29_AAEE
@@ -27383,9 +27383,9 @@ ECL_29_AC03
 	EXIT
 
 ECL_29_AC78
-	IF @6DC7 > 128
+	IF gbvmCombatResult > 128
 		GOTO ECL_29_AD1A
-	IF @6DC7 < 1
+	IF gbvmCombatResult < 1
 		GOTO ECL_29_AC96
 	IF @6DC8 == 0
 		EXIT
@@ -27401,7 +27401,7 @@ ECL_29_ACAA
 ECL_29_ACB0
 	@9808 = PARTY_STRENGTH ()
 	@9809 = 0
-	@6DC6 = @9807
+	moraleThreshold = @9807
 	IF @6E7F < 1
 		@9808 = @9808 / 3
 	IF @6E7F > 1
@@ -27422,19 +27422,19 @@ ECL_29_ACEF
 	GOTO ECL_29_AC78
 
 ECL_29_AD1A
-	@C04D = RANDOM (max: 3)
+	partyPosFacing = RANDOM (max: 3)
 	@9809 = RANDOM (max: 7)
 	@49FB = 1
 	@49FB = 1
-	@C04B = db_$AFB4[@9809]
-	@C04C = db_$AFBC[@9809]
+	partyPosMapX = db_$AFB4[@9809]
+	partyPosMapY = db_$AFBC[@9809]
 	PRINT_CLEAR (message: ``)
 	CALL (opAddr: @2C90)
 	GOTO ECL_29_9A23
 
 ECL_29_AD51
 	SPRITE_OFF ()
-	@6DE1 = 255
+	pictureLoading = 255
 	CALL (opAddr: @2C90)
 	EXIT
 
@@ -27443,7 +27443,7 @@ ECL_29_AD5D
 	@980A = PARLAY (haughtyVal: 10, slyVal: 20, niceVal: 20, meekVal: 20, abusiveVal: 30)
 	@980B = RANDOM (max: 30)
 	@980A = @980A + @980B
-	@980A = @980A + @6DCF
+	@980A = @980A + curCharLoyaltyBase
 	IF @980A < 95
 		GOTO ECL_29_AE15
 	PRINT_CLEAR (message: `'WE HAVE TO KEEP THIS AREA FREE OF INTRUDERS -- BOSS'S ORDERS.  WE'LL LET YOU GO THIS TIME.  BUT IF YOU COME BACK, YOU'LL FACE BIG TROUBLE.' THE MONSTERS LEAVE.`)
