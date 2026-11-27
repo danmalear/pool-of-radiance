@@ -1400,7 +1400,7 @@ ECL_0_AD21
 
 ECL_0_AD2C
 	PRINT_CLEAR (message: `SKULLCRUSHER SPEAKS, 'I MUST GO TO MY MASTER NOW.' `)
-	curCharEnabled = char_enabled_not_found
+	curCharEnabled = char_enabled_write_false
 	curChar = null
 	@9802 = 128 + @9802
 	LOAD_CHARACTER (charId: @9802)
