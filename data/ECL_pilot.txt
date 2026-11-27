@@ -352,11 +352,12 @@ VAR curCharPlatinum = 0 // @6BC3
 VAR curCharAlignment = 0 // @6BD8
 VAR curCharXpAward = 0 // @6BF7
 VAR curCharXpBonusPerHp = 0 // @6BF9
-CONST char_enabled_true = 1
-CONST char_enabled_read_false = 128
-CONST char_enabled_write_false = 0
+CONST char_enabled_read_true = 1
+CONST char_enabled_false = 128
+CONST char_enabled_write_false_and_stoned = 135
+CONST char_enabled_write_dump_on_status_clear = 0
 CONST char_enabled_not_found = 0
-VAR curCharEnabled = char_enabled_write_false // @6C00
+VAR curCharEnabled = char_enabled_not_found // @6C00
 CONST char_combat_role_ally = 0
 CONST char_combat_role_ally_quick = 128
 CONST char_combat_role_hostile = 129
@@ -6608,8 +6609,7 @@ ECL_7_9C69
 	GOTO ECL_7_9CFC
 
 ECL_7_9CC1
-	curCharEnabled = 0
-	curCharStatus = 7 // stoned
+	curCharEnabled = char_enabled_write_false_and_stoned
 	@6E79 = curCharIdx + 128
 	PRINT_CLEAR (message: `WITH A SCREAM OF HORROR `)
 	PRINT_APPEND (message: curCharName)
@@ -6820,7 +6820,7 @@ ECL_7_A404
 		GOTO ECL_7_A43F
 	IF `GENHEERIS` != curCharName
 		GOTO ECL_7_A43F
-	curCharEnabled = 0
+	curCharEnabled = char_enabled_write_dump_on_status_clear
 	curChar = null
 	@9800 = 128 + @9800
 	LOAD_CHARACTER (charId: @9800)
@@ -10690,7 +10690,7 @@ ECL_13_9A23
 
 ECL_13_9A84
 	curChar = null
-	curCharEnabled = 0
+	curCharEnabled = char_enabled_write_dump_on_status_clear
 	@6E7A = 128 + @6E7A
 	LOAD_CHARACTER (charId: @6E7A)
 	NEW_ECL (eclId: 27)
@@ -21108,7 +21108,7 @@ ECL_24_AC5D
 
 ECL_24_ACC3
 	curChar = null
-	curCharEnabled = 0
+	curCharEnabled = char_enabled_write_dump_on_status_clear
 	@6E7A = 128 + @6E7A
 	LOAD_CHARACTER (charId: @6E7A)
 	GOTO ECL_24_B0A3
